@@ -1,0 +1,196 @@
+html {
+  scroll-behavior: smooth;
+}
+html, body {
+height: 100%;
+scroll-behavior: auto;
+overflow: visible; 
+}
+
+body {
+  margin: 0;
+  background-color: #fff;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ===== HEADER ===== */
+.main-header {
+  width: 100%;
+  height: 10vh;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-bottom: 3px solid #fff;
+}
+
+/* ===== SECTION PAULA ===== */
+.section-paula {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #fff;
+  overflow: hidden;
+}
+
+.text-wrapper-paula {
+  position: absolute;
+  top: 15%;
+  left: 10%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.text-paula {
+  font-family: "Space Mono", monospace;
+  font-size: 6vw;
+  color: #000;
+  letter-spacing: 1px;
+  margin: 0;
+}
+.line1-paula { top: 8%; left: 10%; }
+.line2-paula { top: 28%; left: 10%; }
+.line3-paula { top: 50%; left: 55%; }
+.line4-paula { top: 75%; left: 10%; }
+
+.image-container-paula {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* para que el mouse no bloquee */
+  overflow: hidden;
+}
+
+.img-paula {
+  position: fixed; /* muy importante para seguir el cursor global */
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 6px;
+  opacity: 0;
+  filter: blur(0);
+  pointer-events: none;
+  will-change: transform, opacity, filter;
+}
+
+
+.active-paula {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* ===== GRID ===== */
+.grid-paula {
+  background-color: #fff;
+  padding: 8rem 0;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; 
+  position: relative;
+}
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 2rem;
+    width: 95%;
+     background-color: #fff;
+}
+
+/* ===== ITEM ===== */
+.grid-item {
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(50px);
+  border-radius: 6px;
+}
+
+.grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+/* ===== NÚMEROS PEQUEÑOS ===== */
+.grid-item::before {
+  content: attr(data-index);
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: 0.8rem;
+  color: #212529;
+  border-radius: 3px;
+  padding: 2px 4px;
+  z-index: 2;
+  font-family: "Space Mono", monospace;
+}
+
+/* ===== INFO CARD ===== */
+.info-card {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  opacity: 0;
+  color: #fff;
+  font-size: 0.9rem;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  transition: all 0.4s ease;
+}
+
+/* ===== EFECTO HOVER ===== */
+.grid-item:hover img {
+  transform: scale(1.1);
+  filter: brightness(0.7);
+}
+
+.grid-item:hover .info-card {
+  height: 100%;
+  opacity: 1;
+}
+
+/* ===== DESCRIPCIÓN ===== */
+.grid-description {
+  margin-top: 4rem;
+  text-align: center;
+  max-width: 800px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #333;
+  margin-inline: auto;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+  .info-card { font-size: 0.8rem; }
+}
