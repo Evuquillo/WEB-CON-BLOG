@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>(In No Particular Order) - Paula</title>
+  <title>Tienda - Archif.</title>
 
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -13,111 +13,126 @@
 
   <!-- Estilos -->
   <link rel="stylesheet" href="tienda.css" />
+
+  <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+<link rel="shortcut icon" href="favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="Archif." />
+<link rel="manifest" href="favicon/web-app-manifest-192x192.png" />
 </head>
 
 <body>
+  <!-- ===== BOTÓN DARK/LIGHT MODE ===== -->
+  <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+    <!-- Sol -->
+    <svg id="icon-sun" class="icon-theme" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+      viewBox="0 0 24 24">
+      <path fill-rule="evenodd"
+        d="M13 3a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0V3ZM6.343 4.929A1 1 0 0 0 4.93 6.343l1.414 1.414a1 1 0 0 0 1.414-1.414L6.343 4.929Zm12.728 1.414a1 1 0 0 0-1.414-1.414l-1.414 1.414a1 1 0 0 0 1.414 1.414l1.414-1.414ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm-9 4a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H3Zm16 0a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2ZM7.757 17.657a1 1 0 1 0-1.414-1.414l-1.414 1.414a1 1 0 1 0 1.414 1.414l1.414-1.414Zm9.9-1.414a1 1 0 0 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414ZM13 19a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2Z"
+        clip-rule="evenodd" />
+    </svg>
+
+    <!-- Luna -->
+    <svg id="icon-moon" class="icon-theme hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+      fill="#ffff" viewBox="0 0 24 24">
+      <path fill-rule="evenodd"
+        d="M11.675 2.015a.998.998 0 0 0-.403.011C6.09 2.4 2 6.722 2 12c0 5.523 4.477 10 10 10 4.356 0 8.058-2.784 9.43-6.667a1 1 0 0 0-1.02-1.33c-.08.006-.105.005-.127.005h-.001l-.028-.002A5.227 5.227 0 0 0 20 14a8 8 0 0 1-8-8c0-.952.121-1.752.404-2.558a.996.996 0 0 0 .096-.428V3a1 1 0 0 0-.825-.985Z"
+        clip-rule="evenodd" />
+    </svg>
+  </button>
+
   <!-- ===== HEADER RECTANGULAR ===== -->
-  <header class="main-header">
-    <div class="header-content">
-    </div>
-  </header>
 
+
+  <!-- ===== SECCIÓN PRINCIPAL ===== -->
   <section id="inicio" class="section-paula container-fluid p-0">
-  <div class="text-wrapper-paula">
-    <h1 class="text-paula" data-text="[Subasta]"></h1>
-    <h1 class="text-paula" data-text="de_"></h1>
-    <h1 class="text-paula" data-text="piezas"></h1>
-    <h1 class="text-paula" data-text="[únicas]"></h1>
-  </div>
+    <div class="text-wrapper-paula">
+      <h1 class="text-paula" data-text="[Subasta]"></h1>
+      <h1 class="text-paula" data-text="de_"></h1>
+      <h1 class="text-paula" data-text="piezas"></h1>
+      <h1 class="text-paula" data-text="[únicas]"></h1>
 
-  <div id="drag-images" class="image-container-paula">
-    <img src="imgs/railway-1904.jpg" class="img-paula" alt="1">
-    <img src="imgs/london underground.jpg" class="img-paula" alt="2">
-    <img src="imgs/blowfootball.jpg" class="img-paula" alt="3">
-    <img src="imgs/Railway Whitsun Excursions 1905.jpg" class="img-paula" alt="4">
-    <img src="imgs/votes for women.jpg" class="img-paula" alt="5">
-    <img src="imgs/BristolBeaufighter.jpg" class="img-paula" alt="6">
-    <img src="imgs/colussus digital comp.jpg" class="img-paula" alt="7">
-    <img src="imgs/Toguether_poster.jpg" class="img-paula" alt="8">
-    <img src="imgs/metro.jpg" class="img-paula" alt="9">
-  </div>
-</section>
+      <div>
+        <div class="about-auction-paula">
+  <p>/ Pósters únicos, fotografías analógicas y obras de arte de artistas singulares.</p>
+  <p>/ Cada pieza cuenta con una subasta activa y un temporizador con fecha de cierre.</p>
+  <p>/ Cuando esa fecha llega, quien haya realizado la oferta más alta se queda con la pieza de archivo exclusiva.</p>
+</div>
+
+      </div>
+    </div>
+
+    <div id="drag-images" class="image-container-paula">
+      <img src="imgs/railway-1904.jpg" class="img-paula" alt="1">
+      <img src="imgs/london underground.jpg" class="img-paula" alt="2">
+      <img src="imgs/blowfootball.jpg" class="img-paula" alt="3">
+      <img src="imgs/Railway Whitsun Excursions 1905.jpg" class="img-paula" alt="4">
+      <img src="imgs/votes for women.jpg" class="img-paula" alt="5">
+      <img src="imgs/BristolBeaufighter.jpg" class="img-paula" alt="6">
+      <img src="imgs/colussus digital comp.jpg" class="img-paula" alt="7">
+      <img src="imgs/Toguether_poster.jpg" class="img-paula" alt="8">
+      <img src="imgs/metro.jpg" class="img-paula" alt="9">
+    </div>
+  </section>
+
   <!-- ===== GRID 3x3 ===== -->
   <section class="grid-paula">
     <div class="grid-container">
-      <!-- Cada imagen tiene número y card de información -->
-      <div class="grid-item" data-index="01">
-        <img src="imgs/grid 1.jpg" alt="01">
-        <div class="info-card">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-      </div>
-      <div class="grid-item" data-index="02">
-        <img src="imgs/grid 2.jpg" alt="02">
-        <div class="info-card">Pellentesque habitant morbi tristique senectus et netus.</div>
-      </div>
-      <div class="grid-item" data-index="03">
-        <img src="imgs/grid 3.jpg" alt="03">
-        <div class="info-card">Suspendisse potenti. Morbi vel justo ut erat varius.</div>
-      </div>
-      <div class="grid-item" data-index="04">
-        <img src="imgs/grid 4.jpg" alt="04">
-        <div class="info-card">Ut fringilla nisl sit amet quam luctus, sed pulvinar.</div>
-      </div>
-      <div class="grid-item" data-index="05">
-        <img src="imgs/grid 5.jpg" alt="05">
-        <div class="info-card">Vivamus cursus magna vel neque vehicula, vel tempus.</div>
-      </div>
-      <div class="grid-item" data-index="06">
-        <img src="imgs/grid 6.jpg" alt="06">
-        <div class="info-card">Etiam sodales turpis nec tortor gravida fermentum.</div>
-      </div>
-      <div class="grid-item" data-index="07">
-        <img src="imgs/grid 7.jpg" alt="07">
-        <div class="info-card">Donec non sem at magna tempor gravida ac in libero.</div>
-      </div>
-      <div class="grid-item" data-index="08">
-        <img src="imgs/grid 8.jpg" alt="08">
-        <div class="info-card">Aliquam erat volutpat. Vestibulum ante ipsum primis.</div>
-      </div>
-      <div class="grid-item" data-index="09">
-        <img src="imgs/grid 9.jpg" alt="09">
-        <div class="info-card">Mauris a velit ac nisl tincidunt lacinia in non arcu.</div>
-      </div>
-      <div class="grid-item" data-index="10">
-        <img src="imgs/grid 10.jpg" alt="10">
-        <div class="info-card">Mauris a velit ac nisl tincidunt lacinia in non arcu.</div>
-      </div>
-       <div class="grid-item" data-index="11">
-        <img src="imgs/grid 11.jpg" alt="11">
-        <div class="info-card">Mauris a velit ac nisl tincidunt lacinia in non arcu.</div>
-      </div>
-      <div class="grid-item" data-index="12">
-        <img src="imgs/grid 12.jpg" alt="12">
-        <div class="info-card">Mauris a velit ac nisl tincidunt lacinia in non arcu.</div>
-      </div>
+      <div class="grid-item" data-index="01"><img src="imgs/grid 12.png"><div class="info-card">Greg Gorman, Divine 2, Impresión pigmentada de archivo sobre platina Legacy <br> ¡Firmado! <br> Año: 1984</div></div>
+      <div class="grid-item" data-index="02"><img src="imgs/grid 2.png"><div class="info-card">¡Original Vintage WWII Poster Handen Weg! Europa Manos Fuera de Europa Guerra Países Bajos. <br>  Año: 1943 </div></div>
+      <div class="grid-item" data-index="03"><img src="imgs/grid 3.png"><div class="info-card">Número especial de Illustrated publicado para conmemorar la coronación de Isabel II en 1953. <br> Autor: Illustrated Magazine <br> Año: 1953 </div></div>
+      <div class="grid-item" data-index="04"><img src="imgs/grid 4.png"><div class="info-card">Aguafuerte de William Hogarth, grabado por J. Mills y publicado en 1808, con recortes de prensa contemporáneos. <br> Año: 1763-1866</div></div>
+      <div class="grid-item" data-index="05"><img src="imgs/grid 5.png"><div class="info-card">Retrato original de Adolfo Best Maugard, María Luisa Cabrera de Block y Frida Kahlo.<br> Año: 1945 </div></div>
+      <div class="grid-item" data-index="06"><img src="imgs/grid 10.png"><div class="info-card">Batman 1989 Cartel de cine egipcio original. <br> Año: 1989</div></div>
+      <div class="grid-item" data-index="07"><img src="imgs/grid 7.png"><div class="info-card">Il Principe della Notte (La maldición del vudú) <br> Año: 1965</div></div>
+      <div class="grid-item" data-index="08"><img src="imgs/grid 8.png"><div class="info-card">Gustave Le Gray y Auguste Mestral, Fachada oeste de la Catedral de Saint-Gatien, Tours <br> Negativo en papel encerado <br> Año: 1851</div></div>
+      <div class="grid-item" data-index="09"><img src="imgs/grid 9.png"><div class="info-card">Raro Póster Original de Campeonatos de Esquí de La Molina España <br> Año: 1942 </div></div>
+      <div class="grid-item" data-index="10"><img src="imgs/grid 6.png"><div class="info-card">Inside Information: Boombox <br> Author: Dorothy Studio.</div></div>
+      <div class="grid-item" data-index="11"><img src="imgs/grid 11.png"><div class="info-card">Póster Original Vintage Tintín y las Naranjas Azules Herge Cinema Film Art <br> Año: 1964</div></div>
+      <div class="grid-item" data-index="12"><img src="imgs/grid 1.png"><div class="info-card">Cartel de ferias y fiestas de Sevilla <br> Autor: Josep Renau <br> Año: 1930-31</div></div>
+     
     </div>
 
-    <p class="grid-description">
-      Space and Agency is a space that blends management and creativity. It consists of a group of synergically intertwined companies that assist luxury brands in their growth and evolution.
-    </p>
+      <!-- Flecha Scroll to Top -->
+  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Volver arriba">
+    ↑
+  </button>
+
+  <!-- ===== FOOTER ===== -->
+<footer class="main-footer">
+  <div class="footer-container">
+    <div class="footer-logo">
+      <img 
+        id="footer-logo-img"
+        src="logos/archif-logo_negro.png" 
+        alt="Archif logo"
+        class="footer-logo-img"
+      >
+    </div>
+
+    <div class="footer-info">
+      <p>2026 Archif®. Todos los derechos reservados.</p>
+      <p>Plataforma digital dedicada a la recuperación y difusión de archivos creativos poco accesibles.</p>
+    </div>
+
+    <div class="footer-links">
+      <a href="#">Devoluciones</a>
+      <a href="#">Contacto</a>
+      <a href="#">Términos</a>
+    </div>
+  </div>
+</footer>
+
   </section>
 
+
   <!-- ===== SCRIPTS ===== -->
-<!-- Bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- GSAP + ScrollTrigger -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/ScrollTrigger.min.js"></script>
-
-<!-- SmoothScroll GSAP Plugin (ver ejemplo CodePen) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/ScrollToPlugin.min.js"></script>
-
-<!-- Draggable -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/Draggable.min.js"></script>
-
-<!-- ImageDraggingEffects (Codrops) -->
-<script src="https://cdn.jsdelivr.net/gh/codrops/ImageDraggingEffects/js/imageDraggingEffects.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/ScrollToPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/Draggable.min.js"></script>
   <script src="tienda.js"></script>
 </body>
 </html>
