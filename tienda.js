@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   gsap.registerPlugin(ScrollTrigger);
 
+
+
   // ======= EFECTO IMAGE TRAIL (solo en section-paula) =======
 
   const section = document.querySelector(".section-paula");
@@ -126,6 +128,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+
 // ======= EFECTO DE TEXTO SCRAMBLE (tipo GreenSock pen) =======
 
 // Caracteres usados en la animación
@@ -170,3 +174,31 @@ lines.forEach((el) => {
   gsap.delayedCall(delay, () => scrambleText(el, text));
   delay += 0.8; // tiempo entre líneas
 });
+ // ==== LOOP INFINITO ====
+  function loopScramble() {
+    const lines = document.querySelectorAll(".text-paula");
+    let delay = 0;
+
+    lines.forEach((el) => {
+      const text = el.getAttribute("data-text");
+      gsap.delayedCall(delay, () => {
+        scrambleText(el, text, () => {
+          // después de completar, limpiar texto y reiniciar después de 2s
+          gsap.delayedCall(2, () => {
+            el.textContent = "";
+            scrambleText(el, text);
+          });
+        });
+      });
+      delay += 0.8; // tiempo entre cada línea
+    });
+
+    // repetir todo el ciclo cada ~6 segundos
+    gsap.delayedCall(5, loopScramble);
+  }
+
+  // iniciar loop
+  loopScramble();
+
+  
+

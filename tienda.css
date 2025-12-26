@@ -57,30 +57,28 @@ body {
 .line3-paula { top: 50%; left: 55%; }
 .line4-paula { top: 75%; left: 10%; }
 
+/* ===== SECCIÓN PRINCIPAL ===== */
+.section-paula {
+  position: relative;
+  min-height: 85vh;
+  overflow: visible;
+  background: var(--bs-body-bg);
+}
+
 .image-container-paula {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
+  height: 60vh;
   width: 100%;
-  height: 100%;
-  pointer-events: none; /* para que el mouse no bloquee */
-  overflow: hidden;
 }
 
 .img-paula {
-  position: fixed; /* muy importante para seguir el cursor global */
-  top: 0;
-  left: 0;
-  width: 220px;
-  height: 220px;
+  position: absolute;
+  width: clamp(5rem, 12vw, 8rem);
+  height: clamp(5rem, 12vw, 8rem);
   object-fit: cover;
   border-radius: 6px;
   opacity: 0;
-  filter: blur(0);
-  pointer-events: none;
-  will-change: transform, opacity, filter;
 }
-
 
 .active-paula {
   opacity: 1;
@@ -180,6 +178,8 @@ body {
   color: #333;
   margin-inline: auto;
 }
+
+
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
