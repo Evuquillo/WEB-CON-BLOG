@@ -32,104 +32,49 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   smoothScroll();
+  
+  // ===== Cursor Image Trail =====
+const trailContainer = document.getElementById("cursor-trail");
 
-  // === Imágenes dispersas (solo a la derecha) + Draggable ===
-  const imgs = document.querySelectorAll(".img-paula");
-  const imgContainer = document.querySelector(".image-container-paula");
-  const containerWidth = imgContainer.offsetWidth;
-  const containerHeight = imgContainer.offsetHeight;
+const images = [
+  "imgs/blowfootball.jpg",
+  "imgs/BristolBeaufighter.jpg",
+  "imgs/colussus digital comp.jpg",
+  "imgs/blowfootball.jpg"
+];
 
-  imgs.forEach((img) => {
-    const randX = gsap.utils.random(containerWidth * 0.55, containerWidth * 0.9);
-    const randY = gsap.utils.random(0, containerHeight - 200);
-    gsap.set(img, { x: randX, y: randY });
+let imageIndex = 0;
+let lastX = 0;
+let lastY = 0;
+const distanceThreshold = 40; // distancia mínima para soltar imagen
+const maxImages = 25; // límite de acumulación
 
-    gsap.to(img, {
-      opacity: 1,
-      y: randY - 20,
-      duration: 1.2,
-      delay: gsap.utils.random(0, 0.8),
-      ease: "power2.out",
-    });
+window.addEventListener("mousemove", (e) => {
+  const dx = e.clientX - lastX;
+  const dy = e.clientY - lastY;
+  const distance = Math.sqrt(dx * dx + dy * dy);
 
-    Draggable.create(img, { bounds: imgContainer, inertia: true });
-  });
+  if (distance < distanceThreshold) return;
 
- // === Texto glitch con LOOP + aparición del about ===
-  const chars = "!<>-_\\/[]{}—=+*^?#________";
-  const randomChar = () => chars[Math.floor(Math.random() * chars.length)];
+  lastX = e.clientX;
+  lastY = e.clientY;
 
-  function scrambleText(element, finalText, onComplete) {
-    let iteration = 0;
-    const totalIterations = finalText.length + 5;
-    const interval = setInterval(() => {
-      const scrambled = finalText.split("").map((c, i) =>
-        i < iteration ? c : randomChar()
-      ).join("");
-      element.textContent = scrambled;
-      iteration++;
-      if (iteration > totalIterations) {
-        clearInterval(interval);
-        element.textContent = finalText;
-        if (onComplete) onComplete();
-      }
-    }, 60);
+  const img = document.createElement("img");
+  img.src = images[imageIndex];
+  img.className = "cursor-image";
+
+  img.style.left = `${e.clientX}px`;
+  img.style.top = `${e.clientY}px`;
+
+  trailContainer.appendChild(img);
+
+  imageIndex = (imageIndex + 1) % images.length;
+
+  // Limitar cantidad (cola)
+  if (trailContainer.children.length > maxImages) {
+    trailContainer.removeChild(trailContainer.firstChild);
   }
-
-  // Función para aplicar el loop infinito y mostrar el <p> después del primer ciclo
-  function loopScramble(firstRun = false) {
-    const lines = document.querySelectorAll(".text-paula");
-    let delay = 0;
-
-    lines.forEach(el => {
-      const text = el.getAttribute("data-text");
-      gsap.delayedCall(delay, () => {
-        scrambleText(el, text, () => {
-          // Volver a glitchear después de 3s
-          gsap.delayedCall(3, () => scrambleText(el, text));
-        });
-      });
-      delay += 0.8;
-    });
-
-    // Si es la primera ejecución → mostrar el texto explicativo
-    if (firstRun) {
-      gsap.to(".about-auction-paula", {
-        opacity: 1,
-        y: 0,
-        duration: 0.25,
-        delay: delay + 0.25,
-        ease: "power2.inOut"
-      });
-    }
-
-    // Reiniciar el loop del scramble cada 8 segundos
-    gsap.delayedCall(8, () => loopScramble());
-  }
-
-  // Iniciar el loop con flag firstRun=true para disparar el about una sola vez
-  loopScramble(true);
-
-  // === Grid ScrollTrigger ===
-  gsap.utils.toArray(".grid-item").forEach((item, i) => {
-    gsap.to(item, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      delay: i * 0.05,
-      ease: "power2.out",
-      scrollTrigger: { trigger: item, start: "top 90%" },
-    });
-  });
-
-  gsap.from(".grid-description", {
-    opacity: 0,
-    y: 30,
-    duration: 1,
-    ease: "power2.out",
-    scrollTrigger: { trigger: ".grid-description", start: "top 85%" },
-  });
-
+});
   // === Modo oscuro/claro ===
   const toggle = document.getElementById("theme-toggle");
   const sun = document.getElementById("icon-sun");
@@ -171,20 +116,4 @@ document.addEventListener("DOMContentLoaded", () => {
       scrollBtn.classList.remove("visible");
     }
   });
-
-  // Al hacer clic, animamos targetScrollY (no window.scroll)
-  scrollBtn.addEventListener("click", () => {
-    gsap.to(this, {
-      onUpdate: () => {
-        // Reducir suavemente el scroll objetivo
-        targetScrollY = gsap.utils.interpolate(targetScrollY, 0, 0.1);
-      },
-      onComplete: () => {
-        targetScrollY = 0;
-        scrollY = 0;
-        window.scrollTo(0, 0);
-      },
-    });
-  });
-
 });

@@ -22,6 +22,8 @@
 <link rel="manifest" href="favicon/web-app-manifest-192x192.png" />
 </head>
 
+
+
 <body>
   <!-- ===== BOTÓN DARK/LIGHT MODE ===== -->
   <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
@@ -46,58 +48,23 @@
 
 
   <!-- ===== SECCIÓN PRINCIPAL ===== -->
-  <section id="inicio" class="section-paula container-fluid p-0">
-    <div class="text-wrapper-paula">
-      <h1 class="text-paula" data-text="[archif]"></h1>
-      <h3 class="text-paula" data-text="piezas"></h3>
-      <h3 class="text-paula" data-text="de diseño"></h3>
-      <h3 class="text-paula" data-text="[únicas]"></h3>
-
-      <div>
-        <div class="about-auction-paula">
-  <p>/ Pósters únicos, fotografías analógicas y obras de arte de artistas singulares.</p>
-  <p>/ Cada pieza cuenta con una subasta activa y un temporizador con fecha de cierre.</p>
-  <p>/ Cuando esa fecha llega, quien haya realizado la oferta más alta se queda con la pieza de archivo exclusiva.</p>
-</div>
-
-      </div>
-    </div>
-
-    <div id="drag-images" class="image-container-paula">
-      <img src="imgs/railway-1904.jpg" class="img-paula" alt="1">
-      <img src="imgs/london underground.jpg" class="img-paula" alt="2">
-      <img src="imgs/blowfootball.jpg" class="img-paula" alt="3">
-      <img src="imgs/Railway Whitsun Excursions 1905.jpg" class="img-paula" alt="4">
-      <img src="imgs/votes for women.jpg" class="img-paula" alt="5">
-      <img src="imgs/BristolBeaufighter.jpg" class="img-paula" alt="6">
-      <img src="imgs/colussus digital comp.jpg" class="img-paula" alt="7">
-      <img src="imgs/Toguether_poster.jpg" class="img-paula" alt="8">
-      <img src="imgs/metro.jpg" class="img-paula" alt="9">
-    </div>
+    <section class="hero-logo">
+        <img
+          id="hero-logo-img"
+          src="logos/archif-logo_negro.png"
+          alt="Archif logo grande"
+          class="hero-logo-img"
+        />
   </section>
+  <div id="cursor-trail"></div>
 
-  <!-- ===== GRID 3x3 ===== -->
-  <section class="grid-paula">
-    <div class="grid-container">
-      <div class="grid-item" data-index="01"><img src="imgs/grid 12.png"><div class="info-card">Greg Gorman, Divine 2, Impresión pigmentada de archivo sobre platina Legacy <br> ¡Firmado! <br> Año: 1984</div></div>
-      <div class="grid-item" data-index="02"><img src="imgs/grid 2.png"><div class="info-card">¡Original Vintage WWII Poster Handen Weg! Europa Manos Fuera de Europa Guerra Países Bajos. <br>  Año: 1943 </div></div>
-      <div class="grid-item" data-index="03"><img src="imgs/grid 3.png"><div class="info-card">Número especial de Illustrated publicado para conmemorar la coronación de Isabel II en 1953. <br> Autor: Illustrated Magazine <br> Año: 1953 </div></div>
-      <div class="grid-item" data-index="04"><img src="imgs/grid 4.png"><div class="info-card">Aguafuerte de William Hogarth, grabado por J. Mills y publicado en 1808, con recortes de prensa contemporáneos. <br> Año: 1763-1866</div></div>
-      <div class="grid-item" data-index="05"><img src="imgs/grid 5.png"><div class="info-card">Retrato original de Adolfo Best Maugard, María Luisa Cabrera de Block y Frida Kahlo.<br> Año: 1945 </div></div>
-      <div class="grid-item" data-index="06"><img src="imgs/grid 10.png"><div class="info-card">Batman 1989 Cartel de cine egipcio original. <br> Año: 1989</div></div>
-      <div class="grid-item" data-index="07"><img src="imgs/grid 7.png"><div class="info-card">Il Principe della Notte (La maldición del vudú) <br> Año: 1965</div></div>
-      <div class="grid-item" data-index="08"><img src="imgs/grid 8.png"><div class="info-card">Gustave Le Gray y Auguste Mestral, Fachada oeste de la Catedral de Saint-Gatien, Tours <br> Negativo en papel encerado <br> Año: 1851</div></div>
-      <div class="grid-item" data-index="09"><img src="imgs/grid 9.png"><div class="info-card">Raro Póster Original de Campeonatos de Esquí de La Molina España <br> Año: 1942 </div></div>
-      <div class="grid-item" data-index="10"><img src="imgs/grid 6.png"><div class="info-card">Inside Information: Boombox <br> Author: Dorothy Studio.</div></div>
-      <div class="grid-item" data-index="11"><img src="imgs/grid 11.png"><div class="info-card">Póster Original Vintage Tintín y las Naranjas Azules Herge Cinema Film Art <br> Año: 1964</div></div>
-      <div class="grid-item" data-index="12"><img src="imgs/grid 1.png"><div class="info-card">Cartel de ferias y fiestas de Sevilla <br> Autor: Josep Renau <br> Año: 1930-31</div></div>
-     
-    </div>
+
 
       <!-- Flecha Scroll to Top -->
   <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Volver arriba">
     ↑
   </button>
+
 
   <!-- ===== FOOTER ===== -->
 <footer class="main-footer">
