@@ -37,10 +37,14 @@ document.addEventListener("DOMContentLoaded", () => {
 const trailContainer = document.getElementById("cursor-trail");
 
 const images = [
+  "imgs/vertigo.jpg",
+  "imgs/tour-ska-p.jpg",
+  "imgs/festival_1982.jpg",
+  "imgs/mujeresalborde.jpg",
+  "imgs/colussus digital comp.jpg",
   "imgs/blowfootball.jpg",
   "imgs/BristolBeaufighter.jpg",
-  "imgs/colussus digital comp.jpg",
-  "imgs/blowfootball.jpg"
+  "imgs/amelie.jpg"
 ];
 
 let imageIndex = 0;
