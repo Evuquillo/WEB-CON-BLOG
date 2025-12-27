@@ -1,0 +1,253 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+/* HEADER */
+.header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 24px 40px;
+  background: #fff;
+  position: relative;
+  z-index: 20;
+}
+
+.header__logo {
+  font-weight: 600;
+  font-size: 20px;
+  align-items: center; 
+}
+
+.header__logo span {
+  font-size: 12px;
+  vertical-align: super;
+}
+
+.header__logo .logo-registered {
+  width: 30px; 
+  height: auto; 
+}
+
+
+/* BUSCADOR */
+.header__search {
+  position: relative;
+  max-width: 420px;
+  margin: 0 auto;
+  width: 400px;
+  transition: transform 0.3s ease;
+}
+
+.header__search input {
+  width: 100%;
+  padding: 10px 40px 10px 16px;
+  border-radius: 14px;          
+  border: none;
+  background: #f3f3f3;
+  box-shadow: inset 0 1px 3px rgba(139, 139, 139, 0.1);
+  font-size: 14px;
+  outline: none;
+  transition: background 0.2s ease, transform 0.3s ease;
+  color: #888888;                   
+}
+
+
+.search-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #777;
+  cursor: pointer;
+}
+
+.header__icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* OVERLAY GRIS */
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #f0f0f0;
+  padding-top: 96px; 
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 10;
+  inset: 0;
+}
+
+/* CONTENIDO */
+.search-content {
+  padding: 40px;
+  margin-top: 120px;
+  margin-left: 80px;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 24px;
+  row-gap: 28px;
+}
+
+.search-content span {
+  font-size: 12px;
+  color: #999;
+  font-weight: 400;
+  align-self: center;
+}
+
+.search-content p {
+  font-size: 48px;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.1;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+}
+
+.search-content p:hover {
+  opacity: 0.5;
+}
+
+
+.search-open .search-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.search-open .header__search input {
+  background: #fff;
+}
+
+.search-open .header {
+  background: #f0f0f0;
+}
+
+.search-open .header__search input {
+  background: #fff;
+}
+
+.search-open .search-icon,
+.search-open .header__icon {
+  color: #555;
+}
+
+/* Cruz para cerrar búsqueda */
+.header__search::after {
+  content: "✕";
+  position: absolute;
+  right: 38px; 
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #777;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.search-open .header__search::after {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.search-close {
+  position: absolute;
+  right: 38px;
+  top: 50%;
+  transform: translateY(-50%);
+  transform: translateY(-50%) scale(0.5); 
+  font-size: 14px;
+  color: #777;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.3s ease, transform 0.3s ease; 
+}
+
+.search-open .search-close {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-50%) scale(1); 
+}
+
+
+.search-open .header__search {
+  transform: translateX(-470px); 
+  transition: transform 0.3s ease; 
+}
+
+
+/* CONTENEDOR GENERAL */
+.search-wrapper {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  height: calc(100vh - 96px);
+  padding: 40px 80px;
+}
+
+/* LISTA IZQUIERDA */
+.search-content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 24px;
+  row-gap: 28px;
+}
+
+.search-content p {
+  font-size: 48px;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.1;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+}
+
+.search-content p:hover {
+  opacity: 0.5;
+}
+
+/* GALERÍA DERECHA */
+.hover-gallery {
+  position: absolute;
+  top: 200px;          
+  right: 80px;        
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+
+  width: 360px;
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.hover-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  filter: grayscale(100%);
+}
+
+
+.hover-gallery.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
