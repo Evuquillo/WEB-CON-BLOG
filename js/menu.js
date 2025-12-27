@@ -22,53 +22,33 @@ $(document).ready(function () {
   });
 
   const galleries = {
-  home: [
-    'media/img/archif-logo_Mesa de trabajo 2.png',
-    'media/img/home2.jpg',
-    'media/img/home3.jpg',
-    'media/img/home4.jpg'
-  ],
-  subastas: [
-    'media/img/sub1.jpg',
-    'media/img/sub2.jpg',
-    'media/img/sub3.jpg',
-    'media/img/sub4.jpg'
-  ],
-  archivos: [
-    'media/img/arc1.jpg',
-    'media/img/arc2.jpg',
-    'media/img/arc3.jpg',
-    'media/img/arc4.jpg'
-  ],
-  blog: [
-    'media/img/blog1.jpg',
-    'media/img/blog2.jpg',
-    'media/img/blog3.jpg',
-    'media/img/blog4.jpg'
-  ]
-};
+    home: ['media/img/grid 1.png'],
+    subastas: ['media/img/grid 2.png'],
+    archivos: ['media/img/grid 3.png'],
+    blog: ['media/img/grid 4.png']
+  };
 
-$('.search-content p').on('mouseenter', function () {
+  const items = $('.search-item');
+  const gallery = $('.hover-gallery');
+  const images = gallery.find('img');
 
-  const key = $(this)
-    .text()
-    .toLowerCase()
-    .replace('.', '')
-    .split(' ')[0];
+  items.on('mouseenter', function () {
+    const key = $(this).find('p').text().toLowerCase();
+    const imgs = galleries[key];
 
-  const imgs = galleries[key];
-  if (!imgs) return;
+    if (!imgs) return;
 
-  $('.hover-gallery img').each(function (i) {
-    $(this).attr('src', imgs[i]);
+    // Cambiar src de las imágenes existentes
+    images.each(function (i) {
+      $(this).attr('src', imgs[i] || '');
+    });
+
+    // Activar animación
+    gallery.addClass('is-visible');
   });
 
-  $('.hover-gallery').addClass('is-visible');
-});
-
-$('.search-content').on('mouseleave', function () {
-  $('.hover-gallery').removeClass('is-visible');
-});
-
+  $('.search-content').on('mouseleave', function () {
+    gallery.removeClass('is-visible');
+  });
 
 });
