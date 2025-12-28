@@ -110,11 +110,13 @@ body.dark-mode {
 
 /* SECCIÓN 2 */
 .text-can {
+  position: relative;
+  width: 100%;
   font-family: "Inter", sans-serif;
-  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-size: clamp(1.5rem, 5vw, 4.5rem);
   letter-spacing: -0.02em;
   margin: 0;
-  position: relative;
+  margin-top: 2.2rem;
   overflow: hidden;
   color: var(--text-light); /* por defecto claro */
 }
@@ -133,6 +135,32 @@ body.dark-mode .text-can {
 
 .text-can span.bold { font-weight: 700; }
 .text-can span.italic { font-style: italic; }
+
+
+/* ----------SECCIÓN 3----------- */
+#seccion-tres {
+  min-height: calc(100vh - 6rem); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+#seccion-tres .img-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#seccion-tres img {
+  width: 80%; /* tamaño inicial */
+  max-width: 1200px;
+  transition: transform 0.3s ease;
+}
+
+
 
 /* ===== Botón Scroll to Top ===== */
 .scroll-top-btn {
