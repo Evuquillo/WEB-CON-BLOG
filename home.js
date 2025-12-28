@@ -90,24 +90,65 @@ document.addEventListener("DOMContentLoaded", () => {
   // SECCION 2 / SECCION TEXT
   // =============================
 
-  gsap.from(".section-text", {
-  y: 40,
-  opacity: 0,
-  duration: 1,
-  ease: "power3.out",
-  scrollTrigger: {
-    trigger: ".section-text",
-    start: "top 85%"
+function scrambleText(el, finalText, onComplete) {
+  el.innerHTML = ""; // limpiar contenido
+  const letters = [];
+  let bold = false;
+  let italic = false;
+
+  // Crear spans para cada letra y aplicar clases
+  for (let i = 0; i < finalText.length; i++) {
+    const char = finalText[i];
+
+    if (char === "*") { bold = !bold; continue; }
+    if (char === "_") { italic = !italic; continue; }
+
+    const span = document.createElement("span");
+    span.textContent = char;
+    if (bold) span.classList.add("bold");
+    if (italic) span.classList.add("italic");
+
+    el.appendChild(span);
+    letters.push(span);
   }
+
+  // Animación scramble
+  let iterations = 0;
+  const maxIterations = letters.length * 3;
+  const chars = "A_<()&[H]I`++J--M**QR**001+++{i¨{klm<*o&=st][00%%%4<<779?É--ÓÚ$·3#6_<()&[H]I`++J--??0-_^`";
+
+  const interval = setInterval(() => {
+    letters.forEach((span, i) => {
+      if (i < iterations / 3) {
+        span.style.opacity = 1;
+      } else {
+        span.textContent = chars[Math.floor(Math.random() * chars.length)];
+        span.style.opacity = 1;
+      }
+    });
+
+    iterations++;
+    if (iterations > maxIterations) {
+      clearInterval(interval);
+      // restaurar texto final
+      letters.forEach((span, i) => {
+        const finalChar = finalText.replace(/\*|_/g, "")[i];
+        span.textContent = finalChar;
+        span.style.opacity = 1;
+      });
+      if (onComplete) onComplete();
+    }
+  }, 20);
+}
+
+// Animar todas las líneas sin loop
+const lines = document.querySelectorAll(".text-can");
+let delay = 0;
+lines.forEach(el => {
+  const text = el.getAttribute("data-text");
+  gsap.delayedCall(delay, () => { scrambleText(el, text); });
+  delay += 0.6;
 });
-
-// SECCION 2 / SECCION TEXT ANIMACION
-
-
-// =============================
-// SECTION TEXT - TYPE ON SCROLL
-// =============================
-
 
 
 

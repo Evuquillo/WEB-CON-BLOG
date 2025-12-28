@@ -109,21 +109,30 @@ body.dark-mode {
 }
 
 /* SECCIÓN 2 */
-.section-text {
+.text-can {
   font-family: "Inter", sans-serif;
-  font-weight: 300;
-  margin-top: 2rem;
-  font-size: clamp(2.2rem, 5vw, 4.5rem);
-  line-height: 1.15;
+  font-size: clamp(2rem, 5vw, 4.5rem);
   letter-spacing: -0.02em;
-  text-align: left;
+  margin: 0;
+  position: relative;
   overflow: hidden;
+  color: var(--text-light); /* por defecto claro */
 }
 
-.section-text .word {
-  display: inline-block;
-  white-space: nowrap;
+body.dark-mode .text-can {
+  color: var(--text-dark); /* blanco en dark mode */
 }
+
+
+.text-wrapper-can h2 span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0);
+  will-change: transform, opacity;
+}
+
+.text-can span.bold { font-weight: 700; }
+.text-can span.italic { font-style: italic; }
 
 /* ===== Botón Scroll to Top ===== */
 .scroll-top-btn {
