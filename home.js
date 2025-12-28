@@ -42,7 +42,6 @@ const images = [
 let imageIndex = 0;
 let lastX = null;
 let lastY = null;
-
 const distanceThreshold = 30;
 const maxImages = 25;
 
@@ -121,7 +120,7 @@ function scrambleText(el, finalText, onComplete) {
   let iterations = 0;
 
   const interval = setInterval(() => {
-    const revealCount = Math.floor(iterations / 5); // ← MÁS LENTO
+    const revealCount = Math.floor(iterations / 2); // más lento y progresivo
 
     letters.forEach((span, i) => {
       if (!span) return;
@@ -130,8 +129,7 @@ function scrambleText(el, finalText, onComplete) {
         span.textContent = cleanText[i];
         span.style.opacity = 1;
       } else {
-        span.textContent =
-          chars[Math.floor(Math.random() * chars.length)];
+        span.textContent = chars[Math.floor(Math.random() * chars.length)];
         span.style.opacity = 0.3;
       }
     });
@@ -142,23 +140,8 @@ function scrambleText(el, finalText, onComplete) {
       clearInterval(interval);
       if (onComplete) onComplete();
     }
-  }, 30); 
+  }, 60); // intervalo más lento
 }
-
-// =============================
-// SECCION 3 / IMAGEN QUE SE ENCOGE
-// =============================
-gsap.to("#imagen-grande", {
-  scale: 0.7, // tamaño final al hacer scroll
-  ease: "none",
-  scrollTrigger: {
-    trigger: "#seccion-tres",
-    start: "top bottom",  // cuando la sección empieza a entrar
-    end: "bottom top",    // hasta que termina de salir
-    scrub: true,          // animación sincronizada con el scroll
-  }
-});
-
 
 // ---- ScrollTrigger sección 2 ----
 const lines = document.querySelectorAll(".text-can");
@@ -168,14 +151,45 @@ ScrollTrigger.create({
   start: "top 70%",
   once: true,
   onEnter: () => {
-    let delay = 0;
+    // Animar todas las líneas simultáneamente
     lines.forEach(el => {
       const text = el.getAttribute("data-text");
-      gsap.delayedCall(delay, () => scrambleText(el, text));
-      delay += 0.8; // un poco más de aire entre líneas
+      scrambleText(el, text);
     });
   }
 });
+
+// =============================
+// SECCIÓN 3: IMÁGENES INTERCAMBIABLES
+// =============================
+const seccion3Imgs = gsap.utils.toArray("#seccion-tres .img-seccion");
+
+seccion3Imgs.forEach((img, i) => {
+  gsap.fromTo(
+    img,
+    { opacity: i === 0 ? 1 : 0, scale: 0.8, z: -200 },
+    {
+      opacity: 1,
+      scale: 1,
+      z: 0,
+      scrollTrigger: {
+        trigger: "#seccion-tres",
+        start: () => `top+=${i*100} center`,
+        end: () => "+=400",
+        scrub: true,
+        onUpdate: self => {
+          // Efecto de profundidad: la imagen delante se mueve hacia adelante
+          if(i===0){
+            gsap.to(img, { z: self.progress*400, scale: 1 + self.progress*0.2, opacity: 1 });
+          } else {
+            gsap.to(img, { z: -200 + self.progress*400, scale: 0.8 + self.progress*0.2, opacity: self.progress });
+          }
+        }
+      }
+    }
+  );
+});
+
 
 // =============================
 // DARK / LIGHT MODE
@@ -209,4 +223,5 @@ toggle.addEventListener("click", () => {
   updateLogos();
 });
 
+// Estado inicial
 updateLogos();

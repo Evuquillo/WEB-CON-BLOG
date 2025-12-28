@@ -116,7 +116,8 @@ body.dark-mode {
   font-size: clamp(1.5rem, 5vw, 4.5rem);
   letter-spacing: -0.02em;
   margin: 0;
-  margin-top: 2.2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
   overflow: hidden;
   color: var(--text-light); /* por defecto claro */
 }
@@ -138,26 +139,35 @@ body.dark-mode .text-can {
 
 
 /* ----------SECCIÓN 3----------- */
+
+/* SECCIÓN 3: altura suficiente y perspectiva */
 #seccion-tres {
-  min-height: calc(100vh - 6rem); 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  perspective: 1500px; /* profundidad 3D */
+  min-height: 200vh;   /* altura doble de la ventana para scroll completo */
   position: relative;
+  overflow: visible;   /* permitir que las imágenes se muevan fuera */
 }
 
+/* contenedor de imágenes */
 #seccion-tres .img-wrapper {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 50%;
+  height: 100%;
+  position: relative;
+  margin: 0 auto;
+  top: 50%;  /* centrar vertical */
+  transform: translateY(-50%);
 }
 
-#seccion-tres img {
-  width: 80%; /* tamaño inicial */
-  max-width: 1200px;
-  transition: transform 0.3s ease;
+/* imágenes superpuestas */
+#seccion-tres .img-wrapper img {
+  width: 50%;
+  max-width: 800px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateZ(0);
+  transform-style: preserve-3d;
+  opacity: 0;
 }
 
 
