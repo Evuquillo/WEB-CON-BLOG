@@ -101,6 +101,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// SECCION 2 / SECCION TEXT ANIMACION
+
+
+// =============================
+// SECTION TEXT - TYPE ON SCROLL
+// =============================
+
+
+
+
   // =============================
   // DARK / LIGHT MODE
   // =============================

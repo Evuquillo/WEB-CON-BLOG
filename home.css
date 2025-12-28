@@ -117,8 +117,13 @@ body.dark-mode {
   line-height: 1.15;
   letter-spacing: -0.02em;
   text-align: left;
+  overflow: hidden;
 }
 
+.section-text .word {
+  display: inline-block;
+  white-space: nowrap;
+}
 
 /* ===== Botón Scroll to Top ===== */
 .scroll-top-btn {
