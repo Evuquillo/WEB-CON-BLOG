@@ -24,7 +24,7 @@
 
 
 
-<body>
+<body class="d-flex flex-column min-vh-100">
   <!-- ===== BOTÓN DARK/LIGHT MODE ===== -->
   <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
     <!-- Sol -->
@@ -44,30 +44,38 @@
     </svg>
   </button>
 
-  <!-- ===== HEADER RECTANGULAR ===== -->
-
 
   <!-- ===== SECCIÓN PRINCIPAL ===== -->
-    <section class="hero-logo">
-        <img
-          id="hero-logo-img"
-          src="logos/archif-logo_negro.png"
-          alt="Archif logo grande"
-          class="hero-logo-img"
-        />
-  </section>
+  <section class="hero container-fluid p-0">
+  <div class="row g-0 h-100 align-items-center justify-content-center">
+    <div class="col-12 text-center">
+      <img
+        id="hero-logo-img"
+        src="logos/archif-logo_negro.png"
+        alt="Archif logo grande"
+        class="hero-logo-img img-fluid"
+      />
+    </div>
+  </div>
   <div id="cursor-trail"></div>
+</section>
 
 
-
-      <!-- Flecha Scroll to Top -->
-  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Volver arriba">
-    ↑
-  </button>
-
+ <!-- ===== SECCIÓN DOS ===== -->
+  <section class="content container py-5 py-md-7">
+  <div class="row">
+    <div class="col-12 col-lg-9">
+      <h2 class="section-text">
+        Archif es una plataforma que recupera diseños originales y archivos
+        gráficos poco accesibles, poniendo en valor el patrimonio visual
+        contemporáneo.
+      </h2>
+    </div>
+  </div>
+</section>>
 
   <!-- ===== FOOTER ===== -->
-<footer class="main-footer">
+<footer class="main-footer mt-auto">
   <div class="footer-container">
     <div class="footer-logo">
       <img 

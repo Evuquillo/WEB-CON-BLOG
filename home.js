@@ -1,123 +1,148 @@
 document.addEventListener("DOMContentLoaded", () => {
-  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Draggable);
+  // =============================
+  // GSAP
+  // =============================
+  gsap.registerPlugin(ScrollTrigger);
 
-  // === Smooth Scroll (más rápido y responsivo) ===
-  const container = document.scrollingElement || document.documentElement;
-  let scrollY = 0;
-  let targetScrollY = 0;
-  const easeFactor = 0.35; // 🔥 antes 0.1 → ahora más rápido (ajustable entre 0.2–0.35)
-
-  function smoothScroll() {
-    scrollY += (targetScrollY - scrollY) * easeFactor;
-    window.scrollTo(0, scrollY);
-    requestAnimationFrame(smoothScroll);
-  }
-
-  window.addEventListener(
-    "wheel",
-    (e) => {
-      e.preventDefault();
-
-      // Sensibilidad del scroll (ajusta este valor para velocidad)
-      const scrollSpeed = 1.5; // 🔥 antes 1 → más rápido
-      targetScrollY += e.deltaY * scrollSpeed;
-
-      // Limitar dentro del documento
-      targetScrollY = Math.max(
-        0,
-        Math.min(targetScrollY, container.scrollHeight - window.innerHeight)
-      );
-    },
-    { passive: false }
+  // =============================
+  // HERO LOGO SCROLL ANIMATION
+  // =============================
+  gsap.fromTo(
+    "#hero-logo-img",
+    { opacity: 1, scale: 1 },
+    {
+      opacity: 0,
+      scale: 0.95,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+      }
+    }
   );
 
-  smoothScroll();
-  
-  // ===== Cursor Image Trail =====
-const trailContainer = document.getElementById("cursor-trail");
+  // =============================
+  // CURSOR IMAGE TRAIL (FIXED)
+  // =============================
+  const hero = document.querySelector(".hero");
+  const trailContainer = document.getElementById("cursor-trail");
 
-const images = [
-  "imgs/vertigo.jpg",
-  "imgs/tour-ska-p.jpg",
-  "imgs/festival_1982.jpg",
-  "imgs/mujeresalborde.jpg",
-  "imgs/colussus digital comp.jpg",
-  "imgs/blowfootball.jpg",
-  "imgs/BristolBeaufighter.jpg",
-  "imgs/amelie.jpg"
-];
+  const images = [
+    "imgs/vertigo.jpg",
+    "imgs/tour-ska-p.jpg",
+    "imgs/festival_1982.jpg",
+    "imgs/mujeresalborde.jpg",
+    "imgs/colussus digital comp.jpg",
+    "imgs/blowfootball.jpg",
+    "imgs/BristolBeaufighter.jpg",
+    "imgs/amelie.jpg"
+  ];
 
-let imageIndex = 0;
-let lastX = 0;
-let lastY = 0;
-const distanceThreshold = 40; // distancia mínima para soltar imagen
-const maxImages = 25; // límite de acumulación
+  let imageIndex = 0;
+  let lastX = null;
+  let lastY = null;
 
-window.addEventListener("mousemove", (e) => {
-  const dx = e.clientX - lastX;
-  const dy = e.clientY - lastY;
-  const distance = Math.sqrt(dx * dx + dy * dy);
+  const distanceThreshold = 30;
+  const maxImages = 25;
 
-  if (distance < distanceThreshold) return;
+  hero.addEventListener("mousemove", (e) => {
+    const rect = hero.getBoundingClientRect();
 
-  lastX = e.clientX;
-  lastY = e.clientY;
+    // Coordenadas RELATIVAS al hero
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-  const img = document.createElement("img");
-  img.src = images[imageIndex];
-  img.className = "cursor-image";
+    if (lastX !== null && lastY !== null) {
+      const dx = x - lastX;
+      const dy = y - lastY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      if (distance < distanceThreshold) return;
+    }
 
-  img.style.left = `${e.clientX}px`;
-  img.style.top = `${e.clientY}px`;
+    lastX = x;
+    lastY = y;
 
-  trailContainer.appendChild(img);
+    const img = document.createElement("img");
+    img.src = images[imageIndex];
+    img.className = "cursor-image";
 
-  imageIndex = (imageIndex + 1) % images.length;
+    img.style.left = `${x}px`;
+    img.style.top = `${y}px`;
 
-  // Limitar cantidad (cola)
-  if (trailContainer.children.length > maxImages) {
-    trailContainer.removeChild(trailContainer.firstChild);
+    trailContainer.appendChild(img);
+
+    imageIndex = (imageIndex + 1) % images.length;
+
+    if (trailContainer.children.length > maxImages) {
+      trailContainer.removeChild(trailContainer.firstChild);
+    }
+  });
+
+  // Limpiar cuando sales del hero
+  hero.addEventListener("mouseleave", () => {
+    lastX = null;
+    lastY = null;
+  });
+
+  // =============================
+  // SECCION 2 / SECCION TEXT
+  // =============================
+
+  gsap.from(".section-text", {
+  y: 40,
+  opacity: 0,
+  duration: 1,
+  ease: "power3.out",
+  scrollTrigger: {
+    trigger: ".section-text",
+    start: "top 85%"
   }
 });
-  // === Modo oscuro/claro ===
+
+  // =============================
+  // DARK / LIGHT MODE
+  // =============================
   const toggle = document.getElementById("theme-toggle");
   const sun = document.getElementById("icon-sun");
   const moon = document.getElementById("icon-moon");
+  const footerLogo = document.getElementById("footer-logo-img");
 
   document.body.classList.add("light-mode");
+
+  function updateFooterLogo() {
+    footerLogo.src = document.body.classList.contains("dark-mode")
+      ? "logos/archif-logo_blanco.png"
+      : "logos/archif-logo_negro.png";
+  }
 
   toggle.addEventListener("click", () => {
     const isDark = document.body.classList.toggle("dark-mode");
     document.body.classList.toggle("light-mode", !isDark);
     sun.classList.toggle("hidden", isDark);
     moon.classList.toggle("hidden", !isDark);
+    updateFooterLogo();
   });
 
-    // === Cambiar logo del footer según modo ===
-  const footerLogo = document.getElementById("footer-logo-img");
-
-  function updateFooterLogo() {
-    if (document.body.classList.contains("dark-mode")) {
-      footerLogo.src = "logos/archif-logo_blanco.png";
-    } else {
-      footerLogo.src = "logos/archif-logo_negro.png";
-    }
-  }
-
-  // Llamar al inicio y cada vez que se cambia el modo
   updateFooterLogo();
-  toggle.addEventListener("click", updateFooterLogo);
 
-
-  // === Scroll to Top Button (funcional con smooth scroll manual) ===
+  // =============================
+  // SCROLL TO TOP BUTTON (NATIVO)
+  // =============================
   const scrollBtn = document.getElementById("scrollTopBtn");
 
-  // Mostrar / ocultar la flecha según el scroll
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > window.innerHeight * 0.5) {
-      scrollBtn.classList.add("visible");
-    } else {
-      scrollBtn.classList.remove("visible");
-    }
-  });
+  if (scrollBtn) {
+    window.addEventListener("scroll", () => {
+      scrollBtn.classList.toggle(
+        "visible",
+        window.scrollY > window.innerHeight * 0.5
+      );
+    });
+
+    scrollBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
 });
+
