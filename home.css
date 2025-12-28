@@ -142,10 +142,10 @@ body.dark-mode .text-can {
 
 /* SECCIÓN 3: altura suficiente y perspectiva */
 #seccion-tres {
-  perspective: 1500px; /* profundidad 3D */
-  min-height: 200vh;   /* altura doble de la ventana para scroll completo */
+  perspective: 1500px; 
+  min-height: 100vh;   
   position: relative;
-  overflow: visible;   /* permitir que las imágenes se muevan fuera */
+  overflow: visible;   
 }
 
 /* contenedor de imágenes */

@@ -162,32 +162,33 @@ ScrollTrigger.create({
 // =============================
 // SECCIÓN 3: IMÁGENES INTERCAMBIABLES
 // =============================
-const seccion3Imgs = gsap.utils.toArray("#seccion-tres .img-seccion");
+gsap.registerPlugin(ScrollTrigger);
 
-seccion3Imgs.forEach((img, i) => {
-  gsap.fromTo(
-    img,
-    { opacity: i === 0 ? 1 : 0, scale: 0.8, z: -200 },
-    {
-      opacity: 1,
-      scale: 1,
-      z: 0,
-      scrollTrigger: {
-        trigger: "#seccion-tres",
-        start: () => `top+=${i*100} center`,
-        end: () => "+=400",
-        scrub: true,
-        onUpdate: self => {
-          // Efecto de profundidad: la imagen delante se mueve hacia adelante
-          if(i===0){
-            gsap.to(img, { z: self.progress*400, scale: 1 + self.progress*0.2, opacity: 1 });
-          } else {
-            gsap.to(img, { z: -200 + self.progress*400, scale: 0.8 + self.progress*0.2, opacity: self.progress });
-          }
-        }
-      }
-    }
-  );
+// Tomamos todas las imágenes
+const imgs = gsap.utils.toArray("#seccion-tres .img-seccion");
+
+// Timeline de GSAP para animar las fotos una tras otra
+const tl = gsap.timeline({
+  scrollTrigger: {
+    trigger: "#seccion-tres",
+    start: "top top",
+    end: "+=" + imgs.length * window.innerHeight,
+    scrub: 1,
+    pin: true,
+    anticipatePin: 1
+  }
+});
+
+// Animación de cada foto
+imgs.forEach((img, i) => {
+  // Primera imagen: aparece pequeña → normal
+  if (i === 0) {
+    tl.fromTo(img, { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 1 });
+  } else {
+    const prev = imgs[i - 1];
+    tl.to(prev, { z: 400, scale: 1.2, opacity: 0, duration: 1, ease: "power2.in" }, "<"); // sale la anterior
+    tl.fromTo(img, { z: -200, scale: 0.8, opacity: 0 }, { z: 0, scale: 1, opacity: 1, duration: 1, ease: "power2.out" }, "<"); // entra la nueva
+  }
 });
 
 
