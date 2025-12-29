@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Draggable);
 
-  // === Smooth Scroll (más rápido y responsivo) ===
+  /* === SMOOTH SCROLL mejorado === */
   const container = document.scrollingElement || document.documentElement;
   let scrollY = 0;
   let targetScrollY = 0;
-  const easeFactor = 0.35; // 🔥 antes 0.1 → ahora más rápido (ajustable entre 0.2–0.35)
+  const easeFactor = 0.35;
 
   function smoothScroll() {
     scrollY += (targetScrollY - scrollY) * easeFactor;
@@ -17,12 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "wheel",
     (e) => {
       e.preventDefault();
-
-      // Sensibilidad del scroll (ajusta este valor para velocidad)
-      const scrollSpeed = 1.5; // 🔥 antes 1 → más rápido
+      const scrollSpeed = 1.5;
       targetScrollY += e.deltaY * scrollSpeed;
-
-      // Limitar dentro del documento
       targetScrollY = Math.max(
         0,
         Math.min(targetScrollY, container.scrollHeight - window.innerHeight)
@@ -33,20 +29,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   smoothScroll();
 
-  // === Imágenes dispersas (solo a la derecha) + Draggable ===
+  /* === IMÁGENES DISPERSAS + DRAG === */
   const imgs = document.querySelectorAll(".img-paula");
   const imgContainer = document.querySelector(".image-container-paula");
-  const containerWidth = imgContainer.offsetWidth;
-  const containerHeight = imgContainer.offsetHeight;
+  const cw = imgContainer.offsetWidth;
+  const ch = imgContainer.offsetHeight;
 
   imgs.forEach((img) => {
-    const randX = gsap.utils.random(containerWidth * 0.55, containerWidth * 0.9);
-    const randY = gsap.utils.random(0, containerHeight - 200);
-    gsap.set(img, { x: randX, y: randY });
+    const randX = gsap.utils.random(cw * 0.55, cw * 0.9);
+    const randY = gsap.utils.random(0, ch - 200);
+    gsap.set(img, { x: randX, y: randY, opacity: 0, scale: 0.8 });
 
     gsap.to(img, {
       opacity: 1,
       y: randY - 20,
+      scale: 1,
       duration: 1.2,
       delay: gsap.utils.random(0, 0.8),
       ease: "power2.out",
@@ -55,62 +52,56 @@ document.addEventListener("DOMContentLoaded", () => {
     Draggable.create(img, { bounds: imgContainer, inertia: true });
   });
 
- // === Texto glitch con LOOP + aparición del about ===
+  /* === TEXT SCRAMBLE corregido === */
   const chars = "!<>-_\\/[]{}—=+*^?#________";
   const randomChar = () => chars[Math.floor(Math.random() * chars.length)];
 
   function scrambleText(element, finalText, onComplete) {
     let iteration = 0;
-    const totalIterations = finalText.length + 5;
-    const interval = setInterval(() => {
-      const scrambled = finalText.split("").map((c, i) =>
-        i < iteration ? c : randomChar()
-      ).join("");
+    const total = finalText.length + 5;
+
+    clearInterval(element.scrambleInterval); // prevenir loops previos
+
+    element.scrambleInterval = setInterval(() => {
+      const scrambled = finalText
+        .split("")
+        .map((c, i) => (i < iteration ? c : randomChar()))
+        .join("");
+
       element.textContent = scrambled;
       iteration++;
-      if (iteration > totalIterations) {
-        clearInterval(interval);
+
+      if (iteration > total) {
+        clearInterval(element.scrambleInterval);
         element.textContent = finalText;
         if (onComplete) onComplete();
       }
     }, 60);
   }
 
-  // Función para aplicar el loop infinito y mostrar el <p> después del primer ciclo
   function loopScramble(firstRun = false) {
     const lines = document.querySelectorAll(".text-paula");
+    if (!lines.length) return; // evita error si no hay texto
     let delay = 0;
 
-    lines.forEach(el => {
+    lines.forEach((el) => {
       const text = el.getAttribute("data-text");
       gsap.delayedCall(delay, () => {
         scrambleText(el, text, () => {
-          // Volver a glitchear después de 3s
+          // glitch repetido cada 3s sin sobreponer intervalos
           gsap.delayedCall(3, () => scrambleText(el, text));
         });
       });
       delay += 0.8;
     });
 
-    // Si es la primera ejecución → mostrar el texto explicativo
-    if (firstRun) {
-      gsap.to(".about-auction-paula", {
-        opacity: 1,
-        y: 0,
-        duration: 0.25,
-        delay: delay + 0.25,
-        ease: "power2.inOut"
-      });
-    }
-
-    // Reiniciar el loop del scramble cada 8 segundos
     gsap.delayedCall(8, () => loopScramble());
   }
 
-  // Iniciar el loop con flag firstRun=true para disparar el about una sola vez
-  loopScramble(true);
+  // Esperar 500 ms para asegurar que las líneas existen antes de iniciar
+  setTimeout(() => loopScramble(true), 500);
 
-  // === Grid ScrollTrigger ===
+  /* === GRID ANIMATIONS === */
   gsap.utils.toArray(".grid-item").forEach((item, i) => {
     gsap.to(item, {
       opacity: 1,
@@ -130,61 +121,53 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollTrigger: { trigger: ".grid-description", start: "top 85%" },
   });
 
-  // === Modo oscuro/claro ===
-  const toggle = document.getElementById("theme-toggle");
+  /* === MODO OSCURO / CLARO === */
+  const toggle = document.getElementById("theme-toggle") || document.getElementById("modeToggle");
   const sun = document.getElementById("icon-sun");
   const moon = document.getElementById("icon-moon");
+  const footerLogo = document.getElementById("footer-logo-img");
 
   document.body.classList.add("light-mode");
 
-  toggle.addEventListener("click", () => {
-    const isDark = document.body.classList.toggle("dark-mode");
-    document.body.classList.toggle("light-mode", !isDark);
-    sun.classList.toggle("hidden", isDark);
-    moon.classList.toggle("hidden", !isDark);
-  });
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      const isDark = document.body.classList.toggle("dark-mode");
+      document.body.classList.toggle("light-mode", !isDark);
 
-    // === Cambiar logo del footer según modo ===
-  const footerLogo = document.getElementById("footer-logo-img");
+      if (sun && moon) {
+        sun.classList.toggle("hidden", isDark);
+        moon.classList.toggle("hidden", !isDark);
+      }
 
-  function updateFooterLogo() {
-    if (document.body.classList.contains("dark-mode")) {
-      footerLogo.src = "logos/archif-logo_blanco.png";
-    } else {
-      footerLogo.src = "logos/archif-logo_negro.png";
-    }
+      if (footerLogo) {
+        footerLogo.src = isDark
+          ? "logos/archif-logo_blanco.png"
+          : "logos/archif-logo_negro.png";
+      }
+
+      if (toggle.textContent.includes("🌙")) {
+        toggle.textContent = "☀️ Modo claro";
+      } else {
+        toggle.textContent = "🌙 Modo oscuro";
+      }
+    });
   }
 
-  // Llamar al inicio y cada vez que se cambia el modo
-  updateFooterLogo();
-  toggle.addEventListener("click", updateFooterLogo);
-
-
-  // === Scroll to Top Button (funcional con smooth scroll manual) ===
+  /* === SCROLL TO TOP === */
   const scrollBtn = document.getElementById("scrollTopBtn");
-
-  // Mostrar / ocultar la flecha según el scroll
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > window.innerHeight * 0.5) {
-      scrollBtn.classList.add("visible");
-    } else {
-      scrollBtn.classList.remove("visible");
-    }
-  });
-
-  // Al hacer clic, animamos targetScrollY (no window.scroll)
-  scrollBtn.addEventListener("click", () => {
-    gsap.to(this, {
-      onUpdate: () => {
-        // Reducir suavemente el scroll objetivo
-        targetScrollY = gsap.utils.interpolate(targetScrollY, 0, 0.1);
-      },
-      onComplete: () => {
-        targetScrollY = 0;
-        scrollY = 0;
-        window.scrollTo(0, 0);
-      },
+  if (scrollBtn) {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > window.innerHeight * 0.5) {
+        scrollBtn.classList.add("visible");
+      } else {
+        scrollBtn.classList.remove("visible");
+      }
     });
-  });
 
+    scrollBtn.addEventListener("click", () => {
+      gsap.to(window, { duration: 1, scrollTo: 0, ease: "power2.out" });
+      targetScrollY = 0;
+      scrollY = 0;
+    });
+  }
 });
