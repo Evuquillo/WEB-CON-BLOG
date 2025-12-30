@@ -14,51 +14,166 @@
   <!-- Estilos -->
   <link href="css/paises.css" rel="stylesheet">
 
-
+  <!-- Favicons -->
   <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
-<link rel="shortcut icon" href="favicon/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
-<meta name="apple-mobile-web-app-title" content="Archif." />
-<link rel="manifest" href="favicon/web-app-manifest-192x192.png" />
+  <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+  <link rel="shortcut icon" href="favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="Archif." />
+  <link rel="manifest" href="favicon/web-app-manifest-192x192.png" />
 </head>
 
-<body>
-  <!-- ===== BOTÓN DARK/LIGHT MODE ===== -->
-  <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
-    <!-- Sol -->
-    <svg id="icon-sun" class="icon-theme" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-      viewBox="0 0 24 24">
-      <path fill-rule="evenodd"
-        d="M13 3a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0V3ZM6.343 4.929A1 1 0 0 0 4.93 6.343l1.414 1.414a1 1 0 0 0 1.414-1.414L6.343 4.929Zm12.728 1.414a1 1 0 0 0-1.414-1.414l-1.414 1.414a1 1 0 0 0 1.414 1.414l1.414-1.414ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm-9 4a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H3Zm16 0a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2ZM7.757 17.657a1 1 0 1 0-1.414-1.414l-1.414 1.414a1 1 0 1 0 1.414 1.414l1.414-1.414Zm9.9-1.414a1 1 0 0 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414ZM13 19a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2Z"
-        clip-rule="evenodd" />
-    </svg>
+<body class="light-mode">
 
-    <!-- Luna -->
-    <svg id="icon-moon" class="icon-theme hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-      fill="#ffff" viewBox="0 0 24 24">
-      <path fill-rule="evenodd"
-        d="M11.675 2.015a.998.998 0 0 0-.403.011C6.09 2.4 2 6.722 2 12c0 5.523 4.477 10 10 10 4.356 0 8.058-2.784 9.43-6.667a1 1 0 0 0-1.02-1.33c-.08.006-.105.005-.127.005h-.001l-.028-.002A5.227 5.227 0 0 0 20 14a8 8 0 0 1-8-8c0-.952.121-1.752.404-2.558a.996.996 0 0 0 .096-.428V3a1 1 0 0 0-.825-.985Z"
-        clip-rule="evenodd" />
-    </svg>
-  </button>
+<!-- ===== BOTÓN DARK / LIGHT ===== -->
+<button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+  <svg id="icon-sun" class="icon-theme" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M12 7a5 5 0 1 0 0 10a5 5 0 0 0 0-10Z"/>
+  </svg>
+  <svg id="icon-moon" class="icon-theme hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M11.675 2.015A10 10 0 1 0 21.43 15.33a1 1 0 0 0-1.02-1.33A8 8 0 0 1 12 4c0-.952.121-1.752.404-2.558a1 1 0 0 0-.729-.427Z"/>
+  </svg>
+</button>
 
-  <!-- ===== HEADER RECTANGULAR ===== -->
+<!-- ===== FILTROS ===== -->
+<nav class="filters">
+  <button class="active" data-filter="all">( TODOS )</button>
+  <button data-filter="europa">( EUROPA )</button>
+  <button data-filter="america">( AMÉRICA )</button>
+  <button data-filter="asia">( ASIA )</button>
+  <button data-filter="africa">( ÁFRICA )</button>
+</nav>
 
+<!-- ===== GRID ===== -->
+<section class="grid">
 
-  <!-- ===== SECCIÓN PRINCIPAL ===== -->
+   <article class="card america">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Colombia</span>
+  </article>
+
+   <article class="card america">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Austria</span>
+  </article>
+
+  <article class="card asia">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Japón</span>
+  </article>
+
+  <article class="card asia">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Portugal</span>
+  </article>
+
+  <article class="card asia">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Checoslovaquia</span>
+  </article>
+
+  <article class="card europa">
+    <img src="media/img/01 Caracas 9267.jpg" alt="">
+    <span>/Alemania</span>
+  </article>
+
   
+  <article class="card africa">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Marruecos</span>
+  </article>
 
-  <!-- ===== FOOTER ===== -->
+
+  <article class="card africa">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Finlandia</span>
+  </article>
+
+
+  <article class="card europa">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Italia</span>
+  </article>
+
+  <article class="card america">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Canadá</span>
+  </article>
+
+  <article class="card america">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Rumanía</span>
+  </article>
+
+  <article class="card europa">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Francia</span>
+  </article>
+  <article class="card asia">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Israel</span>
+  </article>
+  <article class="card america">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Brasil</span>
+  </article>
+  <article class="card america">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Hungría</span>
+  </article>
+  <article class="card asia">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/China</span>
+  </article>
+
+
+
+  <article class="card europa">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/España</span>
+  </article>
+  <article class="card asia">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Cuba</span>
+  </article>
+  <article class="card asia">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Suecia</span>
+  </article>
+  <article class="card asia">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Grecia</span>
+  </article>
+
+  <article class="card america">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Estados Unidos</span>
+  </article>
+
+
+  <article class="card america">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Argentina</span>
+  </article>
+
+
+  <article class="card asia">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Bélgica</span>
+  </article>
+
+  <article class="card asia">
+    <img src="media/img/grid 1.png" alt="">
+    <span>/Polonia</span>
+  </article>
+
+</section>
+
+<!-- ===== FOOTER ===== -->
 <footer class="main-footer">
   <div class="footer-container">
     <div class="footer-logo">
-      <img 
-        id="footer-logo-img"
-        src="logos/archif-logo_negro.png" 
-        alt="Archif logo"
-        class="footer-logo-img"
-      >
+      <img id="footer-logo-img" src="logos/archif-logo_negro.png" alt="Archif logo" class="footer-logo-img">
     </div>
 
     <div class="footer-info">
@@ -74,14 +189,9 @@
   </div>
 </footer>
 
-
-  <!-- ===== SCRIPTS ===== -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/ScrollToPlugin.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/Draggable.min.js"></script>
-  <script src="js/paises.js"></script>
+<!-- ===== SCRIPTS ===== -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/paises.js"></script>
 
 </body>
 </html>

@@ -55,6 +55,136 @@ body.dark-mode {
 }
 
 
+/* =========================
+   FILTROS
+========================= */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin: 60px 0 80px;
+  font-family: "Space Mono", monospace;
+}
+
+.filters button {
+  background: none;
+  border: none;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.filters button.active,
+.filters button:hover {
+  opacity: 1;
+}
+
+/* =========================
+   GRID ARCHIVO
+========================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 48px 32px;
+  padding: 0 80px 120px;
+}
+
+/* Card */
+/* =========================
+   EFECTO SELECCIÓN EDITORIAL
+========================= */
+
+.card {
+  transition: opacity 0.45s ease, filter 0.45s ease;
+  font-family: "Space Mono", monospace;
+  width: 100%;
+  /* display: flex;
+  flex-direction: column; */
+}
+
+/* Estado filtrado */
+.grid.is-filtering .card {
+  opacity: 0.15;
+  filter: grayscale(100%);
+}
+
+/* Países activos */
+.grid.is-filtering .card.is-active {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+/* Hover sutil incluso en cards apagadas */
+.grid.is-filtering .card:hover {
+  opacity: 0.35;
+}
+
+
+/* === ESTADO GENERAL === */
+.card {
+  transition: opacity 0.35s ease, filter 0.35s ease;
+  /* position: relative; */
+  width: 100%;
+  /* overflow: hidden; */
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  
+}
+
+/* Cuando hay un filtro activo */
+.grid.filtered .card {
+  opacity: 0.2;
+  /* filter: grayscale(100%); */
+}
+
+/* Cards que sí pertenecen al filtro */
+.grid.filtered .card.active {
+  opacity: 1;
+  /* filter: grayscale(0%); */
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  /* filter: grayscale(100%); */
+  transition: filter 0.3s ease;
+}
+
+
+.card span {
+  margin-top: 8px;
+  font-family: "Space Mono", monospace;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 40px 80px;
+  }
+
+  .filters {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+}
 
 
 
@@ -65,7 +195,7 @@ body.dark-mode {
   color: var(--text-light);
   padding: 3rem 2rem;
   border-top: 1px solid rgba(0,0,0,0.1);
-    font-family: "Space Mono", monospace;
+  font-family: "Space Mono", monospace;
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
