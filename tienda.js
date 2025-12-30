@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function smoothScroll() {
     scrollY += (targetScrollY - scrollY) * easeFactor;
     window.scrollTo(0, scrollY);
+    ScrollTrigger.update(); // 🔧 sincroniza con scrollTrigger
     requestAnimationFrame(smoothScroll);
   }
 
@@ -52,54 +53,54 @@ document.addEventListener("DOMContentLoaded", () => {
     Draggable.create(img, { bounds: imgContainer, inertia: true });
   });
 
-  /* === TEXT SCRAMBLE corregido === */
+  /* === TEXT SCRAMBLE FUNCIONAL === */
   const chars = "!<>-_\\/[]{}—=+*^?#________";
   const randomChar = () => chars[Math.floor(Math.random() * chars.length)];
 
-  function scrambleText(element, finalText, onComplete) {
-    let iteration = 0;
-    const total = finalText.length + 5;
+  function scrambleText(element, finalText, duration = 1200, speed = 50, onComplete) {
+    const length = finalText.length;
+    let frame = 0;
+    const totalFrames = Math.ceil(duration / speed);
 
-    clearInterval(element.scrambleInterval); // prevenir loops previos
+    clearInterval(element.scrambleInterval);
 
     element.scrambleInterval = setInterval(() => {
+      const progress = frame / totalFrames;
+      const revealCount = Math.floor(progress * length);
+
       const scrambled = finalText
         .split("")
-        .map((c, i) => (i < iteration ? c : randomChar()))
+        .map((c, i) => (i < revealCount ? c : randomChar()))
         .join("");
 
       element.textContent = scrambled;
-      iteration++;
 
-      if (iteration > total) {
+      frame++;
+      if (frame > totalFrames) {
         clearInterval(element.scrambleInterval);
         element.textContent = finalText;
         if (onComplete) onComplete();
       }
-    }, 60);
+    }, speed);
   }
 
-  function loopScramble(firstRun = false) {
+  function loopScramble() {
     const lines = document.querySelectorAll(".text-paula");
-    if (!lines.length) return; // evita error si no hay texto
+    if (!lines.length) return;
     let delay = 0;
 
     lines.forEach((el) => {
-      const text = el.getAttribute("data-text");
-      gsap.delayedCall(delay, () => {
-        scrambleText(el, text, () => {
-          // glitch repetido cada 3s sin sobreponer intervalos
-          gsap.delayedCall(3, () => scrambleText(el, text));
-        });
-      });
-      delay += 0.8;
+      const finalText = el.textContent.trim(); // ✅ usa el texto real
+      gsap.delayedCall(delay, () => scrambleText(el, finalText));
+      delay += 0.6;
     });
 
-    gsap.delayedCall(8, () => loopScramble());
+    // Repetir cada 5 segundos
+    gsap.delayedCall(5, loopScramble);
   }
 
-  // Esperar 500 ms para asegurar que las líneas existen antes de iniciar
-  setTimeout(() => loopScramble(true), 500);
+  // Iniciar tras 500ms
+  setTimeout(loopScramble, 500);
 
   /* === GRID ANIMATIONS === */
   gsap.utils.toArray(".grid-item").forEach((item, i) => {
@@ -113,45 +114,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  gsap.from(".grid-description", {
-    opacity: 0,
-    y: 30,
-    duration: 1,
-    ease: "power2.out",
-    scrollTrigger: { trigger: ".grid-description", start: "top 85%" },
-  });
-
-  /* === MODO OSCURO / CLARO === */
-  const toggle = document.getElementById("theme-toggle") || document.getElementById("modeToggle");
-  const sun = document.getElementById("icon-sun");
-  const moon = document.getElementById("icon-moon");
+  /* === MODO OSCURO / CLARO (Font Awesome) === */
+  const toggle = document.getElementById("theme-toggle");
+  const sunIcon = '<i class="fa-solid fa-sun" style="color:#ffffff;"></i>';
+  const moonIcon = '<i class="fa-solid fa-moon" style="color:#000000;"></i>';
   const footerLogo = document.getElementById("footer-logo-img");
 
   document.body.classList.add("light-mode");
+  if (toggle) toggle.innerHTML = moonIcon; // por defecto modo claro
 
-  if (toggle) {
-    toggle.addEventListener("click", () => {
-      const isDark = document.body.classList.toggle("dark-mode");
-      document.body.classList.toggle("light-mode", !isDark);
+  toggle.addEventListener("click", () => {
+    const isDark = document.body.classList.toggle("dark-mode");
+    document.body.classList.toggle("light-mode", !isDark);
 
-      if (sun && moon) {
-        sun.classList.toggle("hidden", isDark);
-        moon.classList.toggle("hidden", !isDark);
-      }
+    // alterna icono
+    toggle.innerHTML = isDark ? sunIcon : moonIcon;
 
-      if (footerLogo) {
-        footerLogo.src = isDark
-          ? "logos/archif-logo_blanco.png"
-          : "logos/archif-logo_negro.png";
-      }
-
-      if (toggle.textContent.includes("🌙")) {
-        toggle.textContent = "☀️ Modo claro";
-      } else {
-        toggle.textContent = "🌙 Modo oscuro";
-      }
-    });
-  }
+    // cambia logo footer
+    if (footerLogo) {
+      footerLogo.src = isDark
+        ? "logos/archif-logo_blanco.png"
+        : "logos/archif-logo_negro.png";
+    }
+  });
 
   /* === SCROLL TO TOP === */
   const scrollBtn = document.getElementById("scrollTopBtn");

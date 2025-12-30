@@ -155,10 +155,7 @@ body.dark-mode .main-footer {
 
 body.dark-mode .breadcrumb a {
   color: #fff;
-}
-#countdown {
-  color: #ff6200; 
-}
+}  
 
 /* MODO CLARO */
 body.light-mode {
@@ -226,7 +223,7 @@ body.dark-mode #panel-oferta span {
 
 /* Animación suave al actualizar la oferta */
 #oferta-actual.updated {
-  color: #d9534f;
+  color: #ff6200;
   font-weight: bold;
   animation: pulse 0.6s ease;
 }
@@ -236,6 +233,46 @@ body.dark-mode #panel-oferta span {
   50% { transform: scale(1.15); opacity: 1; }
   100% { transform: scale(1); opacity: 1; }
 }
+
+/* === CONTENEDOR FLEXBOX DEL CONTADOR === */
+.countdown-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+}
+
+/* === TEXTO PRINCIPAL E INFORMATIVO === */
+.countdown-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-color, #000);
+  transition: color 0.3s ease;
+}
+
+.countdown-info {
+  font-size: 0.95rem;
+  color: var(--subtext-color, #555);
+  max-width: 420px;
+  line-height: 1.4;
+  transition: color 0.3s ease;
+}
+
+
+/* === MODO CLARO === */
+.light-mode {
+  --text-color: #000;
+  --subtext-color: #555;
+}
+
+/* === MODO OSCURO === */
+.dark-mode {
+  --text-color: #f1f1f1;
+  --subtext-color: #cfcfcf;
+}
+
 
 /* ======== RESPONSIVE DESIGN ======== */
 
