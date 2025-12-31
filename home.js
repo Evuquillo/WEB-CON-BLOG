@@ -181,35 +181,66 @@ gsap.fromTo(
   }
 );
 
-// =============================
-// SECCIÓN 3 – IMAGE SWAP SCROLL
-// =============================
-const imagesSeccionTres = gsap.utils.toArray("#seccion-tres .img-seccion");
 
-imagesSeccionTres.forEach((img, i) => {
+// =============================
+// SECCIÓN 3 – IMÁGENES + TEXTOS
+// =============================
+const imgs = gsap.utils.toArray("#seccion-tres .img-seccion");
+const leftTexts = gsap.utils.toArray("#seccion-tres .text-left .text-slide");
+const rightTexts = gsap.utils.toArray("#seccion-tres .text-right .text-slide");
+
+// Hacemos que la primera imagen y texto estén visibles inicialmente
+imgs[0].style.opacity = 1;
+leftTexts[0].style.opacity = 1;
+rightTexts[0].style.opacity = 1;
+
+imgs.forEach((img, i) => {
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: "#seccion-tres",
       start: () => `top -${i * window.innerHeight}`,
       end: () => `top -${(i + 1) * window.innerHeight}`,
-      scrub: true
+      scrub: true,
     }
   });
 
-  // Entrada
+  // IMAGEN
+  if(i !== 0){
+    tl.fromTo(
+      img,
+      { opacity: 0, scale: 0.85 },
+      { opacity: 1, scale: 1.1, ease: "none", duration: 1 }
+    );
+  }
+
+  // TEXTOS (ENTRAN)
   tl.fromTo(
-    img,
-    { opacity: 0, scale: 0.85 },
-    { opacity: 1, scale: 1.1, ease: "none" }
+    leftTexts[i],
+    { opacity: 0, y: 30 },
+    { opacity: 1, y: 0, duration: 0.8 },
+    "<"
   );
 
-  // Salida (excepto la última)
-  if (i !== imagesSeccionTres.length - 1) {
-    tl.to(img, {
-      opacity: 0,
-      scale: 1.25,
-      ease: "none"
-    });
+  tl.fromTo(
+    rightTexts[i],
+    { opacity: 0, y: 30 },
+    { opacity: 1, y: 0, duration: 0.8 },
+    "<"
+  );
+
+  // TEXTOS (SALEN solo al hacer scroll a siguiente imagen)
+  if (i !== imgs.length - 1) {
+    tl.to(
+      [leftTexts[i], rightTexts[i]],
+      { opacity: 0, y: -30, duration: 0.8 },
+      "+=0.5" // espera un poquito antes de desaparecer
+    );
+
+    tl.to(
+      img,
+      { opacity: 0, scale: 1.2, ease: "none", duration: 1 },
+      "<"
+    );
   }
 });
 
