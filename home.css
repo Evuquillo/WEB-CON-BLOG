@@ -141,7 +141,7 @@ body.dark-mode .text-can {
 /* ----------SECCIÓN 3----------- */
 
 #seccion-tres {
-  min-height: 500vh; /* controla cuántas imágenes y ritmo */
+  min-height: 700vh; /* controla cuántas imágenes y ritmo */
   position: relative;
 }
 
