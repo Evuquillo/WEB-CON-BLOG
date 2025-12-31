@@ -162,35 +162,56 @@ ScrollTrigger.create({
 // =============================
 // SECCIÓN 3: IMÁGENES INTERCAMBIABLES
 // =============================
-gsap.registerPlugin(ScrollTrigger);
 
-// Tomamos todas las imágenes
-const imgs = gsap.utils.toArray("#seccion-tres .img-seccion");
 
-// Timeline de GSAP para animar las fotos una tras otra
-const tl = gsap.timeline({
-  scrollTrigger: {
-    trigger: "#seccion-tres",
-    start: "top top",
-    end: "+=" + imgs.length * window.innerHeight,
-    scrub: 1,
-    pin: true,
-    anticipatePin: 1
+gsap.fromTo(
+  "#seccion-tres .img-seccion",
+  {
+    scale: 0.6
+  },
+  {
+    scale: 1.15,
+    ease: "none",
+    scrollTrigger: {
+      trigger: "#seccion-tres",
+      start: "top top",
+      end: "bottom bottom",
+      scrub: true
+    }
+  }
+);
+
+// =============================
+// SECCIÓN 3 – IMAGE SWAP SCROLL
+// =============================
+const imagesSeccionTres = gsap.utils.toArray("#seccion-tres .img-seccion");
+
+imagesSeccionTres.forEach((img, i) => {
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: "#seccion-tres",
+      start: () => `top -${i * window.innerHeight}`,
+      end: () => `top -${(i + 1) * window.innerHeight}`,
+      scrub: true
+    }
+  });
+
+  // Entrada
+  tl.fromTo(
+    img,
+    { opacity: 0, scale: 0.85 },
+    { opacity: 1, scale: 1.1, ease: "none" }
+  );
+
+  // Salida (excepto la última)
+  if (i !== imagesSeccionTres.length - 1) {
+    tl.to(img, {
+      opacity: 0,
+      scale: 1.25,
+      ease: "none"
+    });
   }
 });
-
-// Animación de cada foto
-imgs.forEach((img, i) => {
-  // Primera imagen: aparece pequeña → normal
-  if (i === 0) {
-    tl.fromTo(img, { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 1 });
-  } else {
-    const prev = imgs[i - 1];
-    tl.to(prev, { z: 400, scale: 1.2, opacity: 0, duration: 1, ease: "power2.in" }, "<"); // sale la anterior
-    tl.fromTo(img, { z: -200, scale: 0.8, opacity: 0 }, { z: 0, scale: 1, opacity: 1, duration: 1, ease: "power2.out" }, "<"); // entra la nueva
-  }
-});
-
 
 // =============================
 // DARK / LIGHT MODE
