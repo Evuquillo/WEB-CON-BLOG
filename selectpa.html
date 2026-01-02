@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalle de Pieza - Archif</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Estilos -->
+  <link href="css/selectpa.css" rel="stylesheet">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/ScrollTrigger.min.js"></script>
+</head>
+
+<body class="light-mode detalle-page">
+
+  <!-- ===== BOTÓN DARK/LIGHT MODE ===== -->
+  <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+    <!-- Sol -->
+    <svg id="icon-sun" class="icon-theme" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+      fill="currentColor" viewBox="0 0 24 24">
+      <path fill-rule="evenodd"
+        d="M13 3a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0V3ZM6.343 4.929A1 1 0 0 0 4.93 6.343l1.414 1.414a1 1 0 0 0 1.414-1.414L6.343 4.929Zm12.728 1.414a1 1 0 0 0-1.414-1.414l-1.414 1.414a1 1 0 0 0 1.414 1.414l1.414-1.414ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm-9 4a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H3Zm16 0a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2ZM7.757 17.657a1 1 0 1 0-1.414-1.414l-1.414 1.414a1 1 0 1 0 1.414 1.414l1.414-1.414Zm9.9-1.414a1 1 0 0 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414ZM13 19a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2Z"
+        clip-rule="evenodd" />
+    </svg>
+
+    <!-- Luna -->
+    <svg id="icon-moon" class="icon-theme hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+      fill="#ffff" viewBox="0 0 24 24">
+      <path fill-rule="evenodd"
+        d="M11.675 2.015a.998.998 0 0 0-.403.011C6.09 2.4 2 6.722 2 12c0 5.523 4.477 10 10 10 
+        4.356 0 8.058-2.784 9.43-6.667a1 1 0 0 0-1.02-1.33
+        c-.08.006-.105.005-.127.005h-.001l-.028-.002A5.227
+        5.227 0 0 0 20 14a8 8 0 0 1-8-8c0-.952.121-1.752.404-2.558a.996.996
+        0 0 0 .096-.428V3a1 1 0 0 0-.825-.985Z"
+        clip-rule="evenodd" />
+    </svg>
+  </button>
+
+  <!-- ===== CONTENIDO PRINCIPAL ===== -->
+    <section id="seccion-dos" class="content container py-5 position-relative">
+    <div class="text-wrapper-can position-relative">
+        <h2 class="text-can" data-text="Nuestros archivos"></h2>
+    </div>
+    </section>
+    <section class="archive-list container">
+
+  <!-- ITEM -->
+  <div class="archive-item">
+    <button class="archive-header">
+      <span>CARTELES</span>
+      <span class="arrow">›</span>
+    </button>
+
+    <div class="archive-content">
+      <!-- AQUÍ VA EL CONTENIDO DE LA SEGUNDA IMAGEN -->
+      
+      <div class="piece">
+  <img src="media/img/francia-pais15.jpg" alt="Cartel">
+
+  <div class="piece-main">
+    <p class="piece-title">/Pierre Bonnard</p>
+
+    <p class="piece-desc">
+      Póster "France-Champagne" de Pierre Bonnard de 1891:
+      litografía vintage de la década de 1950,
+      publicidad de vino francés.
+    </p>
+
+    <div class="piece-meta">
+      <span class="meta-item">👤 /Pierre Bonnard</span>
+      <span class="meta-item">📍 Pierre Bonnard</span>
+      <span class="meta-item">📄 /Pierre Bonnard</span>
+    </div>
+  </div>
+
+  <button class="btn-more">Ver más</button>
+</div>
+
+
+      <div class="piece">
+  <img src="media/img/francia-pais5.jpg" alt="Cartel">
+
+  <div class="piece-main">
+    <p class="piece-title">/Pierre Bonnard</p>
+
+    <p class="piece-desc">
+      Póster "France-Champagne" de Pierre Bonnard de 1891:
+      litografía vintage de la década de 1950,
+      publicidad de vino francés.
+    </p>
+
+    <div class="piece-meta">
+      <span class="meta-item">👤 /Pierre Bonnard</span>
+      <span class="meta-item">📍 Pierre Bonnard</span>
+      <span class="meta-item">📄 /Pierre Bonnard</span>
+    </div>
+  </div>
+
+  <button class="btn-more">Ver más</button>
+</div>
+
+    </div>
+  </div>
+
+  <!-- ITEM -->
+  <div class="archive-item">
+    <button class="archive-header">
+      <span>FOTOGRAFÍAS</span>
+      <span class="arrow">›</span>
+    </button>
+
+    <div class="archive-content">
+      <!-- AQUÍ VA EL CONTENIDO DE LA SEGUNDA IMAGEN -->
+      
+      <div class="piece">
+  <img src="media/img/francia-pais7.jpg" alt="Cartel">
+
+  <div class="piece-main">
+    <p class="piece-title">/Pierre Bonnard</p>
+
+    <p class="piece-desc">
+      Póster "France-Champagne" de Pierre Bonnard de 1891:
+      litografía vintage de la década de 1950,
+      publicidad de vino francés.
+    </p>
+
+    <div class="piece-meta">
+      <span class="meta-item">👤 /Pierre Bonnard</span>
+      <span class="meta-item">📍 Pierre Bonnard</span>
+      <span class="meta-item">📄 /Pierre Bonnard</span>
+    </div>
+  </div>
+
+  <button class="btn-more">Ver más</button>
+</div>
+
+
+      <div class="piece">
+  <img src="img/cartel1.jpg" alt="Cartel">
+
+  <div class="piece-main">
+    <p class="piece-title">/Pierre Bonnard</p>
+
+    <p class="piece-desc">
+      Póster "France-Champagne" de Pierre Bonnard de 1891:
+      litografía vintage de la década de 1950,
+      publicidad de vino francés.
+    </p>
+
+    <div class="piece-meta">
+      <span class="meta-item">👤 /Pierre Bonnard</span>
+      <span class="meta-item">📍 Pierre Bonnard</span>
+      <span class="meta-item">📄 /Pierre Bonnard</span>
+    </div>
+  </div>
+
+  <button class="btn-more">Ver más</button>
+</div>
+
+
+    </div>
+    </div>
+  </div>
+
+  <!-- ITEM -->
+  <div class="archive-item">
+    <button class="archive-header">
+      <span>POSTERS</span>
+      <span class="arrow">›</span>
+    </button>
+
+    <div class="archive-content">
+      <!-- AQUÍ VA EL CONTENIDO DE LA SEGUNDA IMAGEN -->
+      
+      <div class="piece">
+  <img src="img/cartel1.jpg" alt="Cartel">
+
+  <div class="piece-main">
+    <p class="piece-title">/Pierre Bonnard</p>
+
+    <p class="piece-desc">
+      Póster "France-Champagne" de Pierre Bonnard de 1891:
+      litografía vintage de la década de 1950,
+      publicidad de vino francés.
+    </p>
+
+    <div class="piece-meta">
+      <span class="meta-item">👤 /Pierre Bonnard</span>
+      <span class="meta-item">📍 Pierre Bonnard</span>
+      <span class="meta-item">📄 /Pierre Bonnard</span>
+    </div>
+  </div>
+
+  <button class="btn-more">Ver más</button>
+</div>
+
+
+      <div class="piece">
+  <img src="img/cartel1.jpg" alt="Cartel">
+
+  <div class="piece-main">
+    <p class="piece-title">/Pierre Bonnard</p>
+
+    <p class="piece-desc">
+      Póster "France-Champagne" de Pierre Bonnard de 1891:
+      litografía vintage de la década de 1950,
+      publicidad de vino francés.
+    </p>
+
+    <div class="piece-meta">
+      <span class="meta-item">👤 /Pierre Bonnard</span>
+      <span class="meta-item">📍 Pierre Bonnard</span>
+      <span class="meta-item">📄 /Pierre Bonnard</span>
+    </div>
+  </div>
+
+  <button class="btn-more">Ver más</button>
+</div>
+
+
+    </div>
+  </div>
+
+</section>
+
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <img id="footer-logo-img" src="logos/archif-logo_negro.png" alt="Archif logo" class="footer-logo-img" />
+      </div>
+
+      <div class="footer-info">
+        <p>2026 Archif®. Todos los derechos reservados.</p>
+        <p>Plataforma digital dedicada a la recuperación y difusión de archivos creativos poco accesibles.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="#">Devoluciones</a>
+        <a href="#">Contacto</a>
+        <a href="#">Términos</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/selectpa.js"></script>
+</body>
+</html>
