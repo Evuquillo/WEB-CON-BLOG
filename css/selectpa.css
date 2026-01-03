@@ -3,7 +3,7 @@ html, body {
   padding: 0;
   font-family: 'Inter', sans-serif;
   transition: background-color 0.5s ease, color 0.5s ease;
-  overflow-x: hidden;
+  scrollbar-gutter: stable;
 }
 
 /* Temas */
@@ -83,9 +83,7 @@ body.dark-mode .text-can {
   margin-top: 4rem;
 }
 
-.archive-item {
-  border-bottom: 1px solid rgba(0,0,0,0.2);
-}
+
 
 body.dark-mode .archive-item {
   border-color: rgba(255,255,255,0.2);
@@ -105,9 +103,27 @@ body.dark-mode .archive-item {
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  position: relative;
   color: inherit;
+  
+}
+.archive-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: rgba(0,0,0,0.5);
 }
 
+body.dark-mode .archive-header::after {
+  background: rgba(0, 0, 0, 0.2);
+}
+/* DARK MODE */
+body.dark-mode .archive-header::after {
+  background: rgba(255, 255, 255, 0.5);
+}
 .archive-header .arrow {
   font-size: 1.5rem;
   transform: rotate(0deg);
@@ -123,8 +139,9 @@ body.dark-mode .archive-item {
 
 /* Activo */
 .archive-item.active .archive-content {
-  max-height: 2000px; /* suficiente para varias piezas */
+  max-height: none;
 }
+
 
 .archive-item.active .arrow {
   transform: rotate(90deg);
@@ -132,17 +149,49 @@ body.dark-mode .archive-item {
 
 /* ===== PIEZAS ===== */
 .piece {
-  display: grid;
-  grid-template-columns: 140px 1fr auto;
-  gap: 2rem;
   padding: 2rem 0;
-  align-items: center;
-  border-top: 1px solid rgba(0,0,0,0.1);
+  /* border-top: 1px solid rgba(0,0,0,0.1); */
 }
 
 body.dark-mode .piece {
   border-color: rgba(255,255,255,0.1);
 }
+.piece-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 120px 180px 1fr auto;
+  gap: 2rem;
+  align-items: start;
+}
+.piece-thumb-wrap {
+  position: relative;
+}
+.piece-thumb-wrap::after {
+  content: "";
+  position: absolute;
+  left: calc(120px + 2rem); /* empieza tras la imagen */
+  right: calc(-1 * (180px + 1fr)); /* no importa, lo corregimos abajo */
+}
+
+.piece-row::after {
+  content: "";
+  position: absolute;
+  left: calc(120px + 2rem); /* ancho imagen + gap */
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.5);
+}
+body.dark-mode .piece-row::after {
+  background: rgba(255,255,255,0.5);
+}
+
+.piece-thumb {
+  width: 120px;
+  height: auto;
+  object-fit: cover;
+}
+
 
 .piece img {
   width: 140px;
@@ -162,22 +211,30 @@ body.dark-mode .piece {
   font-size: 0.8rem;
   opacity: 0.6;
   margin: 0;
+  white-space: nowrap;
 }
+
 
 .piece-desc {
   font-size: 0.9rem;
   line-height: 1.4;
   margin: 0;
   max-width: 650px;
+  font-family: "Space Mono", monospace;
+
 }
+
 
 /* Meta inferior con iconos */
 .piece-meta {
+  margin-top: 0.8rem;
+  margin-left: 140px; /* ancho imagen + gap */
   display: flex;
   gap: 1.5rem;
   font-size: 0.75rem;
   opacity: 0.6;
 }
+
 
 .meta-item {
   display: flex;
@@ -185,7 +242,6 @@ body.dark-mode .piece {
   gap: 0.3rem;
 }
 
-/* Botón */
 .btn-more {
   background: #ff4d00;
   color: #fff;
@@ -196,6 +252,7 @@ body.dark-mode .piece {
   cursor: pointer;
   white-space: nowrap;
 }
+
 @media (max-width: 768px) {
   .piece {
     grid-template-columns: 100px 1fr;
@@ -227,6 +284,7 @@ body.dark-mode .piece {
   font-size: 0.75rem;
   border-radius: 20px;
   cursor: pointer;
+  width: 150px;
 }
 
 
