@@ -79,7 +79,7 @@ hero.addEventListener("mouseleave", () => {
 });
 
 // =============================
-// SECCION 2 / TEXT SCRAMBLE SCROLL
+// SECCIÓN 2 - TEXT SCRAMBLE SCROLL
 // =============================
 function scrambleText(el, finalText, onComplete) {
   el.innerHTML = "";
@@ -120,7 +120,7 @@ function scrambleText(el, finalText, onComplete) {
   let iterations = 0;
 
   const interval = setInterval(() => {
-    const revealCount = Math.floor(iterations / 2); // más lento y progresivo
+    const revealCount = Math.floor(iterations / 2);
 
     letters.forEach((span, i) => {
       if (!span) return;
@@ -140,10 +140,10 @@ function scrambleText(el, finalText, onComplete) {
       clearInterval(interval);
       if (onComplete) onComplete();
     }
-  }, 60); // intervalo más lento
+  }, 60);
 }
 
-// ---- ScrollTrigger sección 2 ----
+// ScrollTrigger sección 2
 const lines = document.querySelectorAll(".text-can");
 
 ScrollTrigger.create({
@@ -151,7 +151,6 @@ ScrollTrigger.create({
   start: "top 70%",
   once: true,
   onEnter: () => {
-    // Animar todas las líneas simultáneamente
     lines.forEach(el => {
       const text = el.getAttribute("data-text");
       scrambleText(el, text);
@@ -160,10 +159,11 @@ ScrollTrigger.create({
 });
 
 // =============================
-// SECCIÓN 3 – GALERÍA INTERCAMBIABLE
+// SECCIÓN 3 – GALERÍA INTERCAMBIABLE CENTRADA
 // =============================
-gsap.registerPlugin(ScrollTrigger);
-
+// =============================
+// SECCIÓN 3 – GALERÍA INTERCAMBIABLE CENTRADA Y VISIBLE
+// =============================
 const galleryImages = gsap.utils.toArray("#seccion-tres .img-seccion");
 const leftTexts = gsap.utils.toArray("#seccion-tres .text-left .text-slide");
 const rightTexts = gsap.utils.toArray("#seccion-tres .text-right .text-slide");
@@ -172,20 +172,34 @@ const scaleMin = 0.35;
 const scaleMax = 1;
 const yStep = 50;
 
-// Estado inicial: cola escalonada
-galleryImages.forEach((img, i) => {
-  const t = i / (galleryImages.length - 1);
-  gsap.set(img, {
-    scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
-    y: -yStep * t * galleryImages.length,
-    zIndex: galleryImages.length - i,
-    opacity: 1
+// Función para calcular offset vertical responsivo
+function getOffsetY() {
+  // Dejamos 5% desde arriba y 5% desde abajo para que las imágenes no se corten
+  return window.innerHeight * 0.05;
+}
+
+// Inicializamos offset
+let offsetY = getOffsetY();
+
+// Posición inicial de las imágenes
+function setInitialGalleryPositions() {
+  galleryImages.forEach((img, i) => {
+    const t = i / (galleryImages.length - 1 || 1);
+    gsap.set(img, {
+      scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
+      y: -yStep * t * galleryImages.length + offsetY,
+      zIndex: galleryImages.length - i,
+      opacity: 1
+    });
   });
-});
+}
+
+setInitialGalleryPositions();
 
 // Textos invisibles al inicio
 gsap.set([...leftTexts, ...rightTexts], { opacity: 0 });
 
+// Timeline GSAP
 const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#seccion-tres",
@@ -197,19 +211,17 @@ const tl = gsap.timeline({
 });
 
 galleryImages.forEach((img, i) => {
-
-  // Imagen principal al frente
   tl.set(img, { zIndex: galleryImages.length });
 
-  // Entrada principal
+  // Imagen principal al frente
   tl.to(img, {
     scale: 1,
-    y: 0,
+    y: offsetY, // siempre centrado
     duration: 0.8,
     ease: "power1.out"
   });
 
-  // Textos laterales aparecen con zIndex arriba de todas las imágenes
+  // Textos laterales aparecen
   tl.to([leftTexts[i], rightTexts[i]], {
     opacity: 1,
     zIndex: galleryImages.length + 1,
@@ -219,11 +231,11 @@ galleryImages.forEach((img, i) => {
 
   // Cola progresiva detrás
   galleryImages.forEach((nextImg, j) => {
-    if(j > i){
+    if (j > i) {
       const t = (j - i) / galleryImages.length;
       tl.to(nextImg, {
         scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
-        y: -yStep * t * galleryImages.length,
+        y: -yStep * t * galleryImages.length + offsetY,
         duration: 1,
         ease: "power1.out",
         zIndex: galleryImages.length - j
@@ -247,20 +259,13 @@ galleryImages.forEach((img, i) => {
   }, "<");
 });
 
-
-// Textos aparecen
-tl.to([leftTexts[i], rightTexts[i]], {
-  opacity: 1,
-  duration: 0.3,
-  ease: "none"
-}, "<");
-
-// Textos desaparecen
-tl.to([leftTexts[i], rightTexts[i]], {
-  opacity: 0,
-  duration: 0.25,
-  ease: "none"
-}, "<");
+// =============================
+// Ajuste dinámico al cambiar tamaño de ventana
+// =============================
+window.addEventListener("resize", () => {
+  offsetY = getOffsetY();
+  setInitialGalleryPositions();
+});
 
 
 // =============================
@@ -297,3 +302,16 @@ toggle.addEventListener("click", () => {
 
 // Estado inicial
 updateLogos();
+
+// =============================
+// Ajuste dinámico al cambiar tamaño de ventana
+// =============================
+window.addEventListener("resize", () => {
+  const newOffsetY = window.innerHeight * 0.1;
+  galleryImages.forEach((img, i) => {
+    const t = i / (galleryImages.length - 1 || 1);
+    gsap.set(img, {
+      y: -yStep * t * galleryImages.length + newOffsetY
+    });
+  });
+});
