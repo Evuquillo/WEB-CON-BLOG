@@ -42,6 +42,40 @@ body.dark-mode {
 }
 
 .hidden { display: none; }
+/* Reset padding/margen de Bootstrap containers */
+.container {
+  padding-left: 0% !important;
+  padding-right: 0% !important;
+  max-width: 100%; /* para que no limite el ancho */
+}
+
+/* Archive list y items */
+.archive-list {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
+.archive-item {
+  padding-left: 0;
+  padding-right: 0;
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
+/* Text wrapper (Nuestros archivos) */
+.text-wrapper-can {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
+/* Volver al inicio */
+.volver-inicio-container {
+  margin-left: 4rem; /* opcional, solo un poquito */
+}
 
 /* Header */
 .main-header {
@@ -81,6 +115,7 @@ body.dark-mode .text-can {
 
 .archive-list {
   margin-top: 4rem;
+  /* padding-bottom: 18rem; */
 }
 
 
@@ -106,9 +141,35 @@ body.dark-mode .archive-item {
   cursor: pointer;
   position: relative;
   color: inherit;
-
   
 }
+
+.custom-font {
+  font-family: 'Space Mono', monospace; /* o la que quieras */
+  font-weight: 400;  /* normal, puedes ajustar */
+  font-style: normal; /* si quieres que no sea italic */
+  font-size: 2rem; /* tamaño que quieras */
+  letter-spacing: 0.05em; /* opcional, para estilizar */
+  color: #707070;
+}
+.custom-font:hover {
+  color: #000000;
+}
+/* Solo en dark mode */
+body.dark-mode .custom-font {
+  font-family: 'Space Mono', monospace; /* la que quieras */
+  font-weight: 400;     /* normal */
+  font-style: normal;   /* no italic */
+  font-size: 2rem;      /* tamaño */
+  letter-spacing: 0.05em; /* opcional */
+  color: #cccccc;       /* gris claro para dark mode */
+  transition: color 0.3s ease;
+}
+
+body.dark-mode .custom-font:hover {
+  color: #ffffff;       /* blanco al pasar el mouse */
+}
+
 .archive-header::after {
   content: "";
   position: absolute;
@@ -144,6 +205,15 @@ body.dark-mode .archive-header::after {
   max-height: none;
 }
 
+/* Cuando el item está activo (desplegado) */
+.archive-item.active .custom-font {
+  color: #000000; /* negro en light mode */
+}
+
+/* Dark mode */
+body.dark-mode .archive-item.active .custom-font {
+  color: #ffffff; /* blanco en dark mode */
+}
 
 .archive-item.active .arrow {
   transform: rotate(90deg);
@@ -332,6 +402,9 @@ body.dark-mode .btn-more:hover {
   /* transform: translateX(-3px); */
 }
 
+
+
+/* FOOTER  */
 .main-footer {
   margin-top: auto;
   align-items: baseline;

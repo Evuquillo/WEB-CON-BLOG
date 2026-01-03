@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }, 30);
   }
-
+  
   // ===== ACTIVAR SCRAMBLE CUANDO SE HAGA SCROLL =====
   const lines = document.querySelectorAll(".text-can");
   ScrollTrigger.create({
