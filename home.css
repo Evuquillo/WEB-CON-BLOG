@@ -114,7 +114,7 @@ body.dark-mode .text-can {
 
 /* ===== SECCIÓN 3 - Sticky gallery ===== */
 #seccion-tres {
-  min-height: 700vh; /* controla número de imágenes y scroll */
+  min-height: 700vh;
   position: relative;
 }
 
@@ -125,32 +125,30 @@ body.dark-mode .text-can {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 #seccion-tres .img-seccion {
   position: absolute;
-  width: 22vw;
-  max-width: 520px;
+  width: 18vw;        /* ⬅️ antes 22vw */
+  max-width: 420px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.6);
   opacity: 0;
-  transform: scale(0.85);
   will-change: transform, opacity;
 }
 
-#seccion-tres .img-seccion.active {
-  opacity: 1;
-}
+
 
 /* ===== Textos laterales ===== */
+
 #seccion-tres .text-side {
-  position: fixed; /* Siempre a los lados y centrados verticalmente */
+  position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  z-index: 20;
+  opacity: 0;
   pointer-events: none;
-  width: 20vw; /* opcional: ancho máximo de los textos */
 }
 
 #seccion-tres .text-left { left: 5vw; text-align: left; }

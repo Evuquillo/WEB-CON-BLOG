@@ -183,66 +183,80 @@ gsap.fromTo(
 
 
 // =============================
-// SECCIÓN 3 – IMÁGENES + TEXTOS
+// SECCIÓN 3 – DEPTH SCROLL REAL
+// controversial-free version
 // =============================
-const imgs = gsap.utils.toArray("#seccion-tres .img-seccion");
+
+// =============================
+// SECCIÓN 3 – SCALE + BAJAR + SALIR POR ABAJO
+// =============================
+
+gsap.registerPlugin(ScrollTrigger);
+
+const galleryImages = gsap.utils.toArray("#seccion-tres .img-seccion");
 const leftTexts = gsap.utils.toArray("#seccion-tres .text-left .text-slide");
 const rightTexts = gsap.utils.toArray("#seccion-tres .text-right .text-slide");
 
-// Hacemos que la primera imagen y texto estén visibles inicialmente
-imgs[0].style.opacity = 1;
-leftTexts[0].style.opacity = 1;
-rightTexts[0].style.opacity = 1;
-
-imgs.forEach((img, i) => {
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: "#seccion-tres",
-      start: () => `top -${i * window.innerHeight}`,
-      end: () => `top -${(i + 1) * window.innerHeight}`,
-      scrub: true,
-    }
+// estado inicial
+galleryImages.forEach(img => {
+  gsap.set(img, {
+    opacity: 0,
+    scale: 0.6,
+    y: 0,
+    transformOrigin: "50% 50%"
   });
+});
 
-  // IMAGEN
-  if(i !== 0){
-    tl.fromTo(
-      img,
-      { opacity: 0, scale: 0.85 },
-      { opacity: 1, scale: 1.1, ease: "none", duration: 1 }
-    );
-  }
+gsap.set([...leftTexts, ...rightTexts], { opacity: 0 });
 
-  // TEXTOS (ENTRAN)
-  tl.fromTo(
-    leftTexts[i],
-    { opacity: 0, y: 30 },
-    { opacity: 1, y: 0, duration: 0.8 },
-    "<"
-  );
-
-  tl.fromTo(
-    rightTexts[i],
-    { opacity: 0, y: 30 },
-    { opacity: 1, y: 0, duration: 0.8 },
-    "<"
-  );
-
-  // TEXTOS (SALEN solo al hacer scroll a siguiente imagen)
-  if (i !== imgs.length - 1) {
-    tl.to(
-      [leftTexts[i], rightTexts[i]],
-      { opacity: 0, y: -30, duration: 0.8 },
-      "+=0.5" // espera un poquito antes de desaparecer
-    );
-
-    tl.to(
-      img,
-      { opacity: 0, scale: 1.2, ease: "none", duration: 1 },
-      "<"
-    );
+// timeline maestro (para el scroll)
+const tl = gsap.timeline({
+  scrollTrigger: {
+    trigger: "#seccion-tres",
+    start: "top top",
+    end: "+=" + galleryImages.length * window.innerHeight,
+    scrub: true,
+    pin: true,
+    anticipatePin: 1
   }
 });
+
+galleryImages.forEach((img, i) => {
+
+  // 1. entra desde detrás (centrada)
+  tl.to(img, {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    duration: 0.7,
+    ease: "none"
+  });
+
+  // textos aparecen
+  tl.to([leftTexts[i], rightTexts[i]], {
+    opacity: 1,
+    duration: 0.25,
+    ease: "none"
+  }, "<");
+
+  // 2. AVANZA + BAJA + SALE POR ABAJO
+  tl.to(img, {
+    scale: 2,
+    y: window.innerHeight * 0.7, // 👈 baja fuera del viewport
+    opacity: 0,
+    duration: 1,
+    ease: "none"
+  });
+
+  // textos desaparecen con la imagen
+  tl.to([leftTexts[i], rightTexts[i]], {
+    opacity: 0,
+    duration: 0.25,
+    ease: "none"
+  }, "<");
+});
+
+
 
 // =============================
 // DARK / LIGHT MODE
