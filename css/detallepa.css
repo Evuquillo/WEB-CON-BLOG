@@ -66,6 +66,78 @@ body.dark-mode {
   text-decoration: underline;
   /* transform: translateX(-3px); */
 }
+/* ===== DETALLE PIEZA ===== */
+.detalle-container {
+  margin-top: 4rem;
+  margin-bottom: 6rem;
+}
+
+.image-column {
+  display: flex;
+  justify-content: center;
+  align-items: center;      /* CENTRA VERTICAL */
+  justify-content: center;  /* CENTRA HORIZONTAL */
+  min-height: 60%;         /* asegura altura */
+
+}
+.zoom-container {
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.zoom-image {
+  transition: transform 0.2s ease-out;
+  will-change: transform;
+  cursor: zoom-in;
+}
+
+.art-image {
+  max-width: 70%;
+  height: auto;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.text-column {
+  padding-left: 3rem;
+}
+
+.art-title {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 2.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.art-title span {
+  font-weight: 400;
+}
+
+.art-meta {
+  font-family: "Space Mono", monospace;
+  font-size: 0.95rem;
+  opacity: 0.7;
+  margin-bottom: 2rem;
+}
+
+.info-box {
+  border: 1px solid #DEE2E6;
+  border-radius: 7px;
+  background-color: #F8F9FA;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  font-family: "Space Mono", monospace;
+  
+
+}
+
+body.dark-mode .info-box {
+  border-color: rgba(255,255,255,0.25);
+}
 
 /* FOOTER  */
 .main-footer {

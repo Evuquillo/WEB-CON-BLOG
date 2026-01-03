@@ -1,8 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ===== GSAP ScrollTrigger =====
-  gsap.registerPlugin(ScrollTrigger);
 
-  // ===== MODO OSCURO / CLARO =====
+  /* ===============================
+     GSAP + SCROLLTRIGGER (SEGURO)
+  =============================== */
+  if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  /* ===============================
+     DARK / LIGHT MODE
+  =============================== */
   const toggle = document.getElementById("theme-toggle");
   const sun = document.getElementById("icon-sun");
   const moon = document.getElementById("icon-moon");
@@ -12,12 +19,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateLogos() {
     const isDark = document.body.classList.contains("dark-mode");
-    footerLogo.src = isDark
-      ? "logos/archif-logo_blanco.png"
-      : "logos/archif-logo_negro.png";
 
-    sun.classList.toggle("hidden", isDark);
-    moon.classList.toggle("hidden", !isDark);
+    if (footerLogo) {
+      footerLogo.src = isDark
+        ? "logos/archif-logo_blanco.png"
+        : "logos/archif-logo_negro.png";
+    }
+
+    if (sun && moon) {
+      sun.classList.toggle("hidden", isDark);
+      moon.classList.toggle("hidden", !isDark);
+    }
   }
 
   if (toggle) {
@@ -28,102 +40,125 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ===== DESPLEGABLE ARCHIVOS =====
+  /* ===============================
+     ZOOM IMAGEN (MOUSE TRACK)
+  =============================== */
+  const zoomContainer = document.querySelector(".zoom-container");
+  const zoomImage = document.querySelector(".zoom-image");
+
+  if (zoomContainer && zoomImage) {
+    zoomContainer.addEventListener("mousemove", (e) => {
+      const rect = zoomContainer.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+      zoomImage.style.transformOrigin = `${x}% ${y}%`;
+      zoomImage.style.transform = "scale(2)";
+    });
+
+    zoomContainer.addEventListener("mouseleave", () => {
+      zoomImage.style.transform = "scale(1)";
+    });
+  }
+
+  /* ===============================
+     DESPLEGABLE ARCHIVOS
+  =============================== */
   const archiveHeaders = document.querySelectorAll(".archive-header");
 
   archiveHeaders.forEach(header => {
     header.addEventListener("click", () => {
       const item = header.parentElement;
 
-      // cerrar otros
       document.querySelectorAll(".archive-item").forEach(i => {
         if (i !== item) i.classList.remove("active");
       });
 
-      // toggle actual
       item.classList.toggle("active");
     });
   });
 
-  // ===== FUNCION SCRAMBLE =====
-  function scrambleText(el, finalText, onComplete) {
+  /* ===============================
+     SCRAMBLE TEXT
+  =============================== */
+  function scrambleText(el, finalText) {
     el.innerHTML = "";
     const letters = [];
-    let bold = false;
-    let italic = false;
 
     for (let i = 0; i < finalText.length; i++) {
-      const char = finalText[i];
-      if (char === "*") { bold = !bold; continue; }
-      if (char === "_") { italic = !italic; continue; }
-
       const span = document.createElement("span");
-      if (char === " ") {
+
+      if (finalText[i] === " ") {
         span.innerHTML = "&nbsp;";
-        span.style.opacity = 1;
         el.appendChild(span);
         letters.push(null);
         continue;
       }
 
-      span.textContent = char;
+      span.textContent = finalText[i];
       span.style.opacity = 0;
-      if (bold) span.classList.add("bold");
-      if (italic) span.classList.add("italic");
-
       el.appendChild(span);
       letters.push(span);
     }
 
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
-    const cleanText = finalText.replace(/\*|_/g, "");
     let iterations = 0;
 
     const interval = setInterval(() => {
-      const revealCount = Math.floor(iterations / 2);
       letters.forEach((span, i) => {
         if (!span) return;
-        if (i < revealCount) {
-          span.textContent = cleanText[i];
+
+        if (i < iterations) {
+          span.textContent = finalText[i];
           span.style.opacity = 1;
         } else {
           span.textContent = chars[Math.floor(Math.random() * chars.length)];
           span.style.opacity = 1;
         }
       });
+
       iterations++;
-      if (revealCount >= letters.length) {
-        clearInterval(interval);
-        if (onComplete) onComplete();
-      }
+      if (iterations > letters.length) clearInterval(interval);
     }, 30);
   }
-  
-  // ===== ACTIVAR SCRAMBLE CUANDO SE HAGA SCROLL =====
+
+  /* ===============================
+     ACTIVAR SCRAMBLE SOLO SI EXISTE
+  =============================== */
   const lines = document.querySelectorAll(".text-can");
-  ScrollTrigger.create({
-    trigger: "#seccion-dos",
-    start: "top 80%",
-    once: true,
-    onEnter: () => {
-      lines.forEach(el => {
-        const text = el.getAttribute("data-text");
-        scrambleText(el, text);
+  const triggerSection = document.querySelector("#seccion-dos");
+
+  if (
+    typeof ScrollTrigger !== "undefined" &&
+    triggerSection &&
+    lines.length
+  ) {
+    ScrollTrigger.create({
+      trigger: triggerSection,
+      start: "top 80%",
+      once: true,
+      onEnter: () => {
+        lines.forEach(el => {
+          const text = el.getAttribute("data-text");
+          if (text) scrambleText(el, text);
+        });
+      }
+    });
+  }
+
+  /* ===============================
+     REDIRECCIÓN JULES CHERET
+  =============================== */
+  const pieceRows = document.querySelectorAll(".piece-row");
+
+  pieceRows.forEach(row => {
+    const title = row.querySelector(".piece-title");
+    if (title && title.textContent.includes("Jules")) {
+      row.style.cursor = "pointer";
+      row.addEventListener("click", () => {
+        window.location.href = "detallepa.html";
       });
     }
   });
-
-  // ===== REDIRECCIONAR BLOQUE JULES CHERET =====
-  const julesBlock = Array.from(document.querySelectorAll(".piece-row")).find(row => {
-  const title = row.querySelector(".piece-title");
-  return title && title.textContent.includes("Jules Cheret");
-});
-
-if (julesBlock) {
-  julesBlock.addEventListener("click", () => {
-    window.location.href = "detallepa.html";
-  });
-  julesBlock.style.cursor = "pointer";
-}
 
 });
