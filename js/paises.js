@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-
   /* =============================
      MODO OSCURO / CLARO
   ============================= */
-
   const toggle = document.getElementById("theme-toggle");
   const sun = document.getElementById("icon-sun");
   const moon = document.getElementById("icon-moon");
@@ -29,12 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateFooterLogo();
 
-
   /* =============================
      FILTRO POR CONTINENTES
-     (OPACIDAD – NO OCULTAR)
   ============================= */
-
   const filterButtons = document.querySelectorAll(".filters button");
   const cards = document.querySelectorAll(".card");
   const grid = document.querySelector(".grid");
@@ -43,25 +38,17 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", () => {
       const filter = button.dataset.filter;
 
-      // Estado activo del botón
       filterButtons.forEach(btn => btn.classList.remove("active"));
       button.classList.add("active");
 
-      // Reset cards
-      cards.forEach(card => {
-        card.classList.remove("active");
-      });
+      cards.forEach(card => card.classList.remove("active"));
 
-      // Mostrar todo
       if (filter === "all") {
         grid.classList.remove("filtered");
         return;
       }
 
-      // Activar modo filtrado
       grid.classList.add("filtered");
-
-      // Activar solo las cards del continente
       cards.forEach(card => {
         if (card.classList.contains(filter)) {
           card.classList.add("active");
@@ -70,4 +57,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  /* =============================
+     REDIRECCIÓN AL HACER CLICK EN FRANCIA
+  ============================= */
+  cards.forEach(card => {
+    // Aquí asumimos que la card tiene un texto con el país
+    if (card.textContent.toLowerCase().includes("francia")) {
+      card.addEventListener("click", () => {
+        window.location.href = "selectpa.html";
+      });
+    }
+  });
 });
