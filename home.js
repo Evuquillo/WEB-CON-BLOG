@@ -4,7 +4,7 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // =============================
-// HERO LOGO SCROLL ANIMATION
+// HERO LOGO SCROLL
 // =============================
 gsap.fromTo(
   "#hero-logo-img",
@@ -28,7 +28,7 @@ gsap.fromTo(
 const hero = document.querySelector(".hero");
 const trailContainer = document.getElementById("cursor-trail");
 
-const images = [
+const trailImages = [
   "imgs/vertigo.jpg",
   "imgs/tour-ska-p.jpg",
   "imgs/festival_1982.jpg",
@@ -39,36 +39,34 @@ const images = [
   "imgs/amelie.jpg"
 ];
 
-let imageIndex = 0;
+let imgIndex = 0;
 let lastX = null;
 let lastY = null;
-const distanceThreshold = 30;
-const maxImages = 25;
 
 hero.addEventListener("mousemove", (e) => {
   const rect = hero.getBoundingClientRect();
   const x = e.clientX - rect.left;
   const y = e.clientY - rect.top;
 
-  if (lastX !== null && lastY !== null) {
+  if (lastX !== null) {
     const dx = x - lastX;
     const dy = y - lastY;
-    if (Math.sqrt(dx * dx + dy * dy) < distanceThreshold) return;
+    if (Math.hypot(dx, dy) < 30) return;
   }
 
   lastX = x;
   lastY = y;
 
   const img = document.createElement("img");
-  img.src = images[imageIndex];
+  img.src = trailImages[imgIndex];
   img.className = "cursor-image";
   img.style.left = `${x}px`;
   img.style.top = `${y}px`;
 
   trailContainer.appendChild(img);
-  imageIndex = (imageIndex + 1) % images.length;
+  imgIndex = (imgIndex + 1) % trailImages.length;
 
-  if (trailContainer.children.length > maxImages) {
+  if (trailContainer.children.length > 25) {
     trailContainer.removeChild(trailContainer.firstChild);
   }
 });
@@ -79,17 +77,15 @@ hero.addEventListener("mouseleave", () => {
 });
 
 // =============================
-// SECCIÓN 2 - TEXT SCRAMBLE SCROLL
+// SECCIÓN 2 – TEXT SCRAMBLE
 // =============================
-function scrambleText(el, finalText, onComplete) {
+function scrambleText(el, finalText) {
   el.innerHTML = "";
-  const letters = [];
   let bold = false;
   let italic = false;
+  const spans = [];
 
-  for (let i = 0; i < finalText.length; i++) {
-    const char = finalText[i];
-
+  for (const char of finalText) {
     if (char === "*") { bold = !bold; continue; }
     if (char === "_") { italic = !italic; continue; }
 
@@ -99,34 +95,30 @@ function scrambleText(el, finalText, onComplete) {
       span.innerHTML = "&nbsp;";
       span.style.opacity = 1;
       el.appendChild(span);
-      letters.push(null);
+      spans.push(null);
       continue;
     }
 
     span.textContent = char;
     span.style.opacity = 0;
-
     if (bold) span.classList.add("bold");
     if (italic) span.classList.add("italic");
 
     el.appendChild(span);
-    letters.push(span);
+    spans.push(span);
   }
 
-  const chars =
-    "A_<()&[H]I`++J--M**QR**001+++{i¨{klm<*o&=st][00%%%4<<779?É--ÓÚ$·3#6_<()&[H]I`++J--??0-_^`";
-
-  const cleanText = finalText.replace(/\*|_/g, "");
-  let iterations = 0;
+  const chars = "A<>()[]{}+-*/%#@!?0123456789";
+  const clean = finalText.replace(/[*_]/g, "");
+  let frame = 0;
 
   const interval = setInterval(() => {
-    const revealCount = Math.floor(iterations / 2);
+    const reveal = Math.floor(frame / 2);
 
-    letters.forEach((span, i) => {
+    spans.forEach((span, i) => {
       if (!span) return;
-
-      if (i < revealCount) {
-        span.textContent = cleanText[i];
+      if (i < reveal) {
+        span.textContent = clean[i];
         span.style.opacity = 1;
       } else {
         span.textContent = chars[Math.floor(Math.random() * chars.length)];
@@ -134,139 +126,113 @@ function scrambleText(el, finalText, onComplete) {
       }
     });
 
-    iterations++;
-
-    if (revealCount >= letters.length) {
-      clearInterval(interval);
-      if (onComplete) onComplete();
-    }
+    frame++;
+    if (reveal >= spans.length) clearInterval(interval);
   }, 60);
 }
-
-// ScrollTrigger sección 2
-const lines = document.querySelectorAll(".text-can");
 
 ScrollTrigger.create({
   trigger: "#seccion-dos",
   start: "top 70%",
   once: true,
   onEnter: () => {
-    lines.forEach(el => {
-      const text = el.getAttribute("data-text");
-      scrambleText(el, text);
+    document.querySelectorAll(".text-can").forEach(el => {
+      scrambleText(el, el.dataset.text);
     });
   }
 });
 
 // =============================
-// SECCIÓN 3 – GALERÍA INTERCAMBIABLE CENTRADA
+// SECCIÓN 3 – GALERÍA (FIX DEFINITIVO)
 // =============================
+
 // =============================
-// SECCIÓN 3 – GALERÍA INTERCAMBIABLE CENTRADA Y VISIBLE
+// SECCIÓN 3 – GSAP CANÓNICO (SIN DRIFT)
 // =============================
-const galleryImages = gsap.utils.toArray("#seccion-tres .img-seccion");
+gsap.registerPlugin(ScrollTrigger);
+
+const images = gsap.utils.toArray("#seccion-tres .img-seccion");
 const leftTexts = gsap.utils.toArray("#seccion-tres .text-left .text-slide");
 const rightTexts = gsap.utils.toArray("#seccion-tres .text-right .text-slide");
 
 const scaleMin = 0.35;
 const scaleMax = 1;
-const yStep = 50;
+const spacing = 70;
 
-// Función para calcular offset vertical responsivo
-function getOffsetY() {
-  // Dejamos 5% desde arriba y 5% desde abajo para que las imágenes no se corten
-  return window.innerHeight * 0.05;
-}
+// Estado inicial
+images.forEach((img, i) => {
+  const t = i / (images.length - 1 || 1);
 
-// Inicializamos offset
-let offsetY = getOffsetY();
-
-// Posición inicial de las imágenes
-function setInitialGalleryPositions() {
-  galleryImages.forEach((img, i) => {
-    const t = i / (galleryImages.length - 1 || 1);
-    gsap.set(img, {
-      scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
-      y: -yStep * t * galleryImages.length + offsetY,
-      zIndex: galleryImages.length - i,
-      opacity: 1
-    });
+  gsap.set(img, {
+    x: 0,
+    y: -spacing * t * images.length,
+    scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
+    opacity: 1,
+    zIndex: images.length - i
   });
-}
+});
 
-setInitialGalleryPositions();
-
-// Textos invisibles al inicio
 gsap.set([...leftTexts, ...rightTexts], { opacity: 0 });
 
-// Timeline GSAP
 const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#seccion-tres",
     start: "top top",
-    end: "+=" + galleryImages.length * window.innerHeight * 1.2,
+    end: `+=${images.length * window.innerHeight}`,
     scrub: true,
-    pin: true
+    pin: true,
+    anticipatePin: 1
   }
 });
 
-galleryImages.forEach((img, i) => {
-  tl.set(img, { zIndex: galleryImages.length });
+images.forEach((img, i) => {
 
-  // Imagen principal al frente
+  // Imagen principal al centro
   tl.to(img, {
+    y: 0,
     scale: 1,
-    y: offsetY, // siempre centrado
-    duration: 0.8,
-    ease: "power1.out"
+    duration: 0.6,
+    ease: "power2.out"
   });
 
-  // Textos laterales aparecen
+  // Textos
   tl.to([leftTexts[i], rightTexts[i]], {
     opacity: 1,
-    zIndex: galleryImages.length + 1,
-    duration: 0.3,
-    ease: "none"
+    duration: 0.25
   }, "<");
 
-  // Cola progresiva detrás
-  galleryImages.forEach((nextImg, j) => {
+  // Recolocar pila
+  images.forEach((next, j) => {
     if (j > i) {
-      const t = (j - i) / galleryImages.length;
-      tl.to(nextImg, {
+      const t = (j - i) / images.length;
+      tl.to(next, {
+        y: -spacing * t * images.length,
         scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
-        y: -yStep * t * galleryImages.length + offsetY,
-        duration: 1,
-        ease: "power1.out",
-        zIndex: galleryImages.length - j
-      }, "<0.1"); 
+        duration: 0.6,
+        ease: "power2.out"
+      }, "<");
     }
   });
 
-  // Salida de la imagen principal
+  // Salida
   tl.to(img, {
-    y: window.innerHeight * 1.5,
+    y: window.innerHeight * 1.3,
     scale: 2,
-    duration: 1,
-    ease: "power1.in"
+    duration: 0.8,
+    ease: "power2.in"
   });
 
-  // Textos desaparecen
+  // Ocultar textos
   tl.to([leftTexts[i], rightTexts[i]], {
     opacity: 0,
-    duration: 0.25,
-    ease: "none"
+    duration: 0.2
   }, "<");
 });
 
-// =============================
-// Ajuste dinámico al cambiar tamaño de ventana
-// =============================
+// Refresh limpio
 window.addEventListener("resize", () => {
-  offsetY = getOffsetY();
-  setInitialGalleryPositions();
+  ScrollTrigger.refresh();
 });
-
 
 // =============================
 // DARK / LIGHT MODE
@@ -281,37 +247,17 @@ const heroLogo = document.getElementById("hero-logo-img");
 document.body.classList.add("light-mode");
 
 function updateLogos() {
-  const isDark = document.body.classList.contains("dark-mode");
-
-  footerLogo.src = isDark
-    ? "logos/archif-logo_blanco.png"
-    : "logos/archif-logo_negro.png";
-
-  heroLogo.src = isDark
-    ? "logos/archif-logo_blanco.png"
-    : "logos/archif-logo_negro.png";
+  const dark = document.body.classList.contains("dark-mode");
+  footerLogo.src = dark ? "logos/archif-logo_blanco.png" : "logos/archif-logo_negro.png";
+  heroLogo.src = dark ? "logos/archif-logo_blanco.png" : "logos/archif-logo_negro.png";
 }
 
 toggle.addEventListener("click", () => {
-  const isDark = document.body.classList.toggle("dark-mode");
-  document.body.classList.toggle("light-mode", !isDark);
-  sun.classList.toggle("hidden", isDark);
-  moon.classList.toggle("hidden", !isDark);
+  const dark = document.body.classList.toggle("dark-mode");
+  document.body.classList.toggle("light-mode", !dark);
+  sun.classList.toggle("hidden", dark);
+  moon.classList.toggle("hidden", !dark);
   updateLogos();
 });
 
-// Estado inicial
 updateLogos();
-
-// =============================
-// Ajuste dinámico al cambiar tamaño de ventana
-// =============================
-window.addEventListener("resize", () => {
-  const newOffsetY = window.innerHeight * 0.1;
-  galleryImages.forEach((img, i) => {
-    const t = i / (galleryImages.length - 1 || 1);
-    gsap.set(img, {
-      y: -yStep * t * galleryImages.length + newOffsetY
-    });
-  });
-});

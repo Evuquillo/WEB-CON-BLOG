@@ -6,12 +6,22 @@ html, body {
   transition: background-color 0.5s ease, color 0.5s ease;
   overflow-x: hidden;
   height: 100%;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   display: flex;
   flex-direction: column;
+   position: relative;
 }
+
+.pin-spacer {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
 
 /* ===== Temas ===== */
 :root {
@@ -114,54 +124,60 @@ body.dark-mode .text-can {
 
 
 /* ===== SECCIÓN 3 - Sticky gallery ===== */
+/* =============================
+   SECCIÓN 3
+============================= */
 #seccion-tres {
-  min-height: 700vh;
   position: relative;
+  min-height: 600vh;
 }
 
 #seccion-tres .img-wrapper {
   position: sticky;
-  top: 5%; /* más arriba que antes */
-  height: 90vh; /* dejar margen para que las imágenes no se corten */
+  top: 0;
+  height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center; 
-  overflow: visible; /* permitimos que la parte superior de la imagen se vea */
+  justify-content: center;
+  overflow: hidden;
 }
 
 .img-seccion {
   position: absolute;
-  width: 20vw; /* tamaño base */
+  width: 20vw;
   max-width: 420px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* centrado vertical y horizontal */
+  opacity: 0;
+  will-change: transform;
+}
+
+/* =============================
+   TEXTO CUBO 3D
+============================= */
+#seccion-tres .text-side {
+  perspective: 800px;
+}
+
+.text-slide {
+  transform-origin: center center -20px;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
   opacity: 0;
 }
 
-
-/* ===== Textos laterales ===== */
+/* textos */
 #seccion-tres .text-side {
-  position: absolute;
+  position: fixed;
   top: 50%;
   transform: translateY(-50%);
-  opacity: 0;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 10;
 }
 
-#seccion-tres .text-left { left: 5vw; text-align: left; }
-#seccion-tres .text-right { right: 5vw; text-align: right; }
+#seccion-tres .text-left { left: 5vw; }
+#seccion-tres .text-right { right: 5vw; }
 
-#seccion-tres .text-slide {
-  opacity: 0;
-  font-family: "Space Mono", monospace;
-  font-size: clamp(1rem, 1.5vw, 1.6rem);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin: 0.3em 0;
-  will-change: opacity;
-}
+
+
 
 
 /* ===== Footer ===== */
