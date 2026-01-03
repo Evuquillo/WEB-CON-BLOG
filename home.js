@@ -160,95 +160,86 @@ ScrollTrigger.create({
 });
 
 // =============================
-// SECCIÓN 3: IMÁGENES INTERCAMBIABLES
+// SECCIÓN 3 – GALERÍA INTERCAMBIABLE
 // =============================
-
-
-gsap.fromTo(
-  "#seccion-tres .img-seccion",
-  {
-    scale: 0.6
-  },
-  {
-    scale: 1.15,
-    ease: "none",
-    scrollTrigger: {
-      trigger: "#seccion-tres",
-      start: "top top",
-      end: "bottom bottom",
-      scrub: true
-    }
-  }
-);
-
-
-// =============================
-// SECCIÓN 3 – DEPTH SCROLL REAL
-// controversial-free version
-// =============================
-
-// =============================
-// SECCIÓN 3 – SCALE + BAJAR + SALIR POR ABAJO
-// =============================
-
 gsap.registerPlugin(ScrollTrigger);
 
 const galleryImages = gsap.utils.toArray("#seccion-tres .img-seccion");
 const leftTexts = gsap.utils.toArray("#seccion-tres .text-left .text-slide");
 const rightTexts = gsap.utils.toArray("#seccion-tres .text-right .text-slide");
 
-// estado inicial
-galleryImages.forEach(img => {
+const scaleMin = 0.35;
+const scaleMax = 1;
+const yStep = 50;
+
+// Estado inicial: cola escalonada
+galleryImages.forEach((img, i) => {
+  const t = i / (galleryImages.length - 1);
   gsap.set(img, {
-    opacity: 0,
-    scale: 0.6,
-    y: 0,
-    transformOrigin: "50% 50%"
+    scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
+    y: -yStep * t * galleryImages.length,
+    zIndex: galleryImages.length - i,
+    opacity: 1
   });
 });
 
+// Textos invisibles al inicio
 gsap.set([...leftTexts, ...rightTexts], { opacity: 0 });
 
-// timeline maestro (para el scroll)
 const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#seccion-tres",
     start: "top top",
-    end: "+=" + galleryImages.length * window.innerHeight,
+    end: "+=" + galleryImages.length * window.innerHeight * 1.2,
     scrub: true,
-    pin: true,
-    anticipatePin: 1
+    pin: true
   }
 });
 
 galleryImages.forEach((img, i) => {
 
-  // 1. entra desde detrás (centrada)
+  // Imagen principal al frente
+  tl.set(img, { zIndex: galleryImages.length });
+
+  // Entrada principal
   tl.to(img, {
-    opacity: 1,
     scale: 1,
     y: 0,
-    duration: 0.7,
-    ease: "none"
+    duration: 0.8,
+    ease: "power1.out"
   });
 
-  // textos aparecen
+  // Textos laterales aparecen con zIndex arriba de todas las imágenes
   tl.to([leftTexts[i], rightTexts[i]], {
     opacity: 1,
-    duration: 0.25,
+    zIndex: galleryImages.length + 1,
+    duration: 0.3,
     ease: "none"
   }, "<");
 
-  // 2. AVANZA + BAJA + SALE POR ABAJO
-  tl.to(img, {
-    scale: 2,
-    y: window.innerHeight * 0.7, // 👈 baja fuera del viewport
-    opacity: 0,
-    duration: 1,
-    ease: "none"
+  // Cola progresiva detrás
+  galleryImages.forEach((nextImg, j) => {
+    if(j > i){
+      const t = (j - i) / galleryImages.length;
+      tl.to(nextImg, {
+        scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
+        y: -yStep * t * galleryImages.length,
+        duration: 1,
+        ease: "power1.out",
+        zIndex: galleryImages.length - j
+      }, "<0.1"); 
+    }
   });
 
-  // textos desaparecen con la imagen
+  // Salida de la imagen principal
+  tl.to(img, {
+    y: window.innerHeight * 1.5,
+    scale: 2,
+    duration: 1,
+    ease: "power1.in"
+  });
+
+  // Textos desaparecen
   tl.to([leftTexts[i], rightTexts[i]], {
     opacity: 0,
     duration: 0.25,
@@ -256,6 +247,20 @@ galleryImages.forEach((img, i) => {
   }, "<");
 });
 
+
+// Textos aparecen
+tl.to([leftTexts[i], rightTexts[i]], {
+  opacity: 1,
+  duration: 0.3,
+  ease: "none"
+}, "<");
+
+// Textos desaparecen
+tl.to([leftTexts[i], rightTexts[i]], {
+  opacity: 0,
+  duration: 0.25,
+  ease: "none"
+}, "<");
 
 
 // =============================

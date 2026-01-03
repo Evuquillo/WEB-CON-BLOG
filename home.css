@@ -124,20 +124,21 @@ body.dark-mode .text-can {
   height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; 
   overflow: hidden;
 }
 
 #seccion-tres .img-seccion {
   position: absolute;
-  width: 18vw;        /* ⬅️ antes 22vw */
+  width: 18vw;
   max-width: 420px;
+  /* top: 50%;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) scale(0.6);
+  transform: translate(-50%, -50%) scale(0.6); centrado inicial */
   opacity: 0;
   will-change: transform, opacity;
 }
+
 
 
 
@@ -149,6 +150,7 @@ body.dark-mode .text-can {
   transform: translateY(-50%);
   opacity: 0;
   pointer-events: none;
+  z-index: 9999; 
 }
 
 #seccion-tres .text-left { left: 5vw; text-align: left; }
