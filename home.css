@@ -96,6 +96,13 @@ body.dark-mode {
 
 @keyframes fadeIn { to { opacity: 1; } }
 
+.cursor-image.mobile-float {
+  width: 20vw;
+  max-width: 260px;
+  pointer-events: none;
+}
+
+
 /* ===== SECCIÓN 2 - Text scramble ===== */
 .text-can {
   position: relative;
@@ -237,4 +244,14 @@ body.dark-mode .main-footer {
 @media (max-width: 768px) {
   .footer-container { flex-direction: column; text-align: center; }
   .footer-links { justify-content: center; }
+
+
+
+
+  .img-seccion { width: 75vw; max-width: 320px; }
+  .text-side { position: relative !important; top: auto !important; transform: none !important; }
+  .text-left, .text-right { text-align: center !important; }
+  .text-slide { font-size: 0.9rem; margin-bottom: 0.5rem; }
 }
+
+

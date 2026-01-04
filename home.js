@@ -143,8 +143,35 @@ ScrollTrigger.create({
 });
 
 // =============================
-// SECCIÓN 3 – GALERÍA (FIX DEFINITIVO)
+// CURSOR TRAIL PARA MOVILES
 // =============================
+
+const isMobile = window.innerWidth <= 768;
+if (isMobile) {
+  hero.removeEventListener("mousemove", () => {});
+  trailContainer.innerHTML = "";
+
+  let mobileIndex = 0;
+
+  setInterval(() => {
+    const img = document.createElement("img");
+    img.src = trailImages[mobileIndex];
+    img.className = "cursor-image mobile-float";
+
+    img.style.left = `${Math.random() * 80 + 10}%`;
+    img.style.top = `${Math.random() * 80 + 10}%`;
+
+    trailContainer.appendChild(img);
+
+    gsap.fromTo(img, 
+      { opacity: 0, scale: 0.9 },
+      { opacity: 1, scale: 1, duration: 1, yoyo: true, repeat: 1, repeatDelay: 1, onComplete: () => img.remove() }
+    );
+
+    mobileIndex = (mobileIndex + 1) % trailImages.length;
+  }, 1800);
+}
+
 
 // =============================
 // SECCIÓN 3 – GSAP CANÓNICO (SIN DRIFT)
