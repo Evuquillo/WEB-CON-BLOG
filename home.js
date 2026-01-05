@@ -143,9 +143,8 @@ ScrollTrigger.create({
 });
 
 // =============================
-// CURSOR TRAIL PARA MOVILES
+// CURSOR TRAIL PARA MÓVILES
 // =============================
-
 const isMobile = window.innerWidth <= 768;
 if (isMobile) {
   hero.removeEventListener("mousemove", () => {});
@@ -163,21 +162,27 @@ if (isMobile) {
 
     trailContainer.appendChild(img);
 
-    gsap.fromTo(img, 
+    gsap.fromTo(
+      img,
       { opacity: 0, scale: 0.9 },
-      { opacity: 1, scale: 1, duration: 1, yoyo: true, repeat: 1, repeatDelay: 1, onComplete: () => img.remove() }
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        yoyo: true,
+        repeat: 1,
+        repeatDelay: 1,
+        onComplete: () => img.remove()
+      }
     );
 
     mobileIndex = (mobileIndex + 1) % trailImages.length;
   }, 1800);
 }
 
-
 // =============================
-// SECCIÓN 3 – GSAP CANÓNICO (SIN DRIFT)
+// SECCIÓN 3 – GALERÍA STICKY (TEXTO SINCRONIZADO)
 // =============================
-gsap.registerPlugin(ScrollTrigger);
-
 const images = gsap.utils.toArray("#seccion-tres .img-seccion");
 const leftTexts = gsap.utils.toArray("#seccion-tres .text-left .text-slide");
 const rightTexts = gsap.utils.toArray("#seccion-tres .text-right .text-slide");
@@ -186,10 +191,9 @@ const scaleMin = 0.35;
 const scaleMax = 1;
 const spacing = 70;
 
-// Estado inicial
+// Estado inicial imágenes
 images.forEach((img, i) => {
   const t = i / (images.length - 1 || 1);
-
   gsap.set(img, {
     x: 0,
     y: -spacing * t * images.length,
@@ -199,7 +203,9 @@ images.forEach((img, i) => {
   });
 });
 
-gsap.set([...leftTexts, ...rightTexts], { opacity: 0 });
+// Estado inicial textos
+gsap.set(leftTexts, { opacity: 0, y: 20 });
+gsap.set(rightTexts, { opacity: 0, y: 20 });
 
 const tl = gsap.timeline({
   scrollTrigger: {
@@ -214,7 +220,7 @@ const tl = gsap.timeline({
 
 images.forEach((img, i) => {
 
-  // Imagen principal al centro
+  // Imagen activa
   tl.to(img, {
     y: 0,
     scale: 1,
@@ -222,13 +228,15 @@ images.forEach((img, i) => {
     ease: "power2.out"
   });
 
-  // Textos
+  // Mostrar textos correspondientes
   tl.to([leftTexts[i], rightTexts[i]], {
     opacity: 1,
-    duration: 0.25
+    y: 0,
+    duration: 0.3,
+    ease: "power2.out"
   }, "<");
 
-  // Recolocar pila
+  // Reordenar pila
   images.forEach((next, j) => {
     if (j > i) {
       const t = (j - i) / images.length;
@@ -241,7 +249,7 @@ images.forEach((img, i) => {
     }
   });
 
-  // Salida
+  // Salida imagen
   tl.to(img, {
     y: window.innerHeight * 1.3,
     scale: 2,
@@ -249,9 +257,10 @@ images.forEach((img, i) => {
     ease: "power2.in"
   });
 
-  // Ocultar textos
+  // Ocultar textos actuales
   tl.to([leftTexts[i], rightTexts[i]], {
     opacity: 0,
+    y: -20,
     duration: 0.2
   }, "<");
 });
@@ -275,8 +284,12 @@ document.body.classList.add("light-mode");
 
 function updateLogos() {
   const dark = document.body.classList.contains("dark-mode");
-  footerLogo.src = dark ? "logos/archif-logo_blanco.png" : "logos/archif-logo_negro.png";
-  heroLogo.src = dark ? "logos/archif-logo_blanco.png" : "logos/archif-logo_negro.png";
+  footerLogo.src = dark
+    ? "logos/archif-logo_blanco.png"
+    : "logos/archif-logo_negro.png";
+  heroLogo.src = dark
+    ? "logos/archif-logo_blanco.png"
+    : "logos/archif-logo_negro.png";
 }
 
 toggle.addEventListener("click", () => {

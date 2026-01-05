@@ -157,34 +157,44 @@ body.dark-mode .text-can {
   will-change: transform;
 }
 
+
 /* =============================
-   TEXTO CUBO 3D
+   SECCIÓN 3 – TEXTOS (FIX REAL)
 ============================= */
-#seccion-tres .text-side {
-  perspective: 800px;
+
+#seccion-tres {
+  position: relative;
 }
 
-.text-slide {
-  transform-origin: center center -20px;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  opacity: 0;
-}
-
-/* textos */
+/* contenedor fijo */
 #seccion-tres .text-side {
   position: fixed;
   top: 50%;
-  transform: translateY(-50%);
   pointer-events: none;
   z-index: 10;
 }
 
-#seccion-tres .text-left { left: 5vw; }
-#seccion-tres .text-right { right: 5vw; }
+/* izquierda */
+#seccion-tres .text-left {
+  left: calc(50% - 22vw); /* se va a la izquierda de la imagen */
+  transform: translateY(-50%);
+  text-align: right;
+}
 
+/* derecha */
+#seccion-tres .text-right {
+  left: calc(50% + 22vw); /* se va a la derecha de la imagen */
+  transform: translateY(-50%);
+  text-align: left;
+}
 
-
+/* textos individuales */
+.text-slide {
+  opacity: 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
 
 
 /* ===== Footer ===== */
