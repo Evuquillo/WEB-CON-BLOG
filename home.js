@@ -36,7 +36,7 @@ const trailImages = [
   "imgs/colussus digital comp.jpg",
   "imgs/blowfootball.jpg",
   "imgs/BristolBeaufighter.jpg",
-  "imgs/amelie.jpg"
+  "imgs/lahine.jpg"
 ];
 
 let imgIndex = 0;
