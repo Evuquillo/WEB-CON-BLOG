@@ -145,15 +145,12 @@ ScrollTrigger.create({
 // =============================
 // SECCIÓN 3 – GALERÍA (FIX DEFINITIVO)
 // =============================
-
 // =============================
-// SECCIÓN 3 – GSAP CANÓNICO (SIN DRIFT)
+// SECCIÓN 3 – GALERÍA LIMPIA (solo imágenes)
 // =============================
 gsap.registerPlugin(ScrollTrigger);
 
 const images = gsap.utils.toArray("#seccion-tres .img-seccion");
-const leftTexts = gsap.utils.toArray("#seccion-tres .text-left .text-slide");
-const rightTexts = gsap.utils.toArray("#seccion-tres .text-right .text-slide");
 
 const scaleMin = 0.35;
 const scaleMax = 1;
@@ -172,8 +169,6 @@ images.forEach((img, i) => {
   });
 });
 
-gsap.set([...leftTexts, ...rightTexts], { opacity: 0 });
-
 const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#seccion-tres",
@@ -186,7 +181,6 @@ const tl = gsap.timeline({
 });
 
 images.forEach((img, i) => {
-
   // Imagen principal al centro
   tl.to(img, {
     y: 0,
@@ -194,12 +188,6 @@ images.forEach((img, i) => {
     duration: 0.6,
     ease: "power2.out"
   });
-
-  // Textos
-  tl.to([leftTexts[i], rightTexts[i]], {
-    opacity: 1,
-    duration: 0.25
-  }, "<");
 
   // Recolocar pila
   images.forEach((next, j) => {
@@ -221,18 +209,13 @@ images.forEach((img, i) => {
     duration: 0.8,
     ease: "power2.in"
   });
-
-  // Ocultar textos
-  tl.to([leftTexts[i], rightTexts[i]], {
-    opacity: 0,
-    duration: 0.2
-  }, "<");
 });
 
 // Refresh limpio
 window.addEventListener("resize", () => {
   ScrollTrigger.refresh();
 });
+
 
 // =============================
 // DARK / LIGHT MODE

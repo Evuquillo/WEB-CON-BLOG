@@ -124,9 +124,6 @@ body.dark-mode .text-can {
 
 
 /* ===== SECCIÓN 3 - Sticky gallery ===== */
-/* =============================
-   SECCIÓN 3
-============================= */
 #seccion-tres {
   position: relative;
   min-height: 600vh;
@@ -149,34 +146,6 @@ body.dark-mode .text-can {
   opacity: 0;
   will-change: transform;
 }
-
-/* =============================
-   TEXTO CUBO 3D
-============================= */
-#seccion-tres .text-side {
-  perspective: 800px;
-}
-
-.text-slide {
-  transform-origin: center center -20px;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  opacity: 0;
-}
-
-/* textos */
-#seccion-tres .text-side {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  z-index: 10;
-}
-
-#seccion-tres .text-left { left: 5vw; }
-#seccion-tres .text-right { right: 5vw; }
-
-
 
 
 
