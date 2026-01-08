@@ -1,5 +1,5 @@
 // =============================
-// GSAP
+// GSAP SETUP
 // =============================
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,7 +23,7 @@ gsap.fromTo(
 );
 
 // =============================
-// CURSOR IMAGE TRAIL
+// CURSOR IMAGE TRAIL (DESKTOP)
 // =============================
 const hero = document.querySelector(".hero");
 const trailContainer = document.getElementById("cursor-trail");
@@ -43,16 +43,12 @@ let imgIndex = 0;
 let lastX = null;
 let lastY = null;
 
-hero.addEventListener("mousemove", (e) => {
+hero.addEventListener("mousemove", e => {
   const rect = hero.getBoundingClientRect();
   const x = e.clientX - rect.left;
   const y = e.clientY - rect.top;
 
-  if (lastX !== null) {
-    const dx = x - lastX;
-    const dy = y - lastY;
-    if (Math.hypot(dx, dy) < 30) return;
-  }
+  if (lastX !== null && Math.hypot(x - lastX, y - lastY) < 30) return;
 
   lastX = x;
   lastY = y;
@@ -72,8 +68,7 @@ hero.addEventListener("mousemove", (e) => {
 });
 
 hero.addEventListener("mouseleave", () => {
-  lastX = null;
-  lastY = null;
+  lastX = lastY = null;
 });
 
 // =============================
@@ -143,59 +138,35 @@ ScrollTrigger.create({
 });
 
 // =============================
-// CURSOR TRAIL PARA MÓVILES
+// SECCIÓN 3 – ANIMACIÓN DE IMÁGENES REVISADA
 // =============================
-const isMobile = window.innerWidth <= 768;
-if (isMobile) {
-  hero.removeEventListener("mousemove", () => {});
-  trailContainer.innerHTML = "";
-
-  let mobileIndex = 0;
-
-  setInterval(() => {
-    const img = document.createElement("img");
-    img.src = trailImages[mobileIndex];
-    img.className = "cursor-image mobile-float";
-
-    img.style.left = `${Math.random() * 80 + 10}%`;
-    img.style.top = `${Math.random() * 80 + 10}%`;
-
-    trailContainer.appendChild(img);
-
-    gsap.fromTo(
-      img,
-      { opacity: 0, scale: 0.9 },
-      {
-        opacity: 1,
-        scale: 1,
-        duration: 1,
-        yoyo: true,
-        repeat: 1,
-        repeatDelay: 1,
-        onComplete: () => img.remove()
-      }
-    );
-
-    mobileIndex = (mobileIndex + 1) % trailImages.length;
-  }, 1800);
-}
-
 // =============================
-// SECCIÓN 3 – GALERÍA STICKY (TEXTO SINCRONIZADO)
+// SECCIÓN 3 – PERSPECTIVA STACK FUNCIONAL
 // =============================
 const images = gsap.utils.toArray("#seccion-tres .img-seccion");
-const leftTexts = gsap.utils.toArray("#seccion-tres .text-left .text-slide");
-const rightTexts = gsap.utils.toArray("#seccion-tres .text-right .text-slide");
+const textLeft = document.querySelector("#seccion-tres .text-left");
+const textRight = document.querySelector("#seccion-tres .text-right");
 
+const slidesData = [
+  { text: "Vertigo\nLínea 2\nLínea 3", date: "1976" },
+  { text: "Tour Ska P\nLínea 2\nLínea 3", date: "1980" },
+  { text: "Festival 1982\nLínea 2\nLínea 3", date: "1982" },
+  { text: "Mujeres al borde\nLínea 2\nLínea 3", date: "1985" },
+  { text: "Colussus Digital\nLínea 2\nLínea 3", date: "1987" },
+  { text: "Blow Football\nLínea 2\nLínea 3", date: "1990" },
+  { text: "Bristol Beaufighter\nLínea 2\nLínea 3", date: "1995" },
+  { text: "Amelie\nLínea 2\nLínea 3", date: "2001" },
+];
+
+// Parámetros de la animación
 const scaleMin = 0.35;
 const scaleMax = 1;
 const spacing = 70;
 
-// Estado inicial imágenes
+// Inicializar posiciones y escala
 images.forEach((img, i) => {
-  const t = i / (images.length - 1 || 1);
+  const t = i / (images.length - 1);
   gsap.set(img, {
-    x: 0,
     y: -spacing * t * images.length,
     scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
     opacity: 1,
@@ -203,10 +174,7 @@ images.forEach((img, i) => {
   });
 });
 
-// Estado inicial textos
-gsap.set(leftTexts, { opacity: 0, y: 20 });
-gsap.set(rightTexts, { opacity: 0, y: 20 });
-
+// Timeline principal con pin
 const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#seccion-tres",
@@ -218,9 +186,9 @@ const tl = gsap.timeline({
   }
 });
 
+// Animación de cada imagen y reordenamiento
 images.forEach((img, i) => {
-
-  // Imagen activa
+  // Imagen entra
   tl.to(img, {
     y: 0,
     scale: 1,
@@ -228,18 +196,10 @@ images.forEach((img, i) => {
     ease: "power2.out"
   });
 
-  // Mostrar textos correspondientes
-  tl.to([leftTexts[i], rightTexts[i]], {
-    opacity: 1,
-    y: 0,
-    duration: 0.3,
-    ease: "power2.out"
-  }, "<");
-
   // Reordenar pila
   images.forEach((next, j) => {
-    if (j > i) {
-      const t = (j - i) / images.length;
+    if(j > i){
+      const t = (j - i)/images.length;
       tl.to(next, {
         y: -spacing * t * images.length,
         scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
@@ -249,26 +209,27 @@ images.forEach((img, i) => {
     }
   });
 
-  // Salida imagen
+  // Imagen sale
   tl.to(img, {
     y: window.innerHeight * 1.3,
     scale: 2,
     duration: 0.8,
     ease: "power2.in"
   });
-
-  // Ocultar textos actuales
-  tl.to([leftTexts[i], rightTexts[i]], {
-    opacity: 0,
-    y: -20,
-    duration: 0.2
-  }, "<");
 });
 
-// Refresh limpio
-window.addEventListener("resize", () => {
-  ScrollTrigger.refresh();
+// Actualización de textos sincronizada
+tl.to({}, {
+  duration: images.length, // duración proporcional al número de imágenes
+  onUpdate: () => {
+    const progress = tl.progress();
+    const index = Math.min(slidesData.length - 1, Math.floor(progress * slidesData.length));
+    const slide = slidesData[index];
+    textLeft.innerHTML = slide.text.replace(/\n/g,"<br>");
+    textRight.textContent = slide.date;
+  }
 });
+
 
 // =============================
 // DARK / LIGHT MODE
@@ -276,7 +237,6 @@ window.addEventListener("resize", () => {
 const toggle = document.getElementById("theme-toggle");
 const sun = document.getElementById("icon-sun");
 const moon = document.getElementById("icon-moon");
-
 const footerLogo = document.getElementById("footer-logo-img");
 const heroLogo = document.getElementById("hero-logo-img");
 
@@ -301,3 +261,11 @@ toggle.addEventListener("click", () => {
 });
 
 updateLogos();
+
+// =============================
+// REFRESH
+// =============================
+window.addEventListener("resize", () => {
+  ScrollTrigger.refresh();
+});
+

@@ -129,72 +129,45 @@ body.dark-mode .text-can {
 .text-can span.bold { font-weight: 700; }
 .text-can span.italic { font-style: italic; }
 
-
-/* ===== SECCIÓN 3 - Sticky gallery ===== */
-/* =============================
-   SECCIÓN 3
-============================= */
+/* ===== SECCIÓN 3 ===== */
 #seccion-tres {
   position: relative;
-  min-height: 600vh;
+  width: 100%;
+  height: calc(100vh * 8); /* 8 imágenes */
 }
 
 #seccion-tres .img-wrapper {
-  position: sticky;
+  position: absolute;
   top: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
 }
 
 .img-seccion {
   position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 20vw;
   max-width: 420px;
-  opacity: 0;
-  will-change: transform;
+  height: auto;
 }
-
-
-/* =============================
-   SECCIÓN 3 – TEXTOS (FIX REAL)
-============================= */
-
-#seccion-tres {
-  position: relative;
-}
-
-/* contenedor fijo */
-#seccion-tres .text-side {
-  position: fixed;
-  top: 50%;
+.text-container {
+  position: absolute;
+  top: 20%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5vw;
   pointer-events: none;
   z-index: 10;
 }
+.text-left { color: var(--text-light); font-size: 1rem; line-height:1.4; max-width:40%; }
+.text-right { color: var(--text-light); font-size:3rem; font-weight:bold; }
 
-/* izquierda */
-#seccion-tres .text-left {
-  left: calc(50% - 22vw); /* se va a la izquierda de la imagen */
-  transform: translateY(-50%);
-  text-align: right;
-}
 
-/* derecha */
-#seccion-tres .text-right {
-  left: calc(50% + 22vw); /* se va a la derecha de la imagen */
-  transform: translateY(-50%);
-  text-align: left;
-}
-
-/* textos individuales */
-.text-slide {
-  opacity: 0;
-  font-size: 0.95rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
 
 
 /* ===== Footer ===== */
