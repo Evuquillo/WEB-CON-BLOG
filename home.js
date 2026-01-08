@@ -144,10 +144,7 @@ ScrollTrigger.create({
 });
 
 // =============================
-// SECCIÓN 3 – GALERÍA (FIX DEFINITIVO)
-// =============================
-// =============================
-// SECCIÓN 3 – GALERÍA CON TEXTOS
+// SECCIÓN 3 – GALERÍA CON TEXTOS (Scroll hacia adelante y atrás)
 // =============================
 gsap.registerPlugin(ScrollTrigger);
 
@@ -183,23 +180,31 @@ const tl = gsap.timeline({
     end: `+=${images.length * window.innerHeight}`,
     scrub: true,
     pin: true,
-    anticipatePin: 1
+    anticipatePin: 1,
+    onUpdate: (self) => {
+      // Calculamos el índice de la imagen activa según el scroll
+      const progress = self.progress; // valor de 0 a 1
+      const index = Math.min(
+        images.length - 1,
+        Math.floor(progress * images.length)
+      );
+      const img = images[index];
+      if (img) {
+        textLeft.textContent = img.dataset.left;
+        textRight.textContent = img.dataset.right;
+      }
+    }
   }
 });
 
-// Animación por cada imagen
+// ===== Animaciones por cada imagen (manteniendo tu lógica) =====
 images.forEach((img, i) => {
   // 1️⃣ Imagen principal al centro
   tl.to(img, {
     y: 0,
     scale: 1,
     duration: 0.6,
-    ease: "power2.out",
-    onStart: () => {
-      // Actualizamos los textos al mostrar esta imagen
-      textLeft.textContent = img.dataset.left;
-      textRight.textContent = img.dataset.right;
-    }
+    ease: "power2.out"
   });
 
   // 2️⃣ Recolocar las imágenes que quedan en la pila
@@ -211,11 +216,11 @@ images.forEach((img, i) => {
         scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
         duration: 0.6,
         ease: "power2.out"
-      }, "<");
+      }, "<"); // "<" para sincronizar con la animación anterior
     }
   });
 
-  // 3️⃣ Salida de la imagen (se va hacia arriba y escala)
+  // 3️⃣ Salida de la imagen (hacia arriba y escala)
   tl.to(img, {
     y: window.innerHeight * 1.3,
     scale: 2,
