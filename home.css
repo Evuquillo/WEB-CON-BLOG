@@ -157,7 +157,6 @@ body.dark-mode .text-can {
   position: absolute;
   bottom: 30px;
   font-family: 'Inter', sans-serif;
-  color: var(--text-light);
   pointer-events: none;
   transition: opacity 0.3s;
 }
@@ -168,16 +167,20 @@ body.dark-mode .img-wrapper .text-right {
 }
 
 .img-wrapper .text-left {
-  left: 20px;
-  max-width: 40%;
-  font-size: 1rem;
+  color: rgb(81, 81, 81);
+  left: 10%;
+  top: 50%;               
+  transform: translateY(-50%); 
+  max-width: 22%;
+  font-size: clamp(1rem, 2vw, 1.3rem); 
   line-height: 1.4;
   text-align: left;
 }
 
 .img-wrapper .text-right {
+  color: var(--text-light);
   right: 20px;
-  font-size: 2rem;
+  font-size: clamp(5rem, 10vw, 12rem); 
   text-align: left;
 }
 
