@@ -131,6 +131,7 @@ function scrambleText(el, finalText) {
   }, 60);
 }
 
+
 ScrollTrigger.create({
   trigger: "#seccion-dos",
   start: "top 70%",
@@ -146,20 +147,25 @@ ScrollTrigger.create({
 // SECCIÓN 3 – GALERÍA (FIX DEFINITIVO)
 // =============================
 // =============================
-// SECCIÓN 3 – GALERÍA LIMPIA (solo imágenes)
+// SECCIÓN 3 – GALERÍA CON TEXTOS
 // =============================
 gsap.registerPlugin(ScrollTrigger);
 
+// Seleccionamos todas las imágenes de la galería
 const images = gsap.utils.toArray("#seccion-tres .img-seccion");
 
-const scaleMin = 0.35;
-const scaleMax = 1;
-const spacing = 70;
+// Seleccionamos los contenedores de texto
+const textLeft = document.querySelector(".img-wrapper .text-left");
+const textRight = document.querySelector(".img-wrapper .text-right");
 
-// Estado inicial
+// Parámetros de animación
+const scaleMin = 0.35; // escala inicial de las imágenes "en la pila"
+const scaleMax = 1;    // escala cuando la imagen llega al centro
+const spacing = 70;    // separación vertical entre imágenes en la pila
+
+// ===== Estado inicial de cada imagen =====
 images.forEach((img, i) => {
   const t = i / (images.length - 1 || 1);
-
   gsap.set(img, {
     x: 0,
     y: -spacing * t * images.length,
@@ -169,6 +175,7 @@ images.forEach((img, i) => {
   });
 });
 
+// ===== Timeline principal de la galería =====
 const tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#seccion-tres",
@@ -180,16 +187,22 @@ const tl = gsap.timeline({
   }
 });
 
+// Animación por cada imagen
 images.forEach((img, i) => {
-  // Imagen principal al centro
+  // 1️⃣ Imagen principal al centro
   tl.to(img, {
     y: 0,
     scale: 1,
     duration: 0.6,
-    ease: "power2.out"
+    ease: "power2.out",
+    onStart: () => {
+      // Actualizamos los textos al mostrar esta imagen
+      textLeft.textContent = img.dataset.left;
+      textRight.textContent = img.dataset.right;
+    }
   });
 
-  // Recolocar pila
+  // 2️⃣ Recolocar las imágenes que quedan en la pila
   images.forEach((next, j) => {
     if (j > i) {
       const t = (j - i) / images.length;
@@ -202,7 +215,7 @@ images.forEach((img, i) => {
     }
   });
 
-  // Salida
+  // 3️⃣ Salida de la imagen (se va hacia arriba y escala)
   tl.to(img, {
     y: window.innerHeight * 1.3,
     scale: 2,
@@ -211,7 +224,7 @@ images.forEach((img, i) => {
   });
 });
 
-// Refresh limpio
+// ===== Refrescar scroll y animación al redimensionar =====
 window.addEventListener("resize", () => {
   ScrollTrigger.refresh();
 });

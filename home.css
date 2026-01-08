@@ -129,7 +129,7 @@ body.dark-mode .text-can {
   min-height: 600vh;
 }
 
-#seccion-tres .img-wrapper {
+.img-wrapper {
   position: sticky;
   top: 0;
   height: 100vh;
@@ -145,6 +145,40 @@ body.dark-mode .text-can {
   max-width: 420px;
   opacity: 0;
   will-change: transform;
+}
+
+
+/* ===== Sección 3 – Textos sobre imágenes ===== */
+
+
+/* Textos sobre la imagen (funciona con tu animación) */
+.img-wrapper .text-left,
+.img-wrapper .text-right {
+  position: absolute;
+  bottom: 30px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-light);
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+body.dark-mode .img-wrapper .text-left,
+body.dark-mode .img-wrapper .text-right {
+  color: var(--text-dark);
+}
+
+.img-wrapper .text-left {
+  left: 20px;
+  max-width: 40%;
+  font-size: 1rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.img-wrapper .text-right {
+  right: 20px;
+  font-size: 2rem;
+  text-align: left;
 }
 
 
