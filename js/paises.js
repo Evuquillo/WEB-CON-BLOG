@@ -1,31 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
-  /* =============================
-     MODO OSCURO / CLARO
-  ============================= */
+ /* === MODO OSCURO / CLARO (Font Awesome) === */
   const toggle = document.getElementById("theme-toggle");
-  const sun = document.getElementById("icon-sun");
-  const moon = document.getElementById("icon-moon");
+  const sunIcon = '<i class="fa-solid fa-sun" style="color:#ffffff;"></i>';
+  const moonIcon = '<i class="fa-solid fa-moon" style="color:#000000;"></i>';
   const footerLogo = document.getElementById("footer-logo-img");
 
   document.body.classList.add("light-mode");
-
-  function updateFooterLogo() {
-    footerLogo.src = document.body.classList.contains("dark-mode")
-      ? "logos/archif-logo_blanco.png"
-      : "logos/archif-logo_negro.png";
-  }
+  if (toggle) toggle.innerHTML = moonIcon; // por defecto modo claro
 
   toggle.addEventListener("click", () => {
     const isDark = document.body.classList.toggle("dark-mode");
     document.body.classList.toggle("light-mode", !isDark);
 
-    sun.classList.toggle("hidden", isDark);
-    moon.classList.toggle("hidden", !isDark);
+    // alterna icono
+    toggle.innerHTML = isDark ? sunIcon : moonIcon;
 
-    updateFooterLogo();
+    // cambia logo footer
+    if (footerLogo) {
+      footerLogo.src = isDark
+        ? "logos/archif-logo_blanco.png"
+        : "logos/archif-logo_negro.png";
+    }
   });
-
-  updateFooterLogo();
 
   /* =============================
      FILTRO POR CONTINENTES

@@ -98,7 +98,9 @@ body.dark-mode {
   overflow: hidden;
   color: var(--text-light);
 }
-
+.archive-item:last-of-type {
+  padding-bottom: 7rem; /* ajusta el valor a tu gusto */
+}
 body.dark-mode .text-can {
   color: var(--text-dark);
 }
