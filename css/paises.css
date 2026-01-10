@@ -56,6 +56,9 @@ body {
   z-index: 1000;
 }
 
+a{
+  text-decoration: none;
+}
 
 .header__logo {
   font-weight: 600;

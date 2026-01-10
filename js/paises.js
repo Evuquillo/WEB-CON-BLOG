@@ -3,26 +3,63 @@ $(document).ready(function () {
   // ===== BUSCADOR =====
   const searchInput = $('.header__search input');
   const searchClose = $('.search-close');
+  const searchOverlay = $('.search-overlay');
+  const searchItems = $('.search-item');
+  const hoverGallery = $('.hover-gallery');
+  const hoverImages = hoverGallery.find('img');
 
+  const galleries = {
+    home: ['media/img/grid 1.png'],
+    subastas: ['media/img/grid 2.png'],
+    archivos: ['media/img/grid 3.png'],
+    blog: ['media/img/grid 4.png']
+  };
+
+  // Abrir buscador
   $('.header__search').on('click', function (e) {
     e.stopPropagation();
     $('body').addClass('search-open');
     searchInput.focus();
   });
 
-  $('.search-close, .search-overlay').on('click', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
+  // Cerrar buscador
+  searchClose.add(searchOverlay).on('click', function (e) {
     $('body').removeClass('search-open');
     searchInput.blur();
   });
 
+  // Cerrar con ESC
   $(document).on('keydown', function (e) {
     if (e.key === "Escape") {
       $('body').removeClass('search-open');
       searchInput.blur();
     }
   });
+
+  // Hover para galería
+  searchItems.on('mouseenter', function () {
+    const key = $(this).find('p').text().toLowerCase();
+    const imgs = galleries[key];
+    if (!imgs) return;
+
+    hoverImages.each(function (i) {
+      $(this).attr('src', imgs[i] || '');
+    });
+
+    hoverGallery.addClass('is-visible');
+  });
+
+  $('.search-content').on('mouseleave', function () {
+    hoverGallery.removeClass('is-visible');
+  });
+
+  // Click en enlaces dentro del overlay -> ahora funciona
+  searchItems.find('a').on('click', function (e) {
+    $('body').removeClass('search-open');
+    searchInput.blur();
+    // e.stopPropagation() no se usa aquí para que el enlace funcione normalmente
+  });
+
 
   // ===== FILTROS =====
   $('.filters button').on('click', function () {
@@ -41,33 +78,6 @@ $(document).ready(function () {
     }
   });
 
-  // ===== GALERÍAS HOVER =====
-  const galleries = {
-    home: ['media/img/grid 1.png'],
-    subastas: ['media/img/grid 2.png'],
-    archivos: ['media/img/grid 3.png'],
-    blog: ['media/img/grid 4.png']
-  };
-
-  const items = $('.search-item');
-  const gallery = $('.hover-gallery');
-  const images = gallery.find('img');
-
-  items.on('mouseenter', function () {
-    const key = $(this).find('p').text().toLowerCase();
-    const imgs = galleries[key];
-    if (!imgs) return;
-
-    images.each(function (i) {
-      $(this).attr('src', imgs[i] || '');
-    });
-
-    gallery.addClass('is-visible');
-  });
-
-  $('.search-content').on('mouseleave', function () {
-    gallery.removeClass('is-visible');
-  });
 
   // ===== REDIRECCIÓN (FRANCIA) =====
   const cards = document.querySelectorAll('.card');
@@ -79,12 +89,13 @@ $(document).ready(function () {
     }
   });
 
+
   // ===== MODO OSCURO / CLARO =====
   const toggle = document.getElementById("theme-toggle");
   const sunIcon = '<i class="fa-solid fa-sun" style="color:#ffffff;"></i>';
   const moonIcon = '<i class="fa-solid fa-moon" style="color:#000000;"></i>';
   const footerLogo = document.getElementById("footer-logo-img");
-  const headerLogo = document.querySelector(".logo-registered"); // <--- NUEVO: logo del header
+  const headerLogo = document.querySelector(".logo-registered");
 
   document.body.classList.add("light-mode");
   if (toggle) toggle.innerHTML = moonIcon;
@@ -105,10 +116,11 @@ $(document).ready(function () {
     // Header
     if (headerLogo) {
       headerLogo.src = isDark
-        ? "logos/isotipo_blanco.png" // Logo dark mode
-        : "media/img/archif-logo-03.png";   // Logo light mode original
+        ? "logos/isotipo_blanco.png"
+        : "media/img/archif-logo-03.png";
     }
   });
+
 
   // ===== OCULTAR FILTROS CUANDO EL BUSCADOR ESTÁ ABIERTO =====
   const observer = new MutationObserver(() => {
