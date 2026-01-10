@@ -1,0 +1,685 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  overflow-x: hidden;
+}
+
+/* Temas */
+:root {
+  --bg-light: #ffffff;
+  --bg-dark: #111111;
+  --text-light: #000000;
+  --text-dark: #ffffff;
+}
+
+body.light-mode {
+  background-color: var(--bg-light);
+  color: var(--text-light);
+}
+
+body.dark-mode {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+
+/* MENUUUUUUU */
+/* MENUUUUUUU */
+/* MENUUUUUUU */
+/* MENUUUUUUU */
+/* MENUUUUUUU */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+
+  padding: 24px 40px;
+  background: #fff;
+
+  z-index: 1000;
+}
+
+
+.header__logo {
+  font-weight: 600;
+  font-size: 20px;
+  align-items: center; 
+}
+
+.header__logo span {
+  font-size: 12px;
+  vertical-align: super;
+}
+
+.header__logo .logo-registered {
+  width: 30px; 
+  height: auto; 
+}
+
+
+/* BUSCADOR */
+.header__search {
+  position: relative;
+  max-width: 420px;
+  margin: 0 auto;
+  width: 400px;
+  transition: transform 0.3s ease;
+}
+.search-prefix {
+  position: absolute;
+  left: 0;
+  bottom: 8px;                 /* alinea con la línea */
+  font-family: "Space Mono", monospace;
+  font-size: 14px;
+  color: #bbb;
+  pointer-events: none;
+}
+.header__search input {
+  width: 100%;
+  padding: 8px 28px 8px 13px;
+  border: none;
+  border-bottom: 1px solid #000;
+  border-radius: 0;
+  background: transparent;
+  font-size: 16px;
+  outline: none;
+  color: #000;
+}
+
+.header__search input::placeholder {
+  color: #bbb;
+}
+
+.search-icon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #bbb;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.header__icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* OVERLAY GRIS */
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #f0f0f0;
+  padding-top: 96px; 
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 10;
+  inset: 0;
+}
+
+/* CONTENIDO */
+
+
+.search-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 24px;
+  cursor: pointer;
+  position: relative;
+}
+
+.search-content span {
+  font-size: 30x;
+  color: #999;
+  font-weight: 400;
+  align-self: center;
+}
+
+.search-content p {
+  font-size: 80px;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.1;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+  color: #CFCFCF;
+}
+
+.search-item:hover span,
+.search-item:hover p {
+  color: #000;
+}
+
+.search-open .search-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* .search-open .header__search input {
+  background: #fff;
+} */
+
+.search-open .header {
+  background: #f0f0f0;
+}
+
+/* .search-open .header__search input {
+  background: #fff;
+} */
+
+.search-open .search-icon,
+.search-open .header__icon {
+  color: #555;
+}
+
+/* Cruz para cerrar búsqueda */
+.header__search::after {
+  content: "✕";
+  position: absolute;
+  right: 38px; 
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #777;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.search-open .header__search::after {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.search-close {
+  position: absolute;
+  right: 38px;
+  top: 50%;
+  transform: translateY(-50%);
+  transform: translateY(-50%) scale(0.5); 
+  font-size: 14px;
+  color: #777;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.3s ease, transform 0.3s ease; 
+}
+
+.search-open .search-close {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-50%) scale(1); 
+}
+
+
+.search-open .header__search {
+  transform: translateX(-470px); 
+  transition: transform 0.3s ease; 
+}
+
+.search-item::after {
+  content: "/";
+  position: absolute;
+  left: 26px;          /* ajusta según tu diseño */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 40px;
+  color: #000;
+
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+.search-item:hover::after {
+  opacity: 1;
+}
+
+/* CONTENEDOR GENERAL */
+.search-wrapper {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  height: calc(100vh - 96px);
+  padding: 40px 80px;
+}
+
+/* LISTA IZQUIERDA */
+.search-content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 24px;
+  row-gap: 28px;
+  padding: 40px;
+  margin-top: 120px;
+  margin-left: 80px;
+  font-family: "Space Mono", monospace;
+
+  display: grid;
+  grid-template-columns: 1fr; /* 👈 UNA columna */
+  row-gap: 28px;
+}
+
+.search-content p {
+  font-size: 70px;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.1;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.search-item:hover p {
+  transform: translateX(12px); /* ajusta a gusto */
+}
+
+/* GALERÍA DERECHA */
+.hover-gallery {
+  position: absolute;
+  top: 220px;
+  right: 10px;
+  width: 660px;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(80px);
+  transition:
+    opacity 0.35s ease,
+    transform 0.6s cubic-bezier(.19,1,.22,1);
+  overflow: visible;
+}
+
+/* Contenedor oculto para efecto “mascara” */
+.hover-img-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* 👈 oculta la parte de la imagen que está fuera */
+  position: relative;
+}
+
+.hover-img-wrapper img {
+  width: 100%;
+  transform: translateY(50px); /* empieza abajo */
+  opacity: 0;
+  transition:
+    transform 0.6s cubic-bezier(.19,1,.22,1),
+    opacity 0.35s ease 0.1s;
+}
+
+/* Estado visible de la galería */
+.hover-gallery.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Cuando la galería es visible, animamos las imágenes */
+.hover-gallery.is-visible .hover-img-wrapper img {
+  transform: translateY(0); /* sube desde detrás */
+  opacity: 1;
+}
+
+/* Botón modo oscuro */
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.icon-theme {
+  width: 26px;
+  height: 26px;
+  color: inherit;
+}
+
+.hidden { display: none; }
+
+/* Header */
+.main-header {
+  width: 100%;
+  height: 10vh;
+  background: currentColor;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================
+   FILTROS
+========================= */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin: 120px 0 80px; /* 👈 altura del header = 96px + un poco de margen */
+  position: relative;
+  z-index: 20; /* sobre la grid, debajo del overlay */
+  font-family: "Space Mono", monospace;
+}
+
+/* Ocultar filtros cuando el buscador está abierto */
+body.search-open .filters {
+  display: none;
+}
+
+.filters button {
+  background: none;
+  border: none;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.filters button.active,
+.filters button:hover {
+  opacity: 1;
+}
+
+/* =========================
+   GRID ARCHIVO
+========================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 48px 32px;
+  padding: 0 80px 120px;
+}
+
+/* Card */
+/* =========================
+   EFECTO SELECCIÓN EDITORIAL
+========================= */
+
+.card {
+  transition: opacity 0.45s ease, filter 0.45s ease;
+  font-family: "Space Mono", monospace;
+  width: 100%;
+  /* display: flex;
+  flex-direction: column; */
+}
+
+/* Estado filtrado */
+.grid.is-filtering .card {
+  opacity: 0.15;
+  filter: grayscale(100%);
+}
+
+/* Países activos */
+.grid.is-filtering .card.is-active {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+/* Hover sutil incluso en cards apagadas */
+.grid.is-filtering .card:hover {
+  opacity: 0.35;
+}
+
+
+/* === ESTADO GENERAL === */
+.card {
+  transition: opacity 0.35s ease, filter 0.35s ease;
+  /* position: relative; */
+  width: 100%;
+  /* overflow: hidden; */
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  
+}
+
+/* Cuando hay un filtro activo */
+.grid.filtered .card {
+  opacity: 0.2;
+  /* filter: grayscale(100%); */
+}
+
+/* Cards que sí pertenecen al filtro */
+.grid.filtered .card.active {
+  opacity: 1;
+  /* filter: grayscale(0%); */
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  /* filter: grayscale(100%); */
+  transition: filter 0.3s ease;
+}
+
+
+.card span {
+  margin-top: 8px;
+  font-family: "Space Mono", monospace;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 40px 80px;
+  }
+
+  .filters {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+}
+
+/* =========================
+   DARK MODE
+========================= */
+body.dark-mode {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+/* HEADER */
+body.dark-mode .header {
+  background-color: #111;
+}
+
+body.dark-mode .header__search input {
+  color: #fff;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+}
+
+body.dark-mode .search-prefix,
+body.dark-mode .search-icon,
+body.dark-mode .header__icon {
+  color: #bbb;
+}
+
+body.dark-mode .search-item span,
+body.dark-mode .search-item p {
+  color: #ccc;
+}
+
+body.dark-mode .search-item:hover span,
+body.dark-mode .search-item:hover p {
+  color: #fff;
+}
+
+body.dark-mode .search-open .header {
+  background-color: #111;
+}
+
+body.dark-mode .search-overlay {
+  background: #111;
+}
+
+/* FILTROS */
+body.dark-mode .filters button {
+  color: #ccc;
+}
+
+body.dark-mode .filters button.active,
+body.dark-mode .filters button:hover {
+  color: #fff;
+}
+
+/* GRID Y CARDS */
+body.dark-mode .grid {
+  background-color: #111;
+}
+
+body.dark-mode .card {
+  background: none !important;
+  color: #ccc;
+}
+
+body.dark-mode .grid.is-filtering .card {
+  opacity: 0.15;
+  filter: grayscale(100%);
+}
+
+body.dark-mode .grid.is-filtering .card.is-active {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+body.dark-mode .grid.is-filtering .card:hover {
+  opacity: 0.35;
+}
+
+body.dark-mode .card span {
+  color: #aaa;
+}
+
+body.dark-mode .search-item::after {
+  color: #fff;
+}
+
+body.dark-mode .header-logo-img {
+  content: url('media/img/iotipo_blanco.png');
+}
+
+
+/* ===== FOOTER ===== */
+.main-footer {
+  width: 100%;
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  padding: 3rem 2rem;
+  border-top: 1px solid #111;
+  font-family: "Space Mono", monospace;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body.dark-mode .main-footer {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.footer-logo-img {
+  height: 40px;
+  width: auto;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.footer-info {
+  flex: 1 1 300px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.footer-links {
+  display: flex;
+    gap: 1.5rem;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+}
+
+.footer-links a {
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: opacity 0.3s ease;
+}
+
+.footer-links a:hover {
+  opacity: 0.6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-links {
+    justify-content: center;
+  }
+}

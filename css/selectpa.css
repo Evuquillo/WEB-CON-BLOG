@@ -1,0 +1,511 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  scrollbar-gutter: stable;
+}
+
+/* Temas */
+:root {
+  --bg-light: #ffffff;
+  --bg-dark: #111111;
+  --text-light: #000000;
+  --text-dark: #ffffff;
+}
+
+body.light-mode {
+  background-color: var(--bg-light);
+  color: var(--text-light);
+}
+
+body.dark-mode {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+/* Botón modo oscuro */
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.icon-theme {
+  width: 26px;
+  height: 26px;
+  color: inherit;
+}
+
+.hidden { display: none; }
+/* Reset padding/margen de Bootstrap containers */
+.container {
+  padding-left: 0% !important;
+  padding-right: 0% !important;
+  max-width: 100%; /* para que no limite el ancho */
+}
+
+/* Archive list y items */
+.archive-list {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
+.archive-item {
+  padding-left: 0;
+  padding-right: 0;
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
+/* Text wrapper (Nuestros archivos) */
+.text-wrapper-can {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
+/* Volver al inicio */
+.volver-inicio-container {
+  margin-left: 4rem; /* opcional, solo un poquito */
+}
+
+/* Header */
+.main-header {
+  width: 100%;
+  height: 10vh;
+  background: currentColor;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-can {
+  position: relative;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  font-size: clamp(1.5rem, 5vw, 4.5rem);
+  letter-spacing: -0.02em;
+  margin: 2rem 0;
+  overflow: hidden;
+  color: var(--text-light);
+}
+.archive-item:last-of-type {
+  padding-bottom: 7rem; /* ajusta el valor a tu gusto */
+}
+body.dark-mode .text-can {
+  color: var(--text-dark);
+}
+
+.text-wrapper-can h2 span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0);
+  will-change: transform, opacity;
+}
+
+.text-can span.bold { font-weight: 700; }
+.text-can span.italic { font-style: italic; }
+
+.archive-list {
+  margin-top: 4rem;
+  /* padding-bottom: 18rem; */
+}
+
+
+
+body.dark-mode .archive-item {
+  border-color: rgba(255,255,255,0.2);
+}
+
+/* Header */
+
+.archive-header {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 1.5rem 0;
+  font-family: "Inter", sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.02em;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  color: inherit;
+  
+}
+
+.custom-font {
+  font-family: 'Space Mono', monospace; /* o la que quieras */
+  font-weight: 400;  /* normal, puedes ajustar */
+  font-style: normal; /* si quieres que no sea italic */
+  font-size: 2rem; /* tamaño que quieras */
+  letter-spacing: 0.05em; /* opcional, para estilizar */
+  color: #707070;
+}
+.custom-font:hover {
+  color: #000000;
+}
+/* Solo en dark mode */
+body.dark-mode .custom-font {
+  font-family: 'Space Mono', monospace; /* la que quieras */
+  font-weight: 400;     /* normal */
+  font-style: normal;   /* no italic */
+  font-size: 2rem;      /* tamaño */
+  letter-spacing: 0.05em; /* opcional */
+  color: #cccccc;       /* gris claro para dark mode */
+  transition: color 0.3s ease;
+}
+
+body.dark-mode .custom-font:hover {
+  color: #ffffff;       /* blanco al pasar el mouse */
+}
+
+.archive-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: rgba(0,0,0,0.5);
+}
+
+body.dark-mode .archive-header::after {
+  background: rgba(0, 0, 0, 0.2);
+}
+/* DARK MODE */
+body.dark-mode .archive-header::after {
+  background: rgba(255, 255, 255, 0.5);
+}
+.archive-header .arrow {
+  font-size: 1.5rem;
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
+/* Contenido desplegable */
+.archive-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+/* Activo */
+.archive-item.active .archive-content {
+  max-height: none;
+}
+
+/* Cuando el item está activo (desplegado) */
+.archive-item.active .custom-font {
+  color: #000000; /* negro en light mode */
+}
+
+/* Dark mode */
+body.dark-mode .archive-item.active .custom-font {
+  color: #ffffff; /* blanco en dark mode */
+}
+
+.archive-item.active .arrow {
+  transform: rotate(90deg);
+}
+
+/* ===== PIEZAS ===== */
+.piece {
+  padding: 2rem 0;
+  /* border-top: 1px solid rgba(0,0,0,0.1); */
+}
+
+body.dark-mode .piece {
+  border-color: rgba(255,255,255,0.1);
+}
+.piece-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 120px 180px 1fr auto;
+  gap: 3rem;
+  align-items: start;
+}
+.piece-thumb-wrap {
+  position: relative;
+}
+.piece-thumb-wrap::after {
+  content: "";
+  position: absolute;
+  left: calc(120px + 2rem); /* empieza tras la imagen */
+  right: calc(-1 * (180px + 1fr)); /* no importa, lo corregimos abajo */
+}
+
+.piece-row::after {
+  content: "";
+  position: absolute;
+  left: calc(120px + 3rem); /* ancho imagen + gap */
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.5);
+}
+body.dark-mode .piece-row::after {
+  background: rgba(255,255,255,0.5);
+}
+
+.piece-thumb {
+  width: 120px;
+  height: auto;
+  object-fit: cover;
+
+  /* Sombra */
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.25);
+  border-radius: 3px; /* opcional, suaviza bordes */
+  transition: box-shadow 0.3s ease;
+}
+body.dark-mode .piece-thumb {
+  box-shadow: 4px 4px 10px rgba(255,255,255,0.15);
+}
+body.dark-mode .piece-thumb:hover {
+  box-shadow: 8px 8px 20px rgba(255,255,255,0.25);
+}
+
+.piece-thumb:hover {
+  box-shadow: 8px 8px 20px rgba(0,0,0,0.35);
+  transform: translateY(-2px);
+}
+
+.piece img {
+  width: 140px;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Columna central */
+.piece-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.piece-title {
+  font-family: "Space Mono", monospace;
+  font-size: 0.8rem;
+  opacity: 0.6;
+  margin: 0;
+  white-space: nowrap;
+}
+
+
+.piece-desc {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+  max-width: 650px;
+  font-family: "Space Mono", monospace;
+
+}
+
+
+/* Meta inferior con iconos */
+.piece-meta {
+  margin-top: 0.8rem;
+  margin-left: 140px; /* ancho imagen + gap */
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.btn-more {
+  background: #ff4d00;
+  color: #fff;
+  border: none;
+  padding: 0.45rem 1.2rem;
+  font-size: 0.75rem;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+
+  transition: all 0.3s ease; /* transición suave */
+}
+/* Hover */
+.btn-more:hover {
+  background: rgba(255, 255, 255, 0.1); /* fondo naranja muy suave */
+  border: 1px solid #ff4d00; /* borde naranja */
+  font-weight: 700; /* texto más grueso */
+  color: #ff4d00; /* texto naranja */
+}
+
+/* Dark mode */
+body.dark-mode .btn-more {
+  background: #ff4d00; /* gris claro sobre fondo oscuro */
+  color: #ffffff;
+}
+
+body.dark-mode .btn-more:hover {
+  background: rgba(0, 0, 0, 0); /* naranja más visible sobre dark */
+  border: 1px solid #ff4d00;
+  font-weight: 700;
+  color: #ff4d00;
+}
+
+
+.desc {
+    font-size: 0.9rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.btn-more {
+  background: #ff4d00;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 1rem;
+  font-size: 0.75rem;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 150px;
+}
+
+/* ===== CONTENEDOR VOLVER AL INICIO ===== */
+.volver-inicio-container {
+    text-align: left;          /* Alineado a la izquierda */
+    margin-top: 4rem;          /* Margen superior */
+    margin-left: 1.5rem;       /* Margen izquierdo */
+}
+
+/* ===== ENLACE ===== */
+.volver-inicio {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--bs-body-color, #000);
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.volver-inicio:hover {
+  text-decoration: underline;
+  /* transform: translateX(-3px); */
+}
+
+
+
+/* FOOTER  */
+.main-footer {
+  margin-top: auto;
+  align-items: baseline;
+  width: 100%;
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  padding: 3rem 2rem;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  font-family: "Space Mono", monospace;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body.dark-mode .main-footer {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+/* MODO OSCURO */
+body.dark-mode .volver-inicio {
+    color: #fff;
+}
+
+.footer-logo-img {
+  height: 40px;
+  width: auto;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.footer-info { flex: 1 1 300px; font-size: 0.9rem; line-height: 1.6; text-align: center; }
+
+.footer-links {
+    display: flex;
+    gap: 1.5rem;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+}
+
+.footer-links a {
+    color: inherit;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: opacity 0.3s ease;
+}
+
+.footer-links a:hover { opacity: 0.6; }
+
+
+/* ===== Responsive Grid ===== */
+@media (max-width: 992px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+  .text-wrapper-paula { top: 10%; left: 5%; }
+  .img-paula { max-width: 180px; }
+  .grid-container {
+    grid-template-columns: 1fr;
+}
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+    text-align: center;
+}
+
+.footer-links {
+    justify-content: center;
+}
+
+}
+@media (max-width: 768px) {
+  .piece {
+    grid-template-columns: 100px 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .btn-more {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: 0.5rem;
+  }
+
+  .piece-meta {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+}

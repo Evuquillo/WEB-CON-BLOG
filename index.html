@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tienda - Archif.</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/home.css" />
+
+  <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+<link rel="shortcut icon" href="favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="Archif." />
+<link rel="manifest" href="favicon/web-app-manifest-192x192.png" />
+</head>
+
+
+
+<body class="d-flex flex-column min-vh-100">
+  <!-- ===== BOTÓN DARK/LIGHT MODE ===== -->
+  <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+    <!-- Sol -->
+    <svg id="icon-sun" class="icon-theme" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+      viewBox="0 0 24 24">
+      <path fill-rule="evenodd"
+        d="M13 3a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0V3ZM6.343 4.929A1 1 0 0 0 4.93 6.343l1.414 1.414a1 1 0 0 0 1.414-1.414L6.343 4.929Zm12.728 1.414a1 1 0 0 0-1.414-1.414l-1.414 1.414a1 1 0 0 0 1.414 1.414l1.414-1.414ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm-9 4a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H3Zm16 0a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2ZM7.757 17.657a1 1 0 1 0-1.414-1.414l-1.414 1.414a1 1 0 1 0 1.414 1.414l1.414-1.414Zm9.9-1.414a1 1 0 0 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414ZM13 19a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2Z"
+        clip-rule="evenodd" />
+    </svg>
+
+    <!-- Luna -->
+    <svg id="icon-moon" class="icon-theme hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+      fill="#ffff" viewBox="0 0 24 24">
+      <path fill-rule="evenodd"
+        d="M11.675 2.015a.998.998 0 0 0-.403.011C6.09 2.4 2 6.722 2 12c0 5.523 4.477 10 10 10 4.356 0 8.058-2.784 9.43-6.667a1 1 0 0 0-1.02-1.33c-.08.006-.105.005-.127.005h-.001l-.028-.002A5.227 5.227 0 0 0 20 14a8 8 0 0 1-8-8c0-.952.121-1.752.404-2.558a.996.996 0 0 0 .096-.428V3a1 1 0 0 0-.825-.985Z"
+        clip-rule="evenodd" />
+    </svg>
+  </button>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header__logo">
+    <img src="media/img/archif-logo-03.png" class="logo-registered">
+  </div>
+
+  <div class="header__search">
+    <span class="search-prefix">/</span>
+    <input type="text" placeholder="Buscar...">
+    <span class="search-close">✕</span>
+    <span class="search-icon">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+       xmlns="http://www.w3.org/2000/svg">
+    <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="16.65" y1="16.65" x2="22" y2="22"
+          stroke="currentColor" stroke-width="1.5"/>
+  </svg>
+</span>
+
+  </div>
+
+  <!-- <div class="header__icon">☰</div> -->
+</header>
+
+<!-- OVERLAY -->
+<div class="search-overlay"> 
+
+  <div class="search-content">
+    <div class="search-item">
+     <span>01</span> <a href="index.html"><p>HOME</p></a>
+    </div>
+
+    <div class="search-item">
+      <span>02</span><a href="subasta.html"><p>SUBASTAS</p></a> 
+    </div>
+
+    <div class="search-item">
+      <span>03</span><a href="paises.html"><p>ARCHIVOS</p></a>
+    </div>
+
+    <div class="search-item">
+      <span>04</span><p>BLOG</p>
+    </div>
+  </div>
+
+ <div class="hover-gallery">
+  <div class="hover-img-wrapper">
+    <img src="" alt="">
+  </div>
+  <div class="hover-img-wrapper">
+    <img src="" alt="">
+  </div>
+</div>
+</div>
+</div>
+
+
+
+  <!-- ===== SECCIÓN PRINCIPAL ===== -->
+  <section class="hero container-fluid p-0">
+  <div class="row g-0 h-100 align-items-center justify-content-center">
+    <div class="col-12 text-center">
+      <img
+        id="hero-logo-img"
+        src="logos/archif-logo_negro.png"
+        alt="Archif logo grande"
+        class="hero-logo-img img-fluid"
+      />
+    </div>
+  </div>
+  <div id="cursor-trail"></div>
+</section>
+
+
+ <!-- ===== SECCIÓN DOS ===== -->
+ <section id="seccion-dos" class="content container py-5 position-relative">
+  <div class="text-wrapper-can position-relative">
+    <h2 class="text-can" data-text="_*[Archif]*_ es una "></h2>
+    <h2 class="text-can" data-text="plataforma que recupera y  "></h2>
+    <h2 class="text-can" data-text="difunde *_[diseños originales]*"></h2>
+    <h2 class="text-can" data-text="y _*[archivos gráficos]*"></h2>
+  </div>
+</section>
+
+<!-- ===== SECCIÓN 3 ===== -->
+
+<section id="seccion-tres" class="content py-5 position-relative text-center">
+
+  <div class="img-wrapper">
+
+    <img src="imgs/lahine.jpg" class="img-seccion" data-left="Este cartel captura la intensidad urbana y la crudeza social de la película dirigida por Mathieu Kassovitz. Con un diseño en blanco y negro marcado por contrastes fuertes, refleja la tensión y la alienación de la juventud en los suburbios de París. Una pieza emblemática para coleccionistas de arte cinematográfico y diseño gráfico contemporáneo." data-right="1995">
+
+    <img src="imgs/japon1.jpg" class="img-seccion" data-left="Póster original japonés de “2001: A Space Odyssey” (1968), una obra icónica del cine de ciencia ficción dirigida por Stanley Kubrick. Es una pieza de colección sumamente rara, buscada por coleccionistas de memorabilia cinematográfica internacional." data-right="1985">
+
+     <img src="imgs/festival_1982.jpg" class="img-seccion" data-left="Póster original del Festival de Glastonbury (1982), un ícono de la música y la cultura festivalera británica. Esta pieza representa no solo un momento histórico del festival, sino también una obra de arte visual de los años 80 en la escena musical alternativa." data-right="1982">
+
+    <img src="imgs/vertigo.jpg" class="img-seccion" data-left="La obra maestra del suspense dirigida por Alfred Hitchcock. Este cartel es una pieza de colección extremadamente rara, representando un ícono del cine clásico y del arte del cartel que captura la atmósfera inquietante y sofisticada de la película." data-right="1958">
+    
+
+    <img src="imgs/china1.png" class="img-seccion" data-left="Póster de propaganda china con Mao Zedong, una representación icónica del arte político del siglo XX. La imagen, nos muetra el alcance del país y la visión revolucionaria. Una pieza significativa para coleccionistas de historia y arte." data-right="1920">
+
+    <img src="imgs/austria1.JPG" class="img-seccion" data-left="Póster de la Secesión Vienesa, un ejemplo del Art Nouveau austríaco. Esta obra captura la creatividad de la V.K. Muestra de la Asociación de Artistas Visuales de Austria. Una pieza única para amantes del arte histórico y del diseño gráfico clásico." data-right="1902">
+
+    <!-- Textos flotantes -->
+    <div class="text-left"></div>
+    <div class="text-right"></div>
+  </div>
+
+</section>
+
+
+
+  <!-- ===== FOOTER ===== -->
+<footer class="main-footer mt-auto">
+  <div class="footer-container">
+    <div class="footer-logo">
+      <img 
+        id="footer-logo-img"
+        src="logos/archif-logo_negro.png" 
+        alt="Archif logo"
+        class="footer-logo-img"
+      >
+    </div>
+
+    <div class="footer-info">
+      <p>2026 Archif®. Todos los derechos reservados.</p>
+      <p>Plataforma digital dedicada a la recuperación y difusión de archivos creativos poco accesibles.</p>
+    </div>
+
+    <div class="footer-links">
+      <a href="#">Devoluciones</a>
+      <a href="#">Contacto</a>
+      <a href="#">Términos</a>
+    </div>
+  </div>
+</footer>
+
+  </section>
+
+
+<!-- ===== SCRIPTS ===== -->
+
+<!-- jQuery (OBLIGATORIO para el menú) -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Tu JS -->
+<script src="js/paises.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/ScrollToPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/Draggable.min.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/menu.js"></script>
+</body>
+</html>
