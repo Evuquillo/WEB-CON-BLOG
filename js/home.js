@@ -220,32 +220,46 @@ ScrollTrigger.create({
 
 
 // =============================
-// SECCIÓN 3 – GALERÍA STICKY
+// SECCIÓN 3 – GALERÍA STICKY RESPONSIVE
 // =============================
+gsap.registerPlugin(ScrollTrigger);
+
 const images = gsap.utils.toArray("#seccion-tres .img-seccion");
 const textLeft = document.querySelector(".img-wrapper .text-left");
 const textRight = document.querySelector(".img-wrapper .text-right");
 
 const scaleMin = 0.35;
 const scaleMax = 1;
-const spacing = 70;
 
-images.forEach((img, i) => {
-  const t = i / (images.length - 1 || 1);
-  gsap.set(img, {
-    x: 0,
-    y: -spacing * t * images.length,
-    scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
-    opacity: 1,
-    zIndex: images.length - i
+// Definimos spacing según pantalla
+function getSpacing() {
+  return window.innerWidth <= 768 ? 40 : 70; // más juntas en móvil
+}
+
+// Inicializamos la posición de las imágenes
+function setImagesInitial() {
+  const spacing = getSpacing();
+
+  images.forEach((img, i) => {
+    const t = i / (images.length - 1 || 1);
+    gsap.set(img, {
+      x: 0,
+      y: -spacing * t * images.length,
+      scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
+      opacity: 1,
+      zIndex: images.length - i
+    });
   });
-});
+}
 
-const tl = gsap.timeline({
+setImagesInitial();
+
+// Timeline GSAP con ScrollTrigger
+let tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#seccion-tres",
     start: "top top",
-    end: `+=${images.length * window.innerHeight}`,
+    end: () => `+=${images.length * window.innerHeight}`,
     scrub: true,
     pin: true,
     anticipatePin: 1,
@@ -256,6 +270,7 @@ const tl = gsap.timeline({
       );
       const img = images[index];
       if (img) {
+        // SOLO cambiamos el contenido
         textLeft.textContent = img.dataset.left;
         textRight.textContent = img.dataset.right;
       }
@@ -263,32 +278,47 @@ const tl = gsap.timeline({
   }
 });
 
-images.forEach((img, i) => {
-  tl.to(img, { y: 0, scale: 1, duration: 0.6, ease: "power2.out" });
+// Animación de las imágenes
+function animateImages() {
+  const spacing = getSpacing();
 
-  images.forEach((next, j) => {
-    if (j > i) {
-      const t = (j - i) / images.length;
-      tl.to(next, {
-        y: -spacing * t * images.length,
-        scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
-        duration: 0.6,
-        ease: "power2.out"
-      }, "<");
-    }
+  images.forEach((img, i) => {
+    tl.to(img, { y: 0, scale: 1, duration: 0.6, ease: "power2.out" });
+
+    images.forEach((next, j) => {
+      if (j > i) {
+        const t = (j - i) / images.length;
+        tl.to(next, {
+          y: -spacing * t * images.length,
+          scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
+          duration: 0.6,
+          ease: "power2.out"
+        }, "<");
+      }
+    });
+
+    tl.to(img, {
+      y: window.innerHeight * 1.3,
+      scale: 2,
+      duration: 0.8,
+      ease: "power2.in"
+    });
   });
+}
 
-  tl.to(img, {
-    y: window.innerHeight * 1.3,
-    scale: 2,
-    duration: 0.8,
-    ease: "power2.in"
-  });
-});
+animateImages();
 
+// Refresh y recalculo al redimensionar
 window.addEventListener("resize", () => {
+  const spacing = getSpacing();
+
+  // Reset posiciones
+  setImagesInitial();
+
+  // Refresh ScrollTrigger
   ScrollTrigger.refresh();
 });
+
 
 
 // =============================

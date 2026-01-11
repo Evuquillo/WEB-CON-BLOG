@@ -659,3 +659,33 @@ body.dark-mode  { --cursor-color: #ffffff; }
 
 
 
+/* ===============================
+   SECCIÓN 3 – MOBILE SOLO TEXTO
+================================ */
+
+@media (max-width: 768px) {
+
+  /* Imagen más pequeña (ya aprobado) */
+  .img-seccion {
+    width: 40vw;
+    max-width: 200px;
+  }
+
+  /* ⬇️ SOLO BAJAMOS EL PÁRRAFO */
+  .img-wrapper .text-left {
+    top: 69%;              /* antes 50% */
+    transform: translateY(-8%);
+    max-width: 130vw;
+    font-size: 0.8rem;
+    line-height: 1.7;
+    margin-right: 4%;
+    padding-top: 2%;
+  }
+
+  .img-wrapper .text-right {
+    order: 3;
+    margin-top: 0;
+    font-size: 2.4rem;
+    text-align: left;
+  }
+}
