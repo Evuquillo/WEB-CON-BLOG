@@ -655,6 +655,14 @@ body.dark-mode  { --cursor-color: #ffffff; }
 }
 
 
+@media (max-width: 768px) {
+  #cursor-trail .cursor-image {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 1s ease, transform 1s ease;
+  }
+}
 
 
 
