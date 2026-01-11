@@ -152,6 +152,85 @@ hero.addEventListener("mouseleave", () => {
 });
 
 
+
+// =============================
+// CURSOR TRAIL ALEATORIO EN MÓVIL
+// =============================
+function initMobileTrail() {
+  const hero = document.querySelector(".hero");
+  const trailContainer = document.getElementById("cursor-trail");
+  const trailImages = [
+    "imgs/vertigo.jpg",
+    "imgs/tour-ska-p.jpg",
+    "imgs/festival_1982.jpg",
+    "imgs/mujeresalborde.jpg",
+    "imgs/colussus digital comp.jpg",
+    "imgs/blowfootball.jpg",
+    "imgs/BristolBeaufighter.jpg",
+    "imgs/lahine.jpg"
+  ];
+
+  // Limpiamos cualquier rastro anterior
+  trailContainer.innerHTML = "";
+
+  if (window.innerWidth > 768) return; // solo móvil
+
+  // Función que crea una imagen aleatoria en la hero
+  function spawnRandomImage() {
+    const img = document.createElement("img");
+    img.src = trailImages[Math.floor(Math.random() * trailImages.length)];
+    img.className = "cursor-image";
+    
+    // Tamaño más pequeño en móvil
+    const size = 50 + Math.random() * 30; // 50-80px
+    img.style.width = size + "px";
+    img.style.height = "auto";
+
+    // Posición aleatoria dentro de hero
+    const rect = hero.getBoundingClientRect();
+    const x = Math.random() * rect.width;
+    const y = Math.random() * rect.height;
+    img.style.left = `${x}px`;
+    img.style.top = `${y}px`;
+
+    // Animación de aparición y desvanecimiento
+    img.style.opacity = 0;
+    img.style.position = "absolute";
+    img.style.pointerEvents = "none";
+    img.style.transition = "opacity 1s ease, transform 1s ease";
+    trailContainer.appendChild(img);
+
+    // Forzamos reflow y animamos
+    requestAnimationFrame(() => {
+      img.style.opacity = 1;
+      img.style.transform = `translateY(-20px)`; // pequeño movimiento
+    });
+
+    // Desaparece después de 3-5s
+    setTimeout(() => {
+      img.style.opacity = 0;
+      setTimeout(() => {
+        trailContainer.removeChild(img);
+      }, 1000);
+    }, 3000 + Math.random() * 2000);
+  }
+
+  // Intervalo para generar varias imágenes aleatorias
+  const mobileTrailInterval = setInterval(spawnRandomImage, 400);
+
+  // Limpiamos intervalo si se cambia a desktop
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) {
+      clearInterval(mobileTrailInterval);
+    }
+  });
+}
+
+// Inicializamos al cargar la página
+initMobileTrail();
+
+
+
 // =============================
 // SECCIÓN 2 – TEXT SCRAMBLE
 // =============================
