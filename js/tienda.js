@@ -1,36 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Draggable);
 
-  /* =====================================================
-     SMOOTH SCROLL
-  ===================================================== */
-  const container = document.scrollingElement || document.documentElement;
-  let scrollY = 0;
-  let targetScrollY = 0;
-  const easeFactor = 0.35;
-
-  function smoothScroll() {
-    scrollY += (targetScrollY - scrollY) * easeFactor;
-    window.scrollTo(0, scrollY);
-    ScrollTrigger.update();
-    requestAnimationFrame(smoothScroll);
-  }
-
-  window.addEventListener(
-    "wheel",
-    (e) => {
-      e.preventDefault();
-      const scrollSpeed = 1.5;
-      targetScrollY += e.deltaY * scrollSpeed;
-      targetScrollY = Math.max(
-        0,
-        Math.min(targetScrollY, container.scrollHeight - window.innerHeight)
-      );
-    },
-    { passive: false }
-  );
-
-  smoothScroll();
 
   /* =====================================================
      IMÁGENES DISPERSAS + DRAG
@@ -56,6 +26,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
     Draggable.create(img, { bounds: imgContainer, inertia: true });
   });
+
+  (function initCustomCursor() {
+  // Solo desktop con ratón
+  const isFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (!isFinePointer) return;
+
+  // Si ya está iniciado, no duplicar
+  if (window.__customCursorInit) return;
+  window.__customCursorInit = true;
+
+  // Asegura que exista el HTML
+  let cursor = document.getElementById("custom-cursor");
+  if (!cursor) {
+    cursor = document.createElement("div");
+    cursor.id = "custom-cursor";
+    cursor.innerHTML = `<div class="cursor-inner"></div>`;
+    document.body.appendChild(cursor);
+  }
+
+  const inner = cursor.querySelector(".cursor-inner");
+  if (!inner) return;
+
+  // Mover cursor
+  document.addEventListener("mousemove", (e) => {
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+  });
+
+  // Crecer sobre links, botones y elementos “clicables”
+  document.addEventListener("mouseover", (e) => {
+    if (e.target.closest("a, button, .button-4, input, textarea, select, .grid-item")) {
+      inner.classList.add("link-hover");
+    }
+  });
+
+  document.addEventListener("mouseout", (e) => {
+    if (e.target.closest("a, button, .button-4, input, textarea, select, .grid-item")) {
+      inner.classList.remove("link-hover");
+    }
+  });
+})();
 
   /* =====================================================
      TEXT SCRAMBLE
@@ -127,6 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const sunIcon = '<i class="fa-solid fa-sun" style="color:#ffffff;"></i>';
   const moonIcon = '<i class="fa-solid fa-moon" style="color:#000000;"></i>';
   const footerLogo = document.getElementById("footer-logo-img");
+  
 
   document.body.classList.add("light-mode");
   if (toggle) toggle.innerHTML = moonIcon;

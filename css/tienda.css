@@ -343,14 +343,6 @@ a {
 
 
 
-
-
-
-
-
-
-
-
 html, body {
   margin: 0;
   padding: 0;
@@ -643,7 +635,67 @@ body.dark-mode .main-footer {
   opacity: 0.6;
 }
 
+/* Oculta el cursor nativo SOLO en desktop */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a, button, input, textarea, select {
+    cursor: none;
+  }
+}
 
+/* wrapper fijo del cursor */
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 2147483647;
+}
+
+/* bola del cursor */
+#custom-cursor .cursor-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 22px;
+  height: 22px;
+
+  /* Usa una variable que definimos según el tema */
+  background: var(--cursor-color);
+
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 0.3s ease-in-out;
+  pointer-events: none;
+
+  /* CORRECCIÓN: el !important iba mal escrito */
+  mix-blend-mode: difference !important;
+
+  /* opcional */
+  unicode-bidi: isolate;
+}
+
+/* efecto hover sobre links/botones */
+#custom-cursor .cursor-inner.link-hover {
+  transform: translate(-50%, -50%) scale(2);
+}
+
+/* Color del cursor por tema (si usas mix-blend-mode:difference, puede ir fijo también) */
+body.light-mode { --cursor-color: #ffffff; }
+body.dark-mode  { --cursor-color: #ffffff; }
+
+/* En móvil/tablet: cursor custom OFF */
+@media (hover: none), (pointer: coarse) {
+  #custom-cursor { display: none; }
+  body { cursor: auto; }
+}
+
+body.light-mode { --cursor-color: #000000; }
+body.dark-mode  { --cursor-color: #ffffff; }
 
 /* ===== Responsive Grid ===== */
 @media (max-width: 992px) {

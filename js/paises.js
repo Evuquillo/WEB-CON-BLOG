@@ -134,3 +134,53 @@ $(document).ready(function () {
   observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 
 });
+
+(function initCustomCursorSafe() {
+  function setup() {
+    // Solo desktop con ratón
+    const isFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!isFinePointer) return;
+
+    // Flag único (para no chocar con otras páginas/scripts)
+    if (window.__archifCustomCursorInit) return;
+    window.__archifCustomCursorInit = true;
+
+    // Crear cursor si no existe (no toca nada más)
+    let cursor = document.getElementById("custom-cursor");
+    if (!cursor) {
+      cursor = document.createElement("div");
+      cursor.id = "custom-cursor";
+      cursor.innerHTML = `<div class="cursor-inner"></div>`;
+      document.body.appendChild(cursor);
+    }
+
+    const inner = cursor.querySelector(".cursor-inner");
+    if (!inner) return;
+
+    // Mover cursor (solo escribe left/top del cursor, no afecta tu layout)
+    document.addEventListener("mousemove", (e) => {
+      cursor.style.left = e.clientX + "px";
+      cursor.style.top = e.clientY + "px";
+    });
+
+    // Hover (solo añade/quita una clase)
+    document.addEventListener("mouseover", (e) => {
+      if (e.target.closest("a, button, .btn, .button-4, input, textarea, select, .grid-item")) {
+        inner.classList.add("link-hover");
+      }
+    });
+
+    document.addEventListener("mouseout", (e) => {
+      if (e.target.closest("a, button, .btn, .button-4, input, textarea, select, .grid-item")) {
+        inner.classList.remove("link-hover");
+      }
+    });
+  }
+
+  // Importante: no obliga a mover tu <script>
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setup);
+  } else {
+    setup();
+  }
+})();
