@@ -738,6 +738,7 @@ body.dark-mode  { --cursor-color: #ffffff; }
 
 
 /* Responsive */
+
 @media (max-width: 768px) {
   .footer-container {
     flex-direction: column;
