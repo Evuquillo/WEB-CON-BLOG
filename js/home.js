@@ -152,6 +152,85 @@ hero.addEventListener("mouseleave", () => {
 });
 
 
+
+// =============================
+// CURSOR TRAIL ALEATORIO EN MÓVIL
+// =============================
+function initMobileTrail() {
+  const hero = document.querySelector(".hero");
+  const trailContainer = document.getElementById("cursor-trail");
+  const trailImages = [
+    "imgs/vertigo.jpg",
+    "imgs/tour-ska-p.jpg",
+    "imgs/festival_1982.jpg",
+    "imgs/mujeresalborde.jpg",
+    "imgs/colussus digital comp.jpg",
+    "imgs/blowfootball.jpg",
+    "imgs/BristolBeaufighter.jpg",
+    "imgs/lahine.jpg"
+  ];
+
+  // Limpiamos cualquier rastro anterior
+  trailContainer.innerHTML = "";
+
+  if (window.innerWidth > 768) return; // solo móvil
+
+  // Función que crea una imagen aleatoria en la hero
+  function spawnRandomImage() {
+    const img = document.createElement("img");
+    img.src = trailImages[Math.floor(Math.random() * trailImages.length)];
+    img.className = "cursor-image";
+    
+    // Tamaño más pequeño en móvil
+    const size = 50 + Math.random() * 30; // 50-80px
+    img.style.width = size + "px";
+    img.style.height = "auto";
+
+    // Posición aleatoria dentro de hero
+    const rect = hero.getBoundingClientRect();
+    const x = Math.random() * rect.width;
+    const y = Math.random() * rect.height;
+    img.style.left = `${x}px`;
+    img.style.top = `${y}px`;
+
+    // Animación de aparición y desvanecimiento
+    img.style.opacity = 0;
+    img.style.position = "absolute";
+    img.style.pointerEvents = "none";
+    img.style.transition = "opacity 1s ease, transform 1s ease";
+    trailContainer.appendChild(img);
+
+    // Forzamos reflow y animamos
+    requestAnimationFrame(() => {
+      img.style.opacity = 1;
+      img.style.transform = `translateY(-20px)`; // pequeño movimiento
+    });
+
+    // Desaparece después de 3-5s
+    setTimeout(() => {
+      img.style.opacity = 0;
+      setTimeout(() => {
+        trailContainer.removeChild(img);
+      }, 1000);
+    }, 3000 + Math.random() * 2000);
+  }
+
+  // Intervalo para generar varias imágenes aleatorias
+  const mobileTrailInterval = setInterval(spawnRandomImage, 400);
+
+  // Limpiamos intervalo si se cambia a desktop
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) {
+      clearInterval(mobileTrailInterval);
+    }
+  });
+}
+
+// Inicializamos al cargar la página
+initMobileTrail();
+
+
+
 // =============================
 // SECCIÓN 2 – TEXT SCRAMBLE
 // =============================
@@ -220,32 +299,46 @@ ScrollTrigger.create({
 
 
 // =============================
-// SECCIÓN 3 – GALERÍA STICKY
+// SECCIÓN 3 – GALERÍA STICKY RESPONSIVE
 // =============================
+gsap.registerPlugin(ScrollTrigger);
+
 const images = gsap.utils.toArray("#seccion-tres .img-seccion");
 const textLeft = document.querySelector(".img-wrapper .text-left");
 const textRight = document.querySelector(".img-wrapper .text-right");
 
 const scaleMin = 0.35;
 const scaleMax = 1;
-const spacing = 70;
 
-images.forEach((img, i) => {
-  const t = i / (images.length - 1 || 1);
-  gsap.set(img, {
-    x: 0,
-    y: -spacing * t * images.length,
-    scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
-    opacity: 1,
-    zIndex: images.length - i
+// Definimos spacing según pantalla
+function getSpacing() {
+  return window.innerWidth <= 768 ? 40 : 70; // más juntas en móvil
+}
+
+// Inicializamos la posición de las imágenes
+function setImagesInitial() {
+  const spacing = getSpacing();
+
+  images.forEach((img, i) => {
+    const t = i / (images.length - 1 || 1);
+    gsap.set(img, {
+      x: 0,
+      y: -spacing * t * images.length,
+      scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
+      opacity: 1,
+      zIndex: images.length - i
+    });
   });
-});
+}
 
-const tl = gsap.timeline({
+setImagesInitial();
+
+// Timeline GSAP con ScrollTrigger
+let tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#seccion-tres",
     start: "top top",
-    end: `+=${images.length * window.innerHeight}`,
+    end: () => `+=${images.length * window.innerHeight}`,
     scrub: true,
     pin: true,
     anticipatePin: 1,
@@ -256,6 +349,7 @@ const tl = gsap.timeline({
       );
       const img = images[index];
       if (img) {
+        // SOLO cambiamos el contenido
         textLeft.textContent = img.dataset.left;
         textRight.textContent = img.dataset.right;
       }
@@ -263,32 +357,47 @@ const tl = gsap.timeline({
   }
 });
 
-images.forEach((img, i) => {
-  tl.to(img, { y: 0, scale: 1, duration: 0.6, ease: "power2.out" });
+// Animación de las imágenes
+function animateImages() {
+  const spacing = getSpacing();
 
-  images.forEach((next, j) => {
-    if (j > i) {
-      const t = (j - i) / images.length;
-      tl.to(next, {
-        y: -spacing * t * images.length,
-        scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
-        duration: 0.6,
-        ease: "power2.out"
-      }, "<");
-    }
+  images.forEach((img, i) => {
+    tl.to(img, { y: 0, scale: 1, duration: 0.6, ease: "power2.out" });
+
+    images.forEach((next, j) => {
+      if (j > i) {
+        const t = (j - i) / images.length;
+        tl.to(next, {
+          y: -spacing * t * images.length,
+          scale: scaleMin + (scaleMax - scaleMin) * (1 - t),
+          duration: 0.6,
+          ease: "power2.out"
+        }, "<");
+      }
+    });
+
+    tl.to(img, {
+      y: window.innerHeight * 1.3,
+      scale: 2,
+      duration: 0.8,
+      ease: "power2.in"
+    });
   });
+}
 
-  tl.to(img, {
-    y: window.innerHeight * 1.3,
-    scale: 2,
-    duration: 0.8,
-    ease: "power2.in"
-  });
-});
+animateImages();
 
+// Refresh y recalculo al redimensionar
 window.addEventListener("resize", () => {
+  const spacing = getSpacing();
+
+  // Reset posiciones
+  setImagesInitial();
+
+  // Refresh ScrollTrigger
   ScrollTrigger.refresh();
 });
+
 
 
 // =============================
