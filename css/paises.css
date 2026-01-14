@@ -238,7 +238,7 @@ a{
 
 
 .search-open .header__search {
-  transform: translateX(-470px); 
+  /* transform: translateX(-470px);  */
   transition: transform 0.3s ease; 
 }
 
@@ -294,7 +294,7 @@ a{
 }
 
 .search-item:hover p {
-  transform: translateX(12px); /* ajusta a gusto */
+  transform: translateX(12px); 
 }
 
 /* GALERÍA DERECHA */
@@ -377,159 +377,125 @@ a{
 }
 
 
+@media (max-width: 1023px) {
 
-/* =========================
-   RESPONSIVE
-========================= */
-
-/* Tablets horizontales / grandes (~992px) */
-@media (max-width: 992px) {
+  /* HEADER */
   .header {
-    padding: 20px 30px;
+    padding: 20px 24px;
+    grid-template-columns: auto 1fr auto;
   }
 
+  .header__logo {
+    font-size: 18px;
+  }
+
+  /* BUSCADOR */
   .header__search {
-    max-width: 320px;
+    width: 300px;
+    max-width: 300px;
+  }
+
+  .search-prefix {
+    font-size: 12px;
+  }
+
+  /* OVERLAY */
+  .search-wrapper {
+    grid-template-columns: 1fr;
+    padding: 32px 40px;
+  }
+
+  .search-content {
+    margin-top: 80px;
+    margin-left: 0;
+    padding: 24px;
+  }
+
+  .search-content p {
+    font-size: 48px;
+  }
+
+  /* GALERÍA */
+  .hover-gallery {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    margin-top: 40px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Animación búsqueda */
+  
+}
+
+@media (max-width: 767px) {
+
+  /* HEADER */
+  .header {
+    padding: 16px 20px;
+    grid-template-columns: auto auto;
+  }
+
+  .header__logo {
+    font-size: 16px;
+  }
+
+  /* BUSCADOR */
+  .header__search {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: none;
+    margin-top: 12px;
   }
 
   .header__search input {
     font-size: 14px;
-    padding: 6px 24px 6px 10px;
-  }
-}
-
-/* Tablets verticales (~768px) */
-@media (max-width: 768px) {
-  .header {
-    padding: 16px 20px;
   }
 
-  .header__search {
-    max-width: 240px;
+  /* ICONOS */
+  .header__icon {
+    font-size: 18px;
   }
 
-  .header__search input {
-    font-size: 13px;
-    padding: 5px 20px 5px 8px;
+  /* OVERLAY */
+  .search-overlay {
+    padding-top: 120px;
   }
-}
-
-/* Móviles grandes (~480px) */
-/* =========================
-   HEADER RESPONSIVE - SOLO LUPA
-========================= */
-
-/* Ocultar "/" y el input en móviles y tablets pequeñas */
-@media (max-width: 768px) {
-  .header__search input,
-  .search-prefix {
-    display: none;
-  }
-
-  /* El contenedor de búsqueda se ajusta a la lupa */
-  .header__search {
-    width: auto;
-    max-width: auto;
-    margin: 0 auto;
-  }
-
-  /* Centrar la lupa en la cabecera */
-  .search-icon {
-    position: relative;
-    right: auto;
-    left: auto;
-    top: auto;
-    transform: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #000; /* negro */
-  }
-
-  .search-icon svg {
-    width: 22px;
-    height: 22px;
-    stroke: #000; /* para que la lupa sea negra */
-  }
-}
-
-/* =========================
-   SEARCH OVERLAY RESPONSIVE
-========================= */
-
-/* Tablets medianas */
-@media (max-width: 992px) {
 
   .search-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 200px; /* texto a la izquierda, imágenes a la derecha */
-    gap: 1rem;
-    height: auto;
-    padding: 30px 40px;
+    grid-template-columns: 1fr;
+    padding: 24px 20px;
   }
 
   .search-content {
-    margin-top: 0;
+    margin-top: 40px;
     padding: 0;
-    grid-template-columns: 1fr;
-    row-gap: 20px;
-  }
-
-  .hover-gallery {
-    position: relative;
-    opacity: 1;
-    transform: translateY(0);
-    display: grid;
-    grid-template-columns: 1fr; /* 1 columna para que sean pequeñitas */
-    gap: 8px;
-    width: auto; /* ancho automático */
-    justify-self: start; /* al lado del texto */
-    pointer-events: auto;
-  }
-
-  .hover-img-wrapper {
-    width: 100%;
-    max-width: 180px; /* tamaño pequeño */
-    margin: 0 auto;
-  }
-
-  .hover-img-wrapper img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    transform: translateY(0); /* quitar animación */
-  }
-}
-
-/* ===== MÓVIL (oculta imágenes fijas) ===== */
-@media (max-width: 768px) {
-  .search-wrapper {
-    grid-template-columns: 1fr; /* todo en columna */
-  }
-
-  .hover-gallery {
-    display: none; /* desaparecen en móvil */
   }
 
   .search-content p {
-    text-align: center;
-    font-size: 30px;
+    font-size: 32px;
+  }
+
+  .search-content span {
+    font-size: 14px;
+  }
+
+  /* GALERÍA: fuera en móvil */
+  .hover-gallery {
+    display: none;
+  }
+
+ 
+  /* Quitar detalles finos que no funcionan bien en móvil */
+  .search-item::after {
+    display: none;
   }
 }
 
-@media (max-width: 480px) {
-  .search-content p {
-    font-size: 24px;
-  }
-}
-/* ===== SEARCH OVERLAY: tablet y móvil siempre negro ===== */
-@media (max-width: 992px) {
-  /* todos los items del overlay siempre en negro */
-  .search-item span,
-  .search-item p {
-    color: #000 !important;
-  }
-}
+
+
+
 
 
 

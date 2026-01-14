@@ -19,11 +19,9 @@
   z-index: 1000;
 }
 
-a {
+a{
   text-decoration: none;
-  color: inherit;
 }
-
 
 .header__logo {
   font-weight: 600;
@@ -203,7 +201,7 @@ a {
 
 
 .search-open .header__search {
-  transform: translateX(-470px); 
+  /* transform: translateX(-470px);  */
   transition: transform 0.3s ease; 
 }
 
@@ -259,7 +257,7 @@ a {
 }
 
 .search-item:hover p {
-  transform: translateX(12px); /* ajusta a gusto */
+  transform: translateX(12px); 
 }
 
 /* GALERÍA DERECHA */
@@ -341,6 +339,122 @@ a {
   justify-content: center;
 }
 
+
+@media (max-width: 1023px) {
+
+  /* HEADER */
+  .header {
+    padding: 20px 24px;
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .header__logo {
+    font-size: 18px;
+  }
+
+  /* BUSCADOR */
+  .header__search {
+    width: 300px;
+    max-width: 300px;
+  }
+
+  .search-prefix {
+    font-size: 12px;
+  }
+
+  /* OVERLAY */
+  .search-wrapper {
+    grid-template-columns: 1fr;
+    padding: 32px 40px;
+  }
+
+  .search-content {
+    margin-top: 80px;
+    margin-left: 0;
+    padding: 24px;
+  }
+
+  .search-content p {
+    font-size: 48px;
+  }
+
+  /* GALERÍA */
+  .hover-gallery {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    margin-top: 40px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Animación búsqueda */
+  
+}
+
+@media (max-width: 767px) {
+
+  /* HEADER */
+  .header {
+    padding: 16px 20px;
+    grid-template-columns: auto auto;
+  }
+
+  .header__logo {
+    font-size: 16px;
+  }
+
+  /* BUSCADOR */
+  .header__search {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: none;
+    margin-top: 12px;
+  }
+
+  .header__search input {
+    font-size: 14px;
+  }
+
+  /* ICONOS */
+  .header__icon {
+    font-size: 18px;
+  }
+
+  /* OVERLAY */
+  .search-overlay {
+    padding-top: 120px;
+  }
+
+  .search-wrapper {
+    grid-template-columns: 1fr;
+    padding: 24px 20px;
+  }
+
+  .search-content {
+    margin-top: 40px;
+    padding: 0;
+  }
+
+  .search-content p {
+    font-size: 32px;
+  }
+
+  .search-content span {
+    font-size: 14px;
+  }
+
+  /* GALERÍA: fuera en móvil */
+  .hover-gallery {
+    display: none;
+  }
+
+ 
+  /* Quitar detalles finos que no funcionan bien en móvil */
+  .search-item::after {
+    display: none;
+  }
+}
 
 
 html, body {
