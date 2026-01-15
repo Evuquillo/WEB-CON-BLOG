@@ -357,7 +357,6 @@ let tl = gsap.timeline({
   }
 });
 
-
 // Animación de las imágenes
 function animateImages() {
   const spacing = getSpacing();
@@ -400,10 +399,8 @@ window.addEventListener("resize", () => {
 });
 
 
-
-// =============================
 // DARK / LIGHT MODE
-// =============================
+
 const toggle = document.getElementById("theme-toggle");
 const sun = document.getElementById("icon-sun");
 const moon = document.getElementById("icon-moon");
@@ -429,24 +426,74 @@ toggle.addEventListener("click", () => {
   sun.classList.toggle("hidden", dark);
   moon.classList.toggle("hidden", !dark);
   updateLogos();
+
+  const toggle = document.getElementById("theme-toggle");
+const headerLogo = document.querySelector(".header__logo img");
+const footerLogo = document.getElementById("footer-logo-img");
+
+// Iconos
+const moonIcon = '<i class="fa-solid fa-moon" style="color:#000000;"></i>';
+const sunIcon = '<i class="fa-solid fa-sun" style="color:#ffffff;"></i>';
+
+// Recuperar modo guardado o usar claro por defecto
+const savedTheme = localStorage.getItem("theme") || "light";
+const isDarkStart = savedTheme === "dark";
+
+// Aplicar modo inicial
+document.body.classList.toggle("dark-mode", isDarkStart);
+document.body.classList.toggle("light-mode", !isDarkStart);
+
+// Aplicar ícono correspondiente
+if (toggle) {
+  toggle.innerHTML = isDarkStart ? sunIcon : moonIcon;
+}
+
+// Actualizar logos según modo
+function updateLogos(isDark) {
+  if (headerLogo) {
+    headerLogo.src = isDark ? "logos/isotipo_blanco.png" : "logos/isotipo_negro.png";
+  }
+  if (footerLogo) {
+    footerLogo.src = isDark ? "logos/archif-logo_blanco.png" : "logos/archif-logo_negro.png";
+  }
+}
+
+// Inicializar logos
+updateLogos(isDarkStart);
+
+// Escuchar el click del botón
+if (toggle) {
+  toggle.addEventListener("click", () => {
+    const isDark = document.body.classList.toggle("dark-mode");
+    document.body.classList.toggle("light-mode", !isDark);
+
+    // Cambiar icono
+    toggle.innerHTML = isDark ? sunIcon : moonIcon;
+
+    // Actualizar logos
+    updateLogos(isDark);
+
+    // Guardar preferencia
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+}
 });
 
 updateLogos();
 
-// =============================
+
+
 // CUSTOM CURSOR (bolita que sigue al mouse + hover)
-// =============================
 (function initCustomCursor() {
-  // Solo desktop con ratón
+
   const isFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   if (!isFinePointer) return;
 
-  // Evitar duplicados si el script se evalúa dos veces
   if (window.__customCursorInit) return;
   window.__customCursorInit = true;
 
   const run = () => {
-    // Si ya existe en HTML, lo usa. Si no, lo crea.
+
     let cursor = document.getElementById("custom-cursor");
     if (!cursor) {
       cursor = document.createElement("div");
@@ -481,5 +528,8 @@ updateLogos();
   // Por si el script se carga en <head> alguna vez
   if (document.body) run();
   else window.addEventListener("DOMContentLoaded", run);
+
 })();
+
+
 
