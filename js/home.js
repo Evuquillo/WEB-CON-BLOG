@@ -357,6 +357,7 @@ let tl = gsap.timeline({
   }
 });
 
+
 // Animación de las imágenes
 function animateImages() {
   const spacing = getSpacing();

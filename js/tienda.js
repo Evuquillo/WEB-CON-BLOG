@@ -1,31 +1,48 @@
 document.addEventListener("DOMContentLoaded", () => {
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Draggable);
 
+
   const imgs = document.querySelectorAll(".img-paula");
   const imgContainer = document.querySelector(".image-container-paula");
 
   if (imgContainer) {
-    const cw = imgContainer.offsetWidth;
-    const ch = imgContainer.offsetHeight;
+  const cw = imgContainer.offsetWidth;
+  const ch = imgContainer.offsetHeight;
+  const isMobile = window.innerWidth <= 768;
 
-    imgs.forEach((img) => {
-      const randX = gsap.utils.random(cw * 0.55, cw * 0.9);
-      const randY = gsap.utils.random(0, ch - 200);
+  imgs.forEach((img) => {
+    let randX, randY;
 
-      gsap.set(img, { x: randX, y: randY, opacity: 0, scale: 0.8 });
+    if (isMobile) {
+    
+      randX = cw / 2 - gsap.utils.random(80, 120);
+      randY = gsap.utils.random(0, ch * 0.6);
+    } else {
+      
+      randX = gsap.utils.random(cw * 0.55, cw * 0.9);
+      randY = gsap.utils.random(0, ch - 200);
+    }
 
-      gsap.to(img, {
-        opacity: 1,
-        y: randY - 20,
-        scale: 1,
-        duration: 1.2,
-        delay: gsap.utils.random(0, 0.8),
-        ease: "power2.out",
-      });
-
-      Draggable.create(img, { bounds: imgContainer, inertia: true });
+    gsap.set(img, {
+      x: randX,
+      y: randY,
+      opacity: 0,
+      scale: isMobile ? 0.9 : 0.8,
     });
-  }
+
+    gsap.to(img, {
+      opacity: 1,
+      y: randY - 20,
+      scale: 1,
+      duration: 1.2,
+      delay: gsap.utils.random(0, 0.8),
+      ease: "power2.out",
+    });
+
+    Draggable.create(img, { bounds: imgContainer, inertia: true });
+  });
+}
+
 
   (function initCustomCursor() {
     const isFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -62,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   })();
 
+  // SCRAMBLE TEXT
   const chars = "!<>-_\\/[]{}—=+*^?#________";
   const randomChar = () => chars[Math.floor(Math.random() * chars.length)];
 
@@ -108,6 +126,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setTimeout(loopScramble, 500);
 
+  // =============================
+  // ANIMACIÓN DE GRID
+  // =============================
   gsap.utils.toArray(".grid-item").forEach((item, i) => {
     gsap.to(item, {
       opacity: 1,
@@ -119,133 +140,121 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  const toggle = document.getElementById("theme-toggle");
-  const footerLogo = document.getElementById("footer-logo-img");
-  const sunIcon = '<i class="fa-solid fa-sun" style="color:#000000;"></i>';
-  const moonIcon = '<i class="fa-solid fa-moon" style="color:#000000;"></i>';
-
-  document.body.classList.add("light-mode");
-  if (toggle) toggle.innerHTML = moonIcon;
-
-  if (toggle) {
-    toggle.addEventListener("click", () => {
-      const isDark = document.body.classList.toggle("dark-mode");
-      document.body.classList.toggle("light-mode", !isDark);
-      toggle.innerHTML = isDark ? sunIcon : moonIcon;
-
-      if (footerLogo) {
-        footerLogo.src = isDark ? "logos/archif-logo_blanco.png" : "logos/archif-logo_negro.png";
-      }
-    });
-  }
-
+  // =============================
+  // REGISTRO DE USUARIO
+  // =============================
   const STORAGE_KEY = "archif_registered_email";
 
-const getRegisteredEmail = () => {
-  try { return localStorage.getItem(STORAGE_KEY) || ""; } catch { return ""; }
-};
-const setRegisteredEmail = (email) => {
-  try { localStorage.setItem(STORAGE_KEY, email); } catch {}
-};
-const clearRegisteredEmail = () => {
-  try { localStorage.removeItem(STORAGE_KEY); } catch {}
-};
+  const getRegisteredEmail = () => {
+    try { return localStorage.getItem(STORAGE_KEY) || ""; } catch { return ""; }
+  };
+  const setRegisteredEmail = (email) => {
+    try { localStorage.setItem(STORAGE_KEY, email); } catch {}
+  };
+  const clearRegisteredEmail = () => {
+    try { localStorage.removeItem(STORAGE_KEY); } catch {}
+  };
 
-const userRegisterBtn = document.getElementById("user-register-btn");
-const userMenuWrapper = document.getElementById("user-menu-wrapper");
-const userBorrar = document.getElementById("user-borrar");
+  const userRegisterBtn = document.getElementById("user-register-btn");
+  const userMenuWrapper = document.getElementById("user-menu-wrapper");
+  const userBorrar = document.getElementById("user-borrar");
 
-const registroEmail = document.getElementById("registroEmail");
-const registroError = document.getElementById("registroError");
-const btnRegistro = document.getElementById("btnRegistro");
-const modalRegistroEl = document.getElementById("modalRegistro");
-const modalRegistro = modalRegistroEl ? bootstrap.Modal.getOrCreateInstance(modalRegistroEl) : null;
+  const registroEmail = document.getElementById("registroEmail");
+  const registroError = document.getElementById("registroError");
+  const btnRegistro = document.getElementById("btnRegistro");
+  const modalRegistroEl = document.getElementById("modalRegistro");
+  const modalRegistro = modalRegistroEl ? bootstrap.Modal.getOrCreateInstance(modalRegistroEl) : null;
 
-const modalAvisoEl = document.getElementById("modalAvisoRegistro");
-const btnContinuarRegistro = document.getElementById("btnContinuarRegistro");
+  const modalAvisoEl = document.getElementById("modalAvisoRegistro");
+  const btnContinuarRegistro = document.getElementById("btnContinuarRegistro");
 
-let modalAviso = null;
+  let modalAviso = null;
 
-function isRegistered() {
-  return !!getRegisteredEmail();
-}
+  function isRegistered() {
+    return !!getRegisteredEmail();
+  }
 
-function syncUserUI() {
-  const reg = isRegistered();
-  if (userRegisterBtn) userRegisterBtn.classList.toggle("d-none", reg);
-  if (userMenuWrapper) userMenuWrapper.classList.toggle("d-none", !reg);
-}
+  function syncUserUI() {
+    const reg = isRegistered();
+    if (userRegisterBtn) userRegisterBtn.classList.toggle("d-none", reg);
+    if (userMenuWrapper) userMenuWrapper.classList.toggle("d-none", !reg);
+  }
 
-syncUserUI();
+  syncUserUI();
 
-if (modalAvisoEl && !isRegistered()) {
-  modalAviso = bootstrap.Modal.getOrCreateInstance(modalAvisoEl, {
-    backdrop: "static",
-    keyboard: false
-  });
-  modalAviso.show();
+  if (modalAvisoEl && !isRegistered()) {
+    modalAviso = bootstrap.Modal.getOrCreateInstance(modalAvisoEl, {
+      backdrop: "static",
+      keyboard: false,
+    });
+    modalAviso.show();
 
-  if (btnContinuarRegistro) {
-    btnContinuarRegistro.addEventListener("click", () => {
-      modalAvisoEl.addEventListener("hidden.bs.modal", () => {
-        modalRegistro?.show();
-      }, { once: true });
+    if (btnContinuarRegistro) {
+      btnContinuarRegistro.addEventListener("click", () => {
+        modalAvisoEl.addEventListener(
+          "hidden.bs.modal",
+          () => {
+            modalRegistro?.show();
+          },
+          { once: true }
+        );
+        modalAviso.hide();
+      });
+    }
+  }
 
-      modalAviso.hide();
+  if (modalRegistroEl) {
+    modalRegistroEl.addEventListener("hidden.bs.modal", () => {
+      document.querySelectorAll(".modal-backdrop").forEach((b) => b.remove());
+      document.body.classList.remove("modal-open");
+      document.body.style.removeProperty("padding-right");
+      document.body.style.removeProperty("overflow");
+
+      if (btnRegistro) {
+        btnRegistro.textContent = "Registrarme";
+        btnRegistro.disabled = false;
+      }
+      if (registroEmail) registroEmail.value = "";
+      if (registroError) registroError.classList.add("d-none");
     });
   }
-}
 
-if (modalRegistroEl) {
-  modalRegistroEl.addEventListener("hidden.bs.modal", () => {
-    document.querySelectorAll(".modal-backdrop").forEach((b) => b.remove());
-    document.body.classList.remove("modal-open");
-    document.body.style.removeProperty("padding-right");
-    document.body.style.removeProperty("overflow");
+  if (btnRegistro && registroEmail) {
+    btnRegistro.addEventListener("click", () => {
+      const email = (registroEmail.value || "").trim();
+      const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-    if (btnRegistro) {
-      btnRegistro.textContent = "Registrarme";
-      btnRegistro.disabled = false;
-    }
-    if (registroEmail) registroEmail.value = "";
-    if (registroError) registroError.classList.add("d-none");
-  });
-}
+      if (!isValid) {
+        if (registroError) registroError.classList.remove("d-none");
+        return;
+      }
 
-if (btnRegistro && registroEmail) {
-  btnRegistro.addEventListener("click", () => {
-    const email = (registroEmail.value || "").trim();
-    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (registroError) registroError.classList.add("d-none");
 
-    if (!isValid) {
-      if (registroError) registroError.classList.remove("d-none");
-      return;
-    }
+      setRegisteredEmail(email);
+      syncUserUI();
 
-    if (registroError) registroError.classList.add("d-none");
+      btnRegistro.textContent = "¡Listo! Revisa tu correo";
+      btnRegistro.disabled = true;
 
-    setRegisteredEmail(email);
-    syncUserUI();
+      setTimeout(() => {
+        modalRegistro?.hide();
+        modalAviso?.hide();
+      }, 700);
+    });
+  }
 
-    btnRegistro.textContent = "¡Listo! Revisa tu correo";
-    btnRegistro.disabled = true;
+  if (userBorrar) {
+    userBorrar.addEventListener("click", () => {
+      clearRegisteredEmail();
+      syncUserUI();
+      location.reload();
+    });
+  }
 
-    setTimeout(() => {
-      modalRegistro?.hide();
-      modalAviso?.hide();
-    }, 700);
-  });
-}
-
-if (userBorrar) {
-  userBorrar.addEventListener("click", () => {
-    clearRegisteredEmail();
-    syncUserUI();
-    location.reload();
-  });
-}
-// scroll to top //
-
+  // =============================
+  // SCROLL TO TOP
+  // =============================
   const scrollBtn = document.getElementById("scrollTopBtn");
   if (scrollBtn) {
     window.addEventListener("scroll", () => {
@@ -257,6 +266,7 @@ if (userBorrar) {
       gsap.to(window, { duration: 1, scrollTo: 0, ease: "power2.out" });
     });
   }
+
 
   const searchInput = $(".header__search input");
   const searchClose = $(".search-close");
@@ -313,4 +323,56 @@ if (userBorrar) {
     searchInput.blur();
     e.stopPropagation();
   });
+
+  // =============================
+  // DARK / LIGHT MODE (única versión funcional)
+  // =============================
+  const toggle = document.getElementById("theme-toggle");
+  const headerLogo = document.getElementById("header-logo-img");
+  const footerLogo = document.getElementById("footer-logo-img");
+
+  if (toggle) {
+    const moonIcon = '<i class="fa-solid fa-moon" style="color:#000000;"></i>';
+    const sunIcon = '<i class="fa-solid fa-sun" style="color:#ffffff;"></i>';
+
+    // Recupera modo guardado o usa claro por defecto
+    const savedTheme = localStorage.getItem("theme") || "light";
+    const isDarkStart = savedTheme === "dark";
+
+    document.body.classList.toggle("dark-mode", isDarkStart);
+    document.body.classList.toggle("light-mode", !isDarkStart);
+
+    toggle.innerHTML = isDarkStart ? sunIcon : moonIcon;
+
+    if (headerLogo) {
+      headerLogo.src = isDarkStart
+        ? "logos/isotipo_blanco.png"
+        : "logos/isotipo_negro.png";
+    }
+    if (footerLogo) {
+      footerLogo.src = isDarkStart
+        ? "logos/archif-logo_blanco.png"
+        : "logos/archif-logo_negro.png";
+    }
+
+    toggle.addEventListener("click", () => {
+      const isDark = document.body.classList.toggle("dark-mode");
+      document.body.classList.toggle("light-mode", !isDark);
+
+      toggle.innerHTML = isDark ? sunIcon : moonIcon;
+
+      if (headerLogo) {
+        headerLogo.src = isDark
+          ? "logos/isotipo_blanco.png"
+          : "logos/isotipo_negro.png";
+      }
+      if (footerLogo) {
+        footerLogo.src = isDark
+          ? "logos/archif-logo_blanco.png"
+          : "logos/archif-logo_negro.png";
+      }
+
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+  }
 });

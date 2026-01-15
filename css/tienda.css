@@ -1061,31 +1061,218 @@ body.dark-mode .user-dropdown .dropdown-item:hover{
   background: rgba(255,255,255,0.08);
 }
 
-
-
-/* ===== Responsive Grid ===== */
-@media (max-width: 992px) {
-  .grid-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
+:root {
+  --header-bg-light: #ffffff;
+  --header-text-light: #000000;
+  --header-bg-dark: #000000;
+  --header-text-dark: #ffffff;
 }
 
+/* HEADER base */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 24px 40px;
+  background-color: var(--header-bg-light);
+  color: var(--header-text-light);
+  z-index: 1000;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Modo claro */
+body.light-mode .header {
+  background-color: var(--header-bg-light);
+  color: var(--header-text-light);
+}
+
+/* Modo oscuro */
+body.dark-mode .header {
+  background-color: var(--header-bg-dark);
+  color: var(--header-text-dark);
+}
+
+/* Íconos, enlaces y botones heredan color */
+.header svg,
+.header i,
+.header button,
+.header a {
+  color: inherit;
+  fill: currentColor;
+  transition: color 0.4s ease, fill 0.4s ease;
+}
+
+/* Logo */
+.logo-registered {
+  height: 32px;
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+
 @media (max-width: 768px) {
-  .text-wrapper-paula { top: 10%; left: 5%; }
-  .img-paula { max-width: 180px; }
+
+  /* ===== HEADER ===== */
+  .header {
+    grid-template-columns: auto auto;
+    padding: 16px 20px;
+    background-color: var(--header-bg-light);
+  }
+
+  body.dark-mode .header {
+    background-color: var(--header-bg-dark);
+  }
+
+  .header__logo img {
+    width: 26px;
+    height: auto;
+  }
+
+  .header__search {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: none;
+    margin-top: 12px;
+    order: 3;
+  }
+
+  .header__search input {
+    font-size: 14px;
+    padding: 6px 28px 6px 12px;
+  }
+
+  .header__actions {
+    gap: 8px;
+  }
+
+  .header__actions .theme-toggle i,
+  .header__actions .user-icon {
+    font-size: 18px;
+  }
+
+  /* ===== OVERLAY ===== */
+  .search-overlay {
+    padding-top: 80px;
+  }
+
+  .search-content {
+    margin-top: 40px;
+    padding: 0 24px;
+  }
+
+  .search-content p {
+    font-size: 36px;
+    line-height: 1.1;
+  }
+
+  .search-content span {
+    font-size: 16px;
+  }
+
+  .hover-gallery {
+    display: none; /* Oculta la galería de hover en móvil */
+  }
+
+  .search-item::after {
+    display: none; /* Oculta barra lateral “/” en móvil */
+  }
+
+  /* ===== SECCIÓN PRINCIPAL ===== */
+  .section-paula {
+    min-height: auto;
+    padding-top: 120px; /* da aire al header fijo */
+  }
+
+  .text-wrapper-paula {
+    top: 20%;
+    left: 10%;
+  }
+
+  .text-paula {
+    font-size: clamp(1.8rem, 6vw, 3rem);
+  }
+
+  .image-container-paula {
+    height: auto;
+    min-height: 60vh;
+  }
+
+  .img-paula {
+    max-width: 160px;
+  }
+
+  /* ===== GRID ===== */
   .grid-container {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+    width: 90%;
   }
-}
 
-/* Responsive */
-@media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
+  .grid-item img {
+    border-radius: 4px;
+  }
+
+  .info-card {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+
+  /* ===== BOTÓN SCROLL ===== */
+  .scroll-top-btn {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  /* ===== FOOTER ===== */
+  .main-footer {
+    padding: 2rem 1rem;
     text-align: center;
   }
 
-  .footer-links {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .footer-info {
+    font-size: 0.85rem;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .footer-links a {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .text-paula {
+    font-size: 1.6rem;
+  }
+
+  .search-content p {
+    font-size: 28px;
+  }
+
+  .grid-container {
+    width: 95%;
+    gap: 1rem;
+  }
+
+  .scroll-top-btn {
+    bottom: 1rem;
+    right: 1rem;
   }
 }
