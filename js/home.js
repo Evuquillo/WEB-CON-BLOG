@@ -398,89 +398,16 @@ window.addEventListener("resize", () => {
   ScrollTrigger.refresh();
 });
 
-
-// DARK / LIGHT MODE
-
-const toggle = document.getElementById("theme-toggle");
-const sun = document.getElementById("icon-sun");
-const moon = document.getElementById("icon-moon");
-
-const footerLogo = document.getElementById("footer-logo-img");
-const heroLogo = document.getElementById("hero-logo-img");
-
-document.body.classList.add("light-mode");
-
-function updateLogos() {
-  const dark = document.body.classList.contains("dark-mode");
-  footerLogo.src = dark
-    ? "logos/archif-logo_blanco.png"
-    : "logos/archif-logo_negro.png";
-  heroLogo.src = dark
-    ? "logos/archif-logo_blanco.png"
-    : "logos/archif-logo_negro.png";
-}
-
-toggle.addEventListener("click", () => {
-  const dark = document.body.classList.toggle("dark-mode");
-  document.body.classList.toggle("light-mode", !dark);
-  sun.classList.toggle("hidden", dark);
-  moon.classList.toggle("hidden", !dark);
-  updateLogos();
-
-  const toggle = document.getElementById("theme-toggle");
-const headerLogo = document.querySelector(".header__logo img");
-const footerLogo = document.getElementById("footer-logo-img");
-
-// Iconos
-const moonIcon = '<i class="fa-solid fa-moon" style="color:#000000;"></i>';
-const sunIcon = '<i class="fa-solid fa-sun" style="color:#ffffff;"></i>';
-
-// Recuperar modo guardado o usar claro por defecto
-const savedTheme = localStorage.getItem("theme") || "light";
-const isDarkStart = savedTheme === "dark";
-
-// Aplicar modo inicial
-document.body.classList.toggle("dark-mode", isDarkStart);
-document.body.classList.toggle("light-mode", !isDarkStart);
-
-// Aplicar ícono correspondiente
-if (toggle) {
-  toggle.innerHTML = isDarkStart ? sunIcon : moonIcon;
-}
-
-// Actualizar logos según modo
-function updateLogos(isDark) {
-  if (headerLogo) {
-    headerLogo.src = isDark ? "logos/isotipo_blanco.png" : "logos/isotipo_negro.png";
+// ===== MODO OSCURO / CLARO =====
+document.getElementById('theme-toggle').onclick = function() {
+  if (document.body.classList.contains('light-mode')) {
+    document.body.className = 'dark-mode';
+    this.innerHTML = '<i class="fa-solid fa-sun"></i>';
+  } else {
+    document.body.className = 'light-mode';
+    this.innerHTML = '<i class="fa-solid fa-moon"></i>';
   }
-  if (footerLogo) {
-    footerLogo.src = isDark ? "logos/archif-logo_blanco.png" : "logos/archif-logo_negro.png";
-  }
-}
-
-// Inicializar logos
-updateLogos(isDarkStart);
-
-// Escuchar el click del botón
-if (toggle) {
-  toggle.addEventListener("click", () => {
-    const isDark = document.body.classList.toggle("dark-mode");
-    document.body.classList.toggle("light-mode", !isDark);
-
-    // Cambiar icono
-    toggle.innerHTML = isDark ? sunIcon : moonIcon;
-
-    // Actualizar logos
-    updateLogos(isDark);
-
-    // Guardar preferencia
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  });
-}
-});
-
-updateLogos();
-
+};
 
 
 // CUSTOM CURSOR (bolita que sigue al mouse + hover)

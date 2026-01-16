@@ -309,24 +309,6 @@ a{
   opacity: 1;
 }
 
-/* Botón modo oscuro */
-.theme-toggle {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  z-index: 1000;
-}
-
-.icon-theme {
-  width: 26px;
-  height: 26px;
-  color: inherit;
-}
-
-.hidden { display: none; }
 
 /* Header */
 .main-header {
@@ -370,7 +352,7 @@ a{
 
   .search-content {
     margin-top: 80px;
-    margin-left: 0;
+    margin-left: 20px;
     padding: 24px;
   }
 
@@ -454,6 +436,12 @@ a{
   .search-item::after {
     display: none;
   }
+
+  .footer-links{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 
@@ -473,7 +461,7 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
-   position: relative;
+  position: relative;
 }
 
 .pin-spacer {
@@ -500,24 +488,103 @@ body.dark-mode {
   color: var(--text-dark);
 }
 
-/* ===== Botón modo oscuro ===== */
+
+/* Botón modo oscuro */
+/* Botón modo oscuro */
+/* Botón modo oscuro */
 .theme-toggle {
-  position: fixed;
+  position: fixed !important;
   top: 1rem;
   right: 1rem;
   background: transparent;
   border: none;
   cursor: pointer;
   z-index: 1000;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-.icon-theme {
+.theme-toggle:hover {
+  transform: scale(1.1);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+body.dark-mode .theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-toggle i {
   width: 26px;
   height: 26px;
-  color: inherit;
+  font-size: 1.3rem;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+/* Estilos específicos para cada icono */
+.theme-toggle .fa-moon {
+  color: #000000;
+}
+
+.theme-toggle .fa-sun {
+  color: #ffffff;
+}
+
+/* body.dark-mode .theme-toggle .fa-sun {
+  color: #ffffff !important;
+} */
+
+/* Efecto hover en iconos */
+.theme-toggle:hover i {
+  transform: rotate(15deg);
 }
 
 .hidden { display: none; }
+
+
+/* =========================
+   DARK MODE
+========================= */
+body.dark-mode .header {
+  background-color: #111;
+}
+
+body.dark-mode .header__search input {
+  color: #fff;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+}
+
+body.dark-mode .search-prefix,
+body.dark-mode .search-icon,
+body.dark-mode .header__icon {
+  color: #bbb;
+}
+
+body.dark-mode .search-item span,
+body.dark-mode .search-item p {
+  color: #ccc;
+}
+
+body.dark-mode .search-item:hover span,
+body.dark-mode .search-item:hover p {
+  color: #fff;
+}
+
+body.dark-mode .search-open .header {
+  background-color: #111;
+}
+
+body.dark-mode .search-overlay {
+  background: #111;
+}
 
 /* ===== HERO ===== */
 .hero {
@@ -562,7 +629,7 @@ body.dark-mode {
   font-family: "Inter", sans-serif;
   font-size: clamp(1.5rem, 5vw, 4.5rem);
   letter-spacing: -0.02em;
-  margin: 2rem 0;
+  margin: 1rem 0;
   overflow: hidden;
   color: var(--text-light);
 }
@@ -620,6 +687,10 @@ body.dark-mode .text-can {
   transition: opacity 0.3s;
 }
 
+.text-right {
+  font-weight: 600;
+}
+
 body.dark-mode .img-wrapper .text-left,
 body.dark-mode .img-wrapper .text-right {
   color: var(--text-dark);
@@ -671,22 +742,28 @@ body.dark-mode .main-footer {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .footer-logo-img {
-  height: 40px;
+  height: 50px;
   width: auto;
   transition: filter 0.3s ease, opacity 0.3s ease;
 }
 
-.footer-info { flex: 1 1 300px; font-size: 0.9rem; line-height: 1.6; text-align: center; }
+.footer-info { 
+  flex: 1 1 200px; 
+  max-width: 600px;
+  font-size: 0.9rem; 
+  line-height: 1.6; 
+  text-align: center; 
+}
 
 .footer-links {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   flex-direction: column-reverse;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .footer-links a {
